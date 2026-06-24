@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="robots" content="noindex,nofollow">
+  <title>{% block title %}{{ wireframe_title or 'Website Wireframe' }}{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/wireframe.css') }}">
+  {% block head_extra %}{% endblock %}
+</head>
+<body class="wireframe-body">
+  <div class="wireframe-shell">
+    <aside class="wireframe-sidebar">
+      <a class="wireframe-brand" href="{{ url_for('wireframe.index') }}">
+        <span class="wireframe-brand-mark">WF</span>
+        <span class="wireframe-brand-copy">
+          <strong>Website Wireframe</strong>
+          <small>HTML blueprint</small>
+        </span>
+      </a>
+      <div class="wireframe-sidebar-intro">
+        <span class="eyebrow">Scope</span>
+        <p>{{ wireframe_summary or 'A faithful HTML blueprint of the live public site and admin panel.' }}</p>
+      </div>
+      <nav class="wireframe-nav" aria-label="Wireframe navigation">
+        {% for group in nav_groups %}
+        <section class="wireframe-nav-group">
+          <h2>{{ group.label }}</h2>
+          <div class="wireframe-nav-links">
+            {% for item in group.pages %}
+            <a href="{{ item.url }}" class="{% if item.active %}active{% endif %}">
+              <span>{{ item.title }}</span>
+              <small>{{ item.summary }}</small>
+            </a>
+            {% endfor %}
+          </div>
+        </section>
+        {% endfor %}
+      </nav>
+    </aside>
+    <div class="wireframe-main">
+      <header class="wireframe-topbar">
+        <div class="wireframe-topbar-copy">
+          <span class="eyebrow">{{ page.group_label if page is defined else 'Wireframe' }}</span>
+          <h1>{{ page.title if page is defined else wireframe_title }}</h1>
+          <p>{{ page.summary if page is defined else wireframe_summary }}</p>
+        </div>
+        <div class="wireframe-topbar-actions">
+          {% if page is defined and page.live_url %}
+          <a class="wf-btn wf-btn--primary" href="{{ page.live_url }}" target="_blank" rel="noopener noreferrer">Open live page</a>
+          {% endif %}
+          <a class="wf-btn" href="{{ url_for('wireframe.index') }}">All wireframes</a>
+        </div>
+      </header>
+
+      <main id="main-content" class="wireframe-content" tabindex="-1">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

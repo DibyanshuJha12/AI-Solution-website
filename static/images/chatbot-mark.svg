@@ -1,0 +1,33 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="chatbotFrame" x1="36" y1="24" x2="220" y2="232" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2F7CFF"/>
+      <stop offset="0.55" stop-color="#1EE8FF"/>
+      <stop offset="1" stop-color="#8BE35E"/>
+    </linearGradient>
+    <linearGradient id="chatbotGlow" x1="56" y1="48" x2="200" y2="208" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0E213A"/>
+      <stop offset="1" stop-color="#081320"/>
+    </linearGradient>
+    <linearGradient id="chatbotFace" x1="86" y1="82" x2="170" y2="168" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#59B8FF"/>
+      <stop offset="1" stop-color="#5EFFF0"/>
+    </linearGradient>
+    <filter id="outerGlow" x="10" y="10" width="236" height="236" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feGaussianBlur stdDeviation="10" result="effect1_foregroundBlur"/>
+    </filter>
+  </defs>
+  <g filter="url(#outerGlow)">
+    <rect x="30" y="30" width="196" height="196" rx="56" fill="url(#chatbotGlow)" stroke="url(#chatbotFrame)" stroke-width="10"/>
+  </g>
+  <path d="M89 96C89 83.2975 99.2975 73 112 73H144C156.703 73 167 83.2975 167 96V103H175C183.837 103 191 110.163 191 119V147C191 155.837 183.837 163 175 163H158L140 181C135.589 185.411 128.411 185.411 124 181L106 163H81C72.1634 163 65 155.837 65 147V119C65 110.163 72.1634 103 81 103H89V96Z" fill="url(#chatbotFace)" fill-opacity="0.12" stroke="url(#chatbotFace)" stroke-width="9" stroke-linejoin="round"/>
+  <circle cx="106" cy="125" r="10" fill="url(#chatbotFace)"/>
+  <circle cx="150" cy="125" r="10" fill="url(#chatbotFace)"/>
+  <path d="M104 149C111.5 156 144.5 156 152 149" stroke="url(#chatbotFace)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M96 83V64" stroke="url(#chatbotFace)" stroke-width="9" stroke-linecap="round"/>
+  <path d="M160 83V64" stroke="url(#chatbotFace)" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="96" cy="55" r="8" fill="#1EE8FF"/>
+  <circle cx="160" cy="55" r="8" fill="#8BE35E"/>
+</svg>

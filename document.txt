@@ -1,0 +1,380 @@
+AI SOLUTION Web-Based System Documentation
+
+1. Project Overview
+
+AI SOLUTION is a Flask-based web platform built for an AI services business. The system includes a public-facing website and a protected admin dashboard. It presents services, industries, portfolio case studies, blog posts, events, careers, testimonials, a contact/inquiry workflow, newsletter signup, and an AI chatbot backed by Gemini.
+
+The application is designed as a modern enterprise-style system with a clear separation between presentation, business logic, and data storage. The frontend is implemented with HTML, CSS, and JavaScript using Jinja templates. The backend is implemented in Flask with SQLAlchemy models, CSRF protection, authentication, logging, and content management. The database layer is designed for PostgreSQL, with a local SQLite fallback for development.
+
+2. Technology Stack
+
+Frontend:
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- Jinja2 templates
+- Responsive layout and theme toggling
+
+Backend:
+- Python
+- Flask
+- Flask-WTF
+- SQLAlchemy
+- Werkzeug password hashing
+- PostgreSQL support
+- Gemini API integration
+
+Database:
+- PostgreSQL for production
+- SQLite fallback for local development
+
+Security and Support:
+- CSRF protection
+- Password hashing
+- Session-based authentication
+- reCAPTCHA verification
+- Input sanitisation
+- File upload validation
+- Security headers
+- Admin route protection
+
+3. Frontend Structure
+
+The frontend is organised around reusable templates and shared UI fragments. The main layout is defined in the base template, which provides:
+- site-wide navigation
+- footer and contact details
+- newsletter form
+- chatbot widget
+- cookie consent banner
+- theme switching
+- flash message display
+
+The public pages extend the base template and render content dynamically from the backend. Key pages include:
+- Home
+- Solutions
+- Portfolio
+- Testimonials
+- Events
+- Blog
+- Careers
+- Contact Us
+
+The admin section uses a separate layout with a protected sidebar, top bar, and dashboard workspace.
+
+4. Frontend Working Process
+
+4.1 Page Rendering
+
+The frontend does not contain static hard-coded business content. Instead, each page receives data from Flask routes and renders it through Jinja templates. This makes the website dynamic and easy to update from the admin panel.
+
+Typical flow:
+1. The browser requests a page.
+2. Flask route loads data from the database.
+3. The route sends variables to the template.
+4. Jinja renders cards, sections, forms, and navigation.
+5. CSS provides the visual design and responsiveness.
+6. JavaScript adds interactive behaviour.
+
+4.2 Homepage Behaviour
+
+The homepage is the main public entry point. It presents:
+- hero section
+- service highlights
+- company introduction
+- embedded video
+- testimonial carousel
+- team section
+- latest blogs
+- upcoming events
+- FAQ section
+- inquiry call to action
+
+This page also acts as the strongest conversion path toward contact, inquiry submission, and chatbot engagement.
+
+4.3 Navigation and Layout
+
+The main navigation is shared across public pages and includes:
+- Home
+- Solutions
+- Portfolio
+- Testimonials
+- Events
+- Blog
+- Careers
+- Contact Us
+
+This structure gives users a clear journey through the site. Supporting content such as company information, service details, and trust elements is distributed across these pages.
+
+4.4 Forms and User Interaction
+
+The frontend contains several form-based interactions:
+- Contact inquiry form
+- Newsletter subscription form
+- Event RSVP form
+- Career application form
+- Feedback form
+- Public client login / registration forms
+
+All forms use CSRF tokens and are validated on the backend. The frontend presents inline validation feedback, flash messages, and loading states where appropriate.
+
+4.5 AI Chatbot Widget
+
+The chatbot is a key frontend feature. It is rendered as a floating widget and communicates with the backend through AJAX requests. The chatbot interface supports:
+- opening and closing the panel
+- message history
+- clear conversation action
+- typing animation
+- assistant response rendering
+- keyboard submission
+- session persistence
+
+JavaScript stores conversation state in session storage and synchronises it with the backend history endpoint. When a user submits a message, the frontend sends the request to the backend API and displays the response in the chat panel.
+
+4.6 JavaScript Behaviour
+
+The frontend JavaScript is split into dedicated modules:
+- site.js for general site behaviour
+- chatbot.js for AI chat interactions
+- admin.js for admin charts and dashboard visuals
+
+The JavaScript layer is responsible for:
+- theme toggling
+- mobile navigation behaviour
+- chatbot requests and history restoration
+- feedback modal interactions
+- admin chart rendering
+- smooth interface updates
+
+4.7 Styling and Responsiveness
+
+The UI is styled using separate CSS files for core styles, components, page-specific styles, responsive rules, and admin styles. The layout is responsive and adapts to desktop and mobile screens. The design uses a premium corporate style suitable for a university portfolio submission.
+
+5. Backend Structure
+
+The Flask application is built using an application factory. The main entry point creates the app, configures the database, registers blueprints, enables CSRF, sets security headers, seeds starter data, and prepares the runtime environment.
+
+Backend modules:
+- aisolution/routes/public.py
+- aisolution/routes/api.py
+- aisolution/routes/admin.py
+- aisolution/models.py
+- aisolution/services/chatbot.py
+- aisolution/services/feedback.py
+- aisolution/utils/security.py
+- aisolution/utils/site.py
+
+6. Backend Working Process
+
+6.1 Request Handling
+
+When a user visits the website:
+1. Flask receives the request.
+2. The before-request hook loads the current public or staff user from session data.
+3. Website visits are recorded for analytics.
+4. Security headers are attached to the response.
+5. The route queries the database and returns the rendered page.
+
+6.2 Public Routes
+
+The public blueprint provides the main user-facing experience:
+- Home page
+- Solutions page
+- Industries redirect
+- Portfolio page
+- Testimonials page
+- Events page with RSVP form
+- Blog listing and blog detail
+- Careers page with application form
+- Contact page with inquiry form
+- Newsletter submission
+- Feedback submission
+- Client login and account creation
+- Password reset
+- Public workspace
+- Privacy and terms pages
+- Sitemap and robots file
+
+These routes allow visitors to browse content, submit forms, create accounts, and interact with the chatbot and feedback system.
+
+6.3 Inquiry and Application Processing
+
+The backend validates all submitted forms before saving records.
+
+Inquiry flow:
+1. Visitor fills in the contact form.
+2. Backend sanitises and validates the fields.
+3. Duplicate submission protection checks recent entries.
+4. Captcha and reCAPTCHA are verified.
+5. Inquiry record is stored in the database.
+6. Activity log entry is created.
+7. Success message is shown to the user.
+
+Career application flow:
+1. Visitor opens the careers page.
+2. Form fields are validated.
+3. Resume file type is checked.
+4. Resume is renamed securely and stored in the uploads folder.
+5. Application record is saved.
+6. Activity log entry is recorded.
+7. User receives confirmation.
+
+6.4 Newsletter and Feedback
+
+Newsletter subscriptions are handled by a dedicated route. The backend checks whether the email already exists and reactivates it if necessary.
+
+Feedback submissions are stored as pending records. Approved feedback can later appear on the public site after admin review. This keeps moderation under admin control.
+
+6.5 Blog, Events, and Portfolio Content
+
+These are database-backed public content areas:
+- Blog posts are listed and rendered with read time and share links.
+- Events are displayed with details and RSVP functionality.
+- Portfolio case studies present delivery outcomes and key features.
+
+Content is seeded on startup and can be edited from the admin interface.
+
+6.6 AI Chatbot Processing
+
+The chatbot is processed server-side. The frontend sends a message to the API, and the backend:
+1. sanitises the input
+2. checks session rate limits
+3. checks for duplicate messages
+4. builds context from session history
+5. sends the request to Gemini if configured
+6. falls back to safe scripted guidance if needed
+7. stores the exchange in chatbot logs
+
+The chatbot system is designed so the Gemini API key never appears in frontend code.
+
+6.7 Public Client Workspace
+
+The system also supports public client accounts. Users can register, log in, reset passwords, and access a protected workspace. The workspace shows account-related counts such as inquiry submissions and chatbot usage.
+
+7. Admin Working Process
+
+The admin area is protected and not exposed in the public navigation. It uses a hidden route prefix and server-side session authentication.
+
+Admin flow:
+1. Administrator visits the private login route.
+2. Credentials are checked against hashed passwords.
+3. CAPTCHA and login rate limiting are enforced.
+4. Session variables are created for the staff user.
+5. The dashboard loads analytics, recent activity, and summary cards.
+6. The administrator manages content and operational records.
+7. Logout clears the session and logs the event.
+
+Admin capabilities:
+- dashboard overview
+- inquiry management
+- application management
+- RSVP management
+- chatbot logs
+- newsletter subscriber management
+- service management
+- industry management
+- event management
+- blog management
+- testimonial management
+- FAQ management
+- team management
+- media management
+- site settings
+- case study management
+- job management
+- client user management
+- staff management
+- auth logs and activity logs
+
+8. Database Structure
+
+The database contains separate tables for:
+- staff users
+- public users
+- inquiries
+- newsletter subscribers
+- services
+- industries
+- events
+- RSVPs
+- blog posts
+- testimonials
+- feedback entries
+- case studies
+- jobs
+- job applications
+- FAQ items
+- team members
+- media assets
+- site settings
+- chatbot logs
+- website visits
+- auth session logs
+- activity logs
+- password reset tokens
+
+This structure supports both the public website and the administrative workflow.
+
+9. End-to-End System Process
+
+The overall system works as follows:
+1. A visitor opens the public website.
+2. The frontend renders the requested page using Flask templates.
+3. The visitor browses services, industries, portfolio, blog posts, events, testimonials, and careers.
+4. The visitor may submit an inquiry, subscribe to the newsletter, apply for a job, register as a public user, or use the chatbot.
+5. The backend validates the request, stores data in PostgreSQL, and records logs.
+6. If the chatbot is used, the backend communicates with Gemini and returns a response.
+7. An administrator signs in through the protected admin route.
+8. The dashboard displays analytics from website visits, inquiries, applications, chatbot logs, and auth activity.
+9. The administrator updates content, reviews submissions, and manages user data.
+10. The site remains dynamic because all public and admin content is driven by the database.
+
+10. Security Design
+
+Security is built into the system from the start:
+- CSRF tokens protect form submissions.
+- Passwords are hashed before storage.
+- Admin and public sessions are handled separately.
+- Session cookies are protected with secure flags where enabled.
+- Input is sanitised before saving or rendering.
+- Resume and media uploads are restricted by file type.
+- reCAPTCHA adds a bot-verification layer.
+- SQL injection risk is reduced through SQLAlchemy and parameterised queries.
+- Security headers reduce browser-side attack surface.
+- Admin routes are hidden and noindexed.
+- Chatbot and API activity are rate limited and logged.
+
+11. Frontend and Backend Collaboration
+
+The frontend and backend work together as a single integrated system.
+
+Frontend responsibilities:
+- display pages and forms
+- collect user input
+- show feedback messages
+- render chatbot UI
+- display dashboard charts
+- manage responsive interactions
+
+Backend responsibilities:
+- load and validate data
+- process form submissions
+- authenticate users
+- store records
+- generate analytics
+- communicate with Gemini
+- enforce security controls
+
+This separation keeps the project organised and maintainable.
+
+12. Summary
+
+AI SOLUTION is a complete web-based AI services platform with a polished frontend, a secure Flask backend, database-driven content management, a Gemini chatbot, and a full admin dashboard. The system is suitable for a university product development submission because it demonstrates:
+- clean software architecture
+- practical frontend implementation
+- secure backend processing
+- role-based administration
+- analytics and content management
+- AI integration
+- professional presentation
+
+End of document.

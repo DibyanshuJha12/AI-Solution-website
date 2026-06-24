@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Blog | AI SOLUTION{% endblock %}
+{% block meta_description %}Read AI SOLUTION articles on automation, decision intelligence, security, and enterprise transformation strategy.{% endblock %}
+{% block content %}
+<section class="page-hero compact-hero">
+  <span class="eyebrow">AI Articles</span>
+  <h1>Guides for automation, intelligence, security, and transformation.</h1>
+  <p>Field-tested thinking for companies building AI programs with discipline.</p>
+  <div class="hero-trust-strip">
+    <span><i data-lucide="newspaper"></i> Premium editorial layout</span>
+    <span><i data-lucide="clock-3"></i> Practical reading-time guidance</span>
+    <span><i data-lucide="sparkles"></i> Executive AI insights</span>
+  </div>
+</section>
+
+{% set featured_post = posts[0] if posts else None %}
+{% set secondary_posts = posts[1:] if posts|length > 1 else [] %}
+
+{% if featured_post %}
+<section class="section reveal">
+  <article class="blog-feature-panel">
+    <img src="{{ featured_post.image_url }}" alt="{{ featured_post.title }}">
+    <div>
+      <div class="blog-summary-row">
+        <span class="eyebrow">Featured Insight</span>
+        <span class="blog-reading-time">{{ featured_post.read_time }} min read</span>
+      </div>
+      <h2>{{ featured_post.title }}</h2>
+      <p>{{ featured_post.description }}</p>
+      <div class="blog-meta-inline">
+        <span>{{ featured_post.category }}</span>
+        <span>{{ featured_post.publish_date|date_label }}</span>
+        <span>By {{ featured_post.author }}</span>
+      </div>
+      <a class="btn primary" href="{{ url_for('public.blog_detail', slug=featured_post.slug) }}">Read Blog <i data-lucide="arrow-right"></i></a>
+    </div>
+  </article>
+</section>
+{% endif %}
+
+<section class="section reveal">
+  <div class="section-heading">
+    <span class="eyebrow">Latest Posts</span>
+    <h2>Modern AI thinking written for operators, product teams, and decision makers.</h2>
+  </div>
+  <div class="blog-grid blog-grid--magazine">
+    {% for post in secondary_posts %}
+    <article class="blog-card blog-card--compact">
+      <img src="{{ post.image_url }}" alt="{{ post.title }}">
+      <div>
+        <div class="blog-summary-row">
+          <span class="blog-card-kicker">{{ post.category }} · {{ post.publish_date|date_label }}</span>
+          <span class="blog-reading-time">{{ post.read_time }} min read</span>
+        </div>
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.description }}</p>
+        <small>By {{ post.author }}</small>
+        <a class="btn small" href="{{ url_for('public.blog_detail', slug=post.slug) }}">Read Blog <i data-lucide="arrow-right"></i></a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

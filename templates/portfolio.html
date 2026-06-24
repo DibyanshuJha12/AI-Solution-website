@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Portfolio | AI SOLUTION{% endblock %}
+{% block meta_description %}Browse AI SOLUTION case studies showing practical outcomes across healthcare, finance, retail, logistics, education, and operations.{% endblock %}
+{% block content %}
+<section class="page-hero compact-hero hero-split">
+  <div>
+    <span class="eyebrow">Portfolio & Case Studies</span>
+    <h1>Practical AI delivery patterns with measurable impact.</h1>
+    <p>Browse compact case studies across healthcare, finance, retail, logistics, education, and operations.</p>
+    <div class="hero-trust-strip">
+      <span><i data-lucide="activity"></i> Delivery stories with measurable results</span>
+      <span><i data-lucide="shield-check"></i> Secure AI implementation patterns</span>
+      <span><i data-lucide="chart-no-axes-combined"></i> Executive-friendly outcomes</span>
+    </div>
+    <div class="hero-actions">
+      <a class="btn primary" href="#cases"><i data-lucide="folder-kanban"></i> Explore Case Studies</a>
+      <a class="btn ghost" href="{{ url_for('public.contact') }}"><i data-lucide="message-square-share"></i> Discuss Your Programme</a>
+    </div>
+  </div>
+  <div class="hero-visual-card">
+    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=80" alt="Enterprise AI portfolio dashboard">
+    <div class="hero-visual-overlay">
+      <strong>Enterprise transformation visuals</strong>
+      <p>Analytics, automation, risk monitoring, cloud intelligence, and sector rollout patterns in one view.</p>
+      <div class="hero-kpi-grid">
+        <span><i data-lucide="brain"></i> AI strategy</span>
+        <span><i data-lucide="chart-no-axes-combined"></i> Decision intelligence</span>
+        <span><i data-lucide="shield"></i> Secure delivery</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="cases">
+  <div class="case-grid">
+    {% for case in cases %}
+    <article class="case-card premium-case-card">
+      <div class="case-card-media">
+        <img src="{{ case.image_url }}" alt="{{ case.title }}">
+        <span class="case-card-badge">{{ case.client_industry }}</span>
+      </div>
+      <div class="case-card-body">
+        <div class="case-card-topline">
+          <span class="eyebrow">Case Study</span>
+          <span class="case-card-impact-pill">{{ case.impact }}</span>
+        </div>
+        <h2>{{ case.title }}</h2>
+        <p class="case-card-overview">{{ case.title }} is a focused programme for {{ case.client_industry|lower }} teams needing clearer governance and visible outcomes.</p>
+        <div class="case-card-section">
+          <strong>Delivery Focus</strong>
+          <div class="case-card-chipset">
+            {% for tech in case.technologies.split(',')[:2] %}
+            <span>{{ tech.strip() }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="case-card-section">
+          <strong>Key Features</strong>
+          <ul class="case-card-feature-list">
+            {% for feature in case.key_features[:2] %}
+            <li><i data-lucide="check-check"></i>{{ feature }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="case-card-results">
+          <article>
+            <span>Before</span>
+            <strong>{{ case.before_result }}</strong>
+          </article>
+          <article>
+            <span>After</span>
+            <strong>{{ case.after_result }}</strong>
+          </article>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

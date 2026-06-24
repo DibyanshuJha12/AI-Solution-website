@@ -1,0 +1,134 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ config.title }} | AI SOLUTION Admin{% endblock %}
+{% block admin_content %}
+{% set image_fields = ['image_url', 'profile_image', 'banner_image', 'file_url'] %}
+<section class="admin-page">
+  <div class="admin-heading">
+    <div>
+      <span class="eyebrow">Content Manager</span>
+      <h1>{{ config.title }}</h1>
+    </div>
+    <form class="admin-toolbar" method="get">
+      <input class="control" name="q" value="{{ search }}" placeholder="Search {{ config.title|lower }}">
+      <select class="control" name="state">
+        <option value="all" {% if state == 'all' %}selected{% endif %}>All states</option>
+        <option value="published" {% if state == 'published' %}selected{% endif %}>Published</option>
+        <option value="draft" {% if state == 'draft' %}selected{% endif %}>Draft</option>
+        <option value="archived" {% if state == 'archived' %}selected{% endif %}>Archived</option>
+      </select>
+      <button class="btn small ghost" type="submit">Filter</button>
+    </form>
+  </div>
+
+  <form class="admin-editor" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="action" value="create">
+    <h2>Create {{ config.singular if config.singular else (config.title[:-1] if config.title.endswith('s') else config.title) }}</h2>
+    <div class="editor-grid">
+      {% for name, label, field_type in config.fields %}
+      <label class="{% if field_type in ['textarea', 'list'] %}editor-wide{% endif %}">
+        <span>{{ label }}</span>
+        {% if field_type == 'textarea' %}
+        <textarea name="{{ name }}" rows="5"></textarea>
+        {% elif field_type == 'list' %}
+        <textarea name="{{ name }}" rows="4" placeholder="One item per line"></textarea>
+        {% elif field_type == 'checkbox' %}
+        <input type="checkbox" name="{{ name }}" checked>
+        {% else %}
+        <input type="{{ field_type }}" name="{{ name }}">
+        {% endif %}
+      </label>
+      {% if name in image_fields %}
+      <label class="editor-wide admin-upload-field">
+        <span>Upload {{ label }}</span>
+        <input type="file" name="upload_{{ name }}" accept=".png,.jpg,.jpeg,.webp,.gif,image/*">
+      </label>
+      {% endif %}
+      {% endfor %}
+      {% if resource == 'media' %}
+      <label class="editor-wide">
+        <span>Upload Image File</span>
+        <input type="file" name="upload_file" accept=".png,.jpg,.jpeg,.webp,.gif,image/*">
+      </label>
+      {% endif %}
+    </div>
+    <button class="btn small" type="submit"><i data-lucide="plus"></i> Create</button>
+  </form>
+
+  <div class="content-list">
+    {% for record in records %}
+    <form class="admin-editor compact" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="record_id" value="{{ record.id }}">
+      <input type="hidden" name="action" value="save">
+      <div class="editor-grid">
+        {% for name, label, field_type in config.fields %}
+        {% set value = record|attr(name) %}
+        <label class="{% if field_type in ['textarea', 'list'] %}editor-wide{% endif %}">
+          <span>{{ label }}</span>
+          {% if field_type == 'textarea' %}
+          <textarea name="{{ name }}" rows="4">{{ value }}</textarea>
+          {% elif field_type == 'list' %}
+          <textarea name="{{ name }}" rows="4">{{ value|join('\n') if value else '' }}</textarea>
+          {% elif field_type == 'checkbox' %}
+          <input type="checkbox" name="{{ name }}" {% if value %}checked{% endif %}>
+          {% elif field_type == 'date' %}
+          <input type="date" name="{{ name }}" value="{{ value.isoformat() if value else '' }}">
+          {% else %}
+          <input type="{{ field_type }}" name="{{ name }}" value="{{ value }}">
+          {% endif %}
+        </label>
+        {% set setting_image = resource == 'site-settings' and name == 'value_text' and ('image' in (record.key or '') or 'banner' in (record.key or '') or 'avatar' in (record.key or '')) %}
+        {% if name in image_fields or setting_image %}
+        <label class="editor-wide admin-upload-field">
+          <span>Upload {{ label }}</span>
+          <input type="file" name="upload_{{ name }}" accept=".png,.jpg,.jpeg,.webp,.gif,image/*">
+          {% if value %}
+          <div class="admin-image-preview">
+            <img src="{{ value }}" alt="{{ label }}">
+            <small><a href="{{ value }}" target="_blank" rel="noopener noreferrer">Open current image</a></small>
+          </div>
+          {% endif %}
+        </label>
+        {% endif %}
+        {% endfor %}
+        {% if resource == 'media' %}
+        <label class="editor-wide">
+          <span>Replace Image File</span>
+          <input type="file" name="upload_file" accept=".png,.jpg,.jpeg,.webp,.gif,image/*">
+          {% if record.file_url %}
+          <small>Current file: <a href="{{ record.file_url }}" target="_blank" rel="noopener noreferrer">{{ record.file_url }}</a></small>
+          {% endif %}
+        </label>
+        {% endif %}
+      </div>
+      <div class="editor-actions">
+        <button class="btn small" type="submit" name="action" value="save"><i data-lucide="save"></i> Save</button>
+        <button class="btn small ghost" type="submit" name="action" value="publish"><i data-lucide="send"></i> Publish</button>
+        {% if record.archived %}
+        <button class="btn small ghost" type="submit" name="action" value="restore"><i data-lucide="archive-restore"></i> Restore</button>
+        {% else %}
+        <button class="btn small ghost" type="submit" name="action" value="archive"><i data-lucide="archive"></i> Archive</button>
+        {% endif %}
+        <button class="btn small danger" type="submit" name="action" value="delete"><i data-lucide="trash-2"></i> Delete</button>
+      </div>
+    </form>
+    {% else %}
+    <p class="muted">No content records yet.</p>
+    {% endfor %}
+  </div>
+
+  <div class="pagination">
+    <span>{{ total }} total records</span>
+    <div>
+      {% if page > 1 %}
+      <a class="btn small ghost" href="{{ url_for('admin.manage_content', resource=resource, q=search, state=state, page=page-1, sort=sort, direction=direction) }}">Previous</a>
+      {% endif %}
+      <span>Page {{ page }} of {{ pages }}</span>
+      {% if page < pages %}
+      <a class="btn small ghost" href="{{ url_for('admin.manage_content', resource=resource, q=search, state=state, page=page+1, sort=sort, direction=direction) }}">Next</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

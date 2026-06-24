@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% block title %}Testimonials | AI SOLUTION{% endblock %}
+{% block meta_description %}See verified AI SOLUTION testimonials and feedback from teams that value secure delivery, clear governance, and measurable outcomes.{% endblock %}
+{% block content %}
+<section class="page-hero compact-hero hero-split testimonial-hero">
+  <div>
+    <span class="eyebrow">Customer Voices</span>
+    <h1>Trusted by leaders who wanted AI delivery to feel calm and production-ready.</h1>
+    <p>Practical architecture, secure implementation, and measurable outcomes for organisations that need enterprise-ready AI execution.</p>
+    <div class="hero-trust-strip">
+      <span><i data-lucide="shield-check"></i> Secure implementation</span>
+      <span><i data-lucide="sparkles"></i> Executive-ready communication</span>
+      <span><i data-lucide="chart-no-axes-combined"></i> Measurable adoption</span>
+    </div>
+  </div>
+  <article class="testimonial-hero-card">
+    <img src="{{ url_for('static', filename='images/logo-mark.png') }}" alt="AI SOLUTION logo">
+    <span class="eyebrow">Client Trust</span>
+    <h2>Feedback from teams that needed dependable AI execution.</h2>
+    <p>AI SOLUTION is chosen for calm delivery, structured guidance, and outcomes that feel realistic in complex business environments.</p>
+    <div class="metric-strip testimonial-metrics">
+      <article>
+        <span>Average Rating</span>
+        <strong>{{ review_stats.average_label }}</strong>
+      </article>
+      <article>
+        <span>Trusted Reviews</span>
+        <strong>{{ review_stats.total_count }}</strong>
+      </article>
+      <article>
+        <span>Approved Feedback</span>
+        <strong>{{ approved_feedback_count }}</strong>
+      </article>
+      <article>
+        <span>Testimonials</span>
+        <strong>{{ testimonial_count }}</strong>
+      </article>
+    </div>
+  </article>
+</section>
+
+<section class="section reveal testimonial-stage">
+  <div class="section-heading testimonial-home-heading testimonial-stage-heading">
+    <div class="section-heading--anchored">
+      <span class="eyebrow">Client Stories</span>
+      <h2>Client stories with measurable results and clear governance.</h2>
+    </div>
+    <div class="section-actions">
+      <button class="btn small ghost" type="button" data-feedback-open>Share Your Feedback</button>
+      <a href="{{ url_for('public.contact', service='AI Consultation') }}">Discuss a similar engagement <i data-lucide="arrow-right"></i></a>
+    </div>
+  </div>
+  <div class="testimonial-showcase-shell">
+    {% if testimonials %}
+    <article class="testimonial-spotlight-card testimonial-spotlight-card--wide">
+      <div class="testimonial-card-top">
+        <span class="eyebrow">Featured Review</span>
+        <span class="testimonial-rating-pill">{{ "★" * testimonials[0].rating }} {{ testimonials[0].rating }}/5</span>
+      </div>
+      <div class="testimonial-quote-mark"><i data-lucide="quote"></i></div>
+      <div class="testimonial-person">
+        {% if testimonials[0].profile_image %}
+        <img src="{{ testimonials[0].profile_image }}" alt="{{ testimonials[0].customer_name }}">
+        {% else %}
+        <div class="testimonial-avatar">{{ testimonials[0].avatar_label }}</div>
+        {% endif %}
+        <div>
+          <span class="testimonial-source-pill">{{ testimonials[0].source_label }}</span>
+          <strong>{{ testimonials[0].customer_name }}</strong>
+          <span>{{ testimonials[0].role }}</span>
+          <small>{{ testimonials[0].company_name }}</small>
+        </div>
+      </div>
+      <p>{{ testimonials[0].feedback|truncate(160, True, '...') }}</p>
+      <div class="hero-trust-strip testimonial-chip-row">
+        <span><i data-lucide="sparkles"></i> Measurable business value</span>
+        <span><i data-lucide="shield-check"></i> Governance-aware delivery</span>
+        <span><i data-lucide="handshake"></i> Calm stakeholder collaboration</span>
+      </div>
+      <div class="testimonial-card-foot">
+        <span>Verified enterprise feedback</span>
+        <a href="{{ url_for('public.contact', service='AI Consultation') }}">Start a similar roadmap <i data-lucide="arrow-right"></i></a>
+      </div>
+    </article>
+    {% endif %}
+    <article class="testimonial-summary-card testimonial-summary-card--panel">
+      <span class="eyebrow">Review Snapshot</span>
+      <h3>Trusted for clarity, secure implementation, and AI programmes that feel professionally managed.</h3>
+      <div class="testimonial-summary-points">
+        <span><i data-lucide="badge-check"></i> Verified delivery feedback</span>
+        <span><i data-lucide="shield-check"></i> Secure implementation focus</span>
+        <span><i data-lucide="chart-no-axes-combined"></i> Measurable executive outcomes</span>
+      </div>
+      <div class="metric-strip testimonial-metrics">
+        <article>
+          <span>Average Rating</span>
+          <strong>{{ review_stats.average_label }}</strong>
+        </article>
+        <article>
+          <span>Verified Reviews</span>
+          <strong>{{ review_stats.total_count }}</strong>
+        </article>
+        <article>
+          <span>Approved Feedback</span>
+          <strong>{{ approved_feedback_count }}</strong>
+        </article>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-heading section-heading--anchored">
+    <span class="eyebrow">Testimonial Carousel</span>
+    <h2>Auto-scrolling client stories in a compact premium layout.</h2>
+  </div>
+  <div class="testimonial-carousel-shell testimonial-carousel-shell--page" data-carousel-root data-carousel-auto="true">
+    <div class="carousel-controls">
+      <button type="button" aria-label="Previous testimonial" data-carousel-prev><i data-lucide="arrow-left"></i></button>
+      <button type="button" aria-label="Next testimonial" data-carousel-next><i data-lucide="arrow-right"></i></button>
+    </div>
+    <div class="testimonial-carousel testimonial-carousel--wide" data-carousel>
+      {% for item in testimonials %}
+      <article class="premium-testimonial-card premium-testimonial-card--carousel">
+        <div class="testimonial-card-top">
+          <span class="eyebrow">Verified Review</span>
+          <span class="testimonial-rating-pill">{{ "★" * item.rating }} {{ item.rating }}/5</span>
+        </div>
+        <div class="testimonial-person">
+          {% if item.profile_image %}
+          <img src="{{ item.profile_image }}" alt="{{ item.customer_name }}">
+          {% else %}
+          <div class="testimonial-avatar">{{ item.avatar_label }}</div>
+          {% endif %}
+          <div>
+            <span class="testimonial-source-pill">{{ item.source_label }}</span>
+            <strong>{{ item.customer_name }}</strong>
+            <span>{{ item.role }}</span>
+            <small>{{ item.company_name }}</small>
+          </div>
+        </div>
+        <div class="stars">{{ "★" * item.rating }}</div>
+        <p>{{ item.feedback|truncate(150, True, '...') }}</p>
+        <div class="testimonial-card-foot">
+          <span>{{ item.company_name }}</span>
+          <a href="{{ url_for('public.contact', service='AI Consultation') }}">Talk to the team <i data-lucide="arrow-right"></i></a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-heading section-heading--anchored">
+    <span class="eyebrow">Why Clients Stay</span>
+    <h2>Delivery patterns that make enterprise AI feel dependable.</h2>
+  </div>
+  <div class="solution-bridge-grid testimonial-confidence-grid">
+    <article>
+      <i data-lucide="shield-check"></i>
+      <strong>Security-first implementation</strong>
+      <p>Programmes are designed with governance, traceability, and operational safeguards built into the delivery model.</p>
+    </article>
+    <article>
+      <i data-lucide="sparkles"></i>
+      <strong>Executive-ready communication</strong>
+      <p>Leaders receive clear progress, practical recommendations, and measurable outcomes instead of abstract AI experimentation.</p>
+    </article>
+    <article>
+      <i data-lucide="workflow"></i>
+      <strong>Useful adoption in real teams</strong>
+      <p>Solutions are shaped around how people actually work, so assistants and automation become part of daily operations with trust.</p>
+    </article>
+  </div>
+</section>
+{% endblock %}

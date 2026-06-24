@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% from "macros.html" import captcha_box, checkbox_field, input_field, select_field, textarea_field %}
+{% block title %}Careers | AI SOLUTION{% endblock %}
+{% block meta_description %}Join AI SOLUTION to build secure AI products, intelligent workflows, and premium digital experiences for enterprise clients.{% endblock %}
+{% block content %}
+{% set hero_image = site_settings.get('careers_hero_image', 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80') %}
+{% set culture_image = site_settings.get('careers_culture_image', 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80') %}
+{% set cta_image = site_settings.get('careers_cta_image', 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=80') %}
+
+<section class="page-hero compact-hero careers-hero">
+  <div>
+    <span class="eyebrow">Careers</span>
+    <h1>Build secure AI products with a team that cares about craft.</h1>
+    <p>Join AI SOLUTION to design intelligent systems used by real businesses across industries, with strong engineering discipline, thoughtful UX, and responsible AI delivery at the center.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#jobs"><i data-lucide="briefcase-business"></i> View Open Roles</a>
+      <a class="btn ghost" href="#apply"><i data-lucide="send"></i> Apply Securely</a>
+    </div>
+    <div class="hero-trust-strip solution-trust-strip">
+      <span><i data-lucide="sparkles"></i> Product-minded teams</span>
+      <span><i data-lucide="shield-check"></i> Secure engineering culture</span>
+      <span><i data-lucide="rocket"></i> Enterprise AI delivery</span>
+    </div>
+  </div>
+  <div class="careers-hero-visual">
+    <img src="{{ hero_image }}" alt="AI SOLUTION careers workplace">
+    <div class="careers-hero-card">
+      <strong>Why people join</strong>
+      <p>Teams at AI SOLUTION work across strategy, design, engineering, automation, analytics, and client delivery with space to learn, ship carefully, and build systems that matter.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal careers-culture-grid">
+  <article class="careers-visual-panel">
+    <img src="{{ culture_image }}" alt="AI SOLUTION culture and collaboration">
+  </article>
+  <div>
+    <span class="eyebrow">Culture</span>
+    <h2>Focused, collaborative, security-aware, and product-minded.</h2>
+    <p>We value calm execution, clear communication, thoughtful design, and responsible AI delivery. Teams work across strategy, engineering, UX, security, and customer success to turn demanding enterprise requirements into dependable software experiences.</p>
+    <div class="benefit-grid careers-values-grid">
+      <span><i data-lucide="laptop"></i> Hybrid-first collaboration</span>
+      <span><i data-lucide="graduation-cap"></i> Continuous AI learning budget</span>
+      <span><i data-lucide="shield"></i> Security-led engineering standards</span>
+      <span><i data-lucide="heart-handshake"></i> Wellbeing and support culture</span>
+    </div>
+    <div class="pill-list">
+      <span>Small, high-trust teams</span>
+      <span>Clear growth paths</span>
+      <span>Real client impact</span>
+      <span>Enterprise product rigor</span>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-heading section-heading--anchored">
+    <span class="eyebrow">Benefits</span>
+    <h2>A modern workplace built for sustained, high-quality delivery.</h2>
+  </div>
+  <div class="solution-bridge-grid careers-benefit-grid">
+    <article>
+      <i data-lucide="sparkles"></i>
+      <strong>AI learning and experimentation</strong>
+      <p>Structured time for product research, prompt engineering, platform improvement, and hands-on exploration of modern AI systems.</p>
+    </article>
+    <article>
+      <i data-lucide="users-round"></i>
+      <strong>Supportive team environment</strong>
+      <p>Work with designers, engineers, and delivery leaders who value clear reviews, calm problem-solving, and mentoring across disciplines.</p>
+    </article>
+    <article>
+      <i data-lucide="rocket"></i>
+      <strong>High-impact enterprise work</strong>
+      <p>Contribute to automation, analytics, assistants, and security programmes used by real businesses managing regulated and operationally sensitive workflows.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section reveal careers-cta-strip">
+  <div class="careers-cta-copy">
+    <span class="eyebrow">Life at AI SOLUTION</span>
+    <h2>Move quickly, think carefully, and build with trust.</h2>
+    <p>From onboarding to project delivery, we aim for clean systems, strong communication, and a work rhythm that supports both quality and pace.</p>
+    <a class="btn ghost" href="#apply"><i data-lucide="badge-check"></i> Start your application</a>
+  </div>
+  <img src="{{ cta_image }}" alt="AI professionals collaborating on product delivery">
+</section>
+
+<section class="section reveal" id="jobs">
+  <div class="section-heading">
+    <span class="eyebrow">Open Roles</span>
+    <h2>Open roles across product, AI, cloud, and support.</h2>
+  </div>
+  <div class="job-grid">
+    {% for job in jobs %}
+    <article class="job-card">
+      <span>{{ job.department }}</span>
+      <h2>{{ job.title }}</h2>
+      <p>{{ job.description }}</p>
+      <div class="job-meta">
+        <small>{{ job.location }}</small>
+        <small>{{ job.employment_type }}</small>
+      </div>
+      <button type="button" class="btn small" data-apply-position="{{ job.title }}"><i data-lucide="send"></i> Apply</button>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section hiring-process reveal">
+  <div class="section-heading compact">
+    <span class="eyebrow">Hiring Process</span>
+    <h2>Clear stages, quick communication, and respectful decision-making.</h2>
+  </div>
+  <div class="process-grid careers-process-grid">
+    <article><strong>1</strong><span>Application review</span><p>We review role fit, communication, and relevant experience.</p></article>
+    <article><strong>2</strong><span>Team conversation</span><p>You meet the people closest to the role and delivery context.</p></article>
+    <article><strong>3</strong><span>Practical assessment</span><p>A focused exercise that reflects real product or engineering work.</p></article>
+    <article><strong>4</strong><span>Offer and onboarding</span><p>Clear expectations, structured onboarding, and fast access to tools.</p></article>
+  </div>
+</section>
+
+<section class="form-section reveal" id="apply">
+  <div class="careers-apply-copy">
+    <span class="eyebrow">Secure Application</span>
+    <h2>Apply to AI SOLUTION</h2>
+    <p>Resume files are validated, protected, and reviewed through a secure internal hiring workflow.</p>
+    <article class="contact-visual-card">
+      <img src="{{ cta_image }}" alt="AI recruitment and team planning">
+      <div>
+        <strong>What to expect</strong>
+        <p>We look for thoughtful problem-solvers who communicate clearly, work well with others, and care about building secure, high-quality systems.</p>
+      </div>
+    </article>
+  </div>
+  <form class="form-grid" method="post" enctype="multipart/form-data" action="{{ url_for('public.careers') }}">
+    {{ form.hidden_tag() }}
+    {{ input_field(form.full_name) }}
+    {{ input_field(form.email, type='email') }}
+    {{ input_field(form.phone) }}
+    {{ input_field(form.address) }}
+    {{ select_field(form.position) }}
+    {{ select_field(form.experience) }}
+    {{ textarea_field(form.skills, rows=4) }}
+    {{ input_field(form.portfolio_url, type='url') }}
+    {{ textarea_field(form.cover_letter, rows=6) }}
+    <label class="field">
+      <span>{{ form.resume.label.text }}</span>
+      {{ form.resume(class_='control') }}
+      {% for error in form.resume.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+    </label>
+    {{ captcha_box(form, captcha_prompt) }}
+    {{ checkbox_field(form.terms, 'I agree to the Privacy Policy and confirm my application details are accurate.') }}
+    <button class="btn primary" type="submit" data-loading-text="Submitting application..."><i data-lucide="upload-cloud"></i> Submit Application</button>
+  </form>
+</section>
+{% endblock %}

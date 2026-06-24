@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Industries | AI SOLUTION{% endblock %}
+{% block content %}
+<section class="page-hero compact-hero">
+  <span class="eyebrow">Industry-Specific AI</span>
+  <h1>Practical AI architecture for the realities of each market.</h1>
+  <p>Each industry program combines discovery, secure implementation, adoption, and measurable improvement.</p>
+</section>
+
+<section class="industry-stack">
+  {% for industry in industries %}
+  <article class="industry-section reveal">
+    <img src="{{ industry.image_url }}" alt="{{ industry.name }} AI services">
+    <div>
+      <span class="eyebrow">{{ industry.name }}</span>
+      <h2>{{ industry.overview }}</h2>
+      <div class="industry-detail">
+        <strong>Problems</strong>
+        <p>{{ industry.problems }}</p>
+      </div>
+      <div class="industry-detail">
+        <strong>AI Solution</strong>
+        <p>{{ industry.solution }}</p>
+      </div>
+      <div class="pill-list">
+        {% for benefit in industry.benefits %}<span>{{ benefit }}</span>{% endfor %}
+      </div>
+      <div class="usecase-list">
+        {% for use_case in industry.use_cases %}<a href="{{ url_for('public.contact', service=industry.name ~ ' AI') }}">{{ use_case }}</a>{% endfor %}
+      </div>
+    </div>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}

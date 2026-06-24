@@ -1,0 +1,446 @@
+{% extends "wireframe/base.html" %}
+{% from "wireframe/macros.html" import render_card, render_field, render_metric %}
+{% block title %}{{ page.title }} Wireframe | AI SOLUTION{% endblock %}
+{% block content %}
+<section class="wf-page-overview">
+  <div>
+    <span class="eyebrow">Wireframe page</span>
+    <h2>{{ page.title }}</h2>
+    <p>{{ page.summary }}</p>
+    <div class="wf-page-tags">
+      <span>{{ page.group_label }}</span>
+      <span>{{ page.section_count }} sections</span>
+      {% if page.live_url %}
+      <span>{{ page.live_url }}</span>
+      {% else %}
+      <span>Token or utility route</span>
+      {% endif %}
+    </div>
+  </div>
+  <div class="wf-page-actions">
+    {% if page.live_url %}
+    <a class="wf-btn wf-btn--primary" href="{{ page.live_url }}" target="_blank" rel="noopener noreferrer">Open live page</a>
+    {% endif %}
+    <a class="wf-btn" href="{{ url_for('wireframe.index') }}">Back to index</a>
+  </div>
+</section>
+
+<nav class="wf-section-nav" aria-label="Section navigation">
+  {% for section in page.sections %}
+  <a href="#{{ section.id }}">{{ section.label }}</a>
+  {% endfor %}
+</nav>
+
+<div class="wf-section-stack">
+  {% for section in page.sections %}
+  <details class="wf-section wf-section--{{ section.kind }}" id="{{ section.id }}" open>
+    <summary>
+      <div>
+        <span>{{ section.kind|replace('_', ' ')|title }}</span>
+        <strong>{{ section.label }}</strong>
+      </div>
+      {% if section.summary %}
+      <p>{{ section.summary }}</p>
+      {% endif %}
+    </summary>
+
+    <div class="wf-section-body">
+      {% if section.kind == 'hero' %}
+      {% set visual = section.get('visual', {}) %}
+      <div class="wf-hero-layout">
+        <article class="wf-copy-panel">
+          {% if section.eyebrow %}<span class="eyebrow">{{ section.eyebrow }}</span>{% endif %}
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.description }}</p>
+          {% if section.badges %}
+          <div class="wf-chip-row">
+            {% for badge in section.badges %}
+            <span class="wf-chip">{{ badge }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if section.actions %}
+          <div class="wf-action-row">
+            {% for action in section.actions %}
+            <span class="wf-btn wf-btn--ghost">{{ action }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+        <article class="wf-visual-panel">
+          <span class="wf-visual-label">{{ visual.title if visual and visual.title is defined else "Visual placeholder" }}</span>
+          {% if visual and visual.summary is defined and visual.summary %}
+          <strong>{{ visual.summary }}</strong>
+          {% endif %}
+          {% if visual and visual.get('items') %}
+          <div class="wf-mini-list">
+            {% for item in visual.get('items') %}
+            <span>{{ item }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+      </div>
+
+      {% elif section.kind == 'metrics' %}
+      <div class="wf-metric-grid">
+        {% for metric in section.metrics %}
+        {{ render_metric(metric) }}
+        {% endfor %}
+      </div>
+
+      {% elif section.kind == 'split' %}
+      {% set left = section.get('left', {}) %}
+      {% if left is not mapping %}
+      {% set left = {'cards': left} %}
+      {% endif %}
+      {% set right = section.get('right', {}) %}
+      {% if right is not mapping %}
+      {% set right = {'cards': right} %}
+      {% endif %}
+      <div class="wf-split-layout">
+        <article class="wf-split-card">
+          {% if left.eyebrow is defined and left.eyebrow %}<span class="wf-section-kicker">{{ left.eyebrow }}</span>{% endif %}
+          {% if left.title is defined and left.title %}<h3>{{ left.title }}</h3>{% endif %}
+          {% if left.copy is defined and left.copy %}<p>{{ left.copy }}</p>{% endif %}
+          {% if left.get('cards') %}
+          <div class="wf-card-stack">
+            {% for card in left.get('cards') %}
+            {{ render_card(card) }}
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if left.get('items') %}
+          <div class="wf-mini-list">
+            {% for item in left.get('items') %}
+            <span>{{ item }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+        <article class="wf-split-card">
+          {% if right.eyebrow is defined and right.eyebrow %}<span class="wf-section-kicker">{{ right.eyebrow }}</span>{% endif %}
+          {% if right.title is defined and right.title %}<h3>{{ right.title }}</h3>{% endif %}
+          {% if right.copy is defined and right.copy %}<p>{{ right.copy }}</p>{% endif %}
+          {% if right.get('cards') %}
+          <div class="wf-card-stack">
+            {% for card in right.get('cards') %}
+            {{ render_card(card) }}
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if right.get('items') %}
+          <div class="wf-mini-list">
+            {% for item in right.get('items') %}
+            <span>{{ item }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+      </div>
+
+      {% elif section.kind == 'grid' or section.kind == 'rail' %}
+      <div class="wf-grid-shell {% if section.kind == 'rail' %}wf-grid-shell--rail{% endif %}" style="--wf-columns: {{ section.columns or 3 }};">
+        {% for card in section.cards %}
+        {{ render_card(card) }}
+        {% endfor %}
+      </div>
+
+      {% elif section.kind == 'form' %}
+      {% set intro = section.get('intro', {}) %}
+      <div class="wf-form-layout">
+        <article class="wf-split-card wf-form-intro">
+          {% if intro.eyebrow is defined and intro.eyebrow %}<span class="wf-section-kicker">{{ intro.eyebrow }}</span>{% endif %}
+          {% if intro.title is defined and intro.title %}<h3>{{ intro.title }}</h3>{% endif %}
+          {% if intro.copy is defined and intro.copy %}<p>{{ intro.copy }}</p>{% endif %}
+          {% if intro.get('cards') %}
+          <div class="wf-card-stack">
+            {% for card in intro.get('cards') %}
+            {{ render_card(card) }}
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+        <div class="wf-form-panel">
+          <div class="wf-form-grid">
+            {% for field in section.fields %}
+            {{ render_field(field) }}
+            {% endfor %}
+          </div>
+          {% if section.notes %}
+          <div class="wf-note-list">
+            {% for note in section.notes %}
+            <span>{{ note }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+          <div class="wf-submit-row">
+            <span>{{ section.submit_label or 'Submit' }}</span>
+            <div class="wf-submit-button"></div>
+          </div>
+        </div>
+      </div>
+
+      {% elif section.kind == 'legal' %}
+      <div class="wf-legal-layout">
+        <aside class="wf-legal-toc">
+          <span class="wf-section-kicker">Contents</span>
+          {% if section.toc %}
+          <nav>
+            {% for item in section.toc %}
+            <a href="#legal-{{ loop.index }}">{{ item }}</a>
+            {% endfor %}
+          </nav>
+          {% endif %}
+        </aside>
+        <div class="wf-legal-article">
+          {% if section.cards %}
+          <div class="wf-legal-faq-grid">
+            {% for card in section.cards %}
+            {{ render_card(card) }}
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if section.sections %}
+          <div class="wf-legal-sections">
+            {% for item in section.sections %}
+            <article class="wf-legal-block" id="legal-{{ loop.index }}">
+              <strong>{{ item.title }}</strong>
+              <p>{{ item.copy }}</p>
+            </article>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {% elif section.kind == 'table' %}
+      <div class="wf-table-layout">
+        <div class="wf-toolbar-row">
+          <span class="wf-toolbar-chip">Search</span>
+          <span class="wf-toolbar-chip">Filter</span>
+          <span class="wf-toolbar-chip">Sort</span>
+          {% if section.statuses %}
+          <span class="wf-toolbar-chip">Status selector</span>
+          {% endif %}
+          {% if section.actions and 'Export CSV' in section.actions %}
+          <span class="wf-toolbar-chip">Export CSV</span>
+          {% endif %}
+        </div>
+        <div class="wf-table-shell">
+          <div class="wf-table-head">
+            {% for column in section.columns %}
+            <span>{{ column.replace('_', ' ').title() }}</span>
+            {% endfor %}
+            <span>Actions</span>
+          </div>
+          <div class="wf-table-row">
+            {% for column in section.columns %}
+            <span>{{ column.replace('_', ' ').title() }}</span>
+            {% endfor %}
+            <span>{{ section.actions|join(' / ') if section.actions else 'View' }}</span>
+          </div>
+          <div class="wf-table-row wf-table-row--muted">
+            {% for column in section.columns %}
+            <span>Sample value</span>
+            {% endfor %}
+            <span>Row actions</span>
+          </div>
+        </div>
+        <div class="wf-pagination-row">
+          <span>Pagination controls</span>
+          <div class="wf-pagination-chips">
+            <span>Previous</span>
+            <span>Page 1 of 1</span>
+            <span>Next</span>
+          </div>
+        </div>
+      </div>
+
+      {% elif section.kind == 'editor' %}
+      <div class="wf-editor-layout">
+        <div class="wf-toolbar-row">
+          <span class="wf-toolbar-chip">Search</span>
+          <span class="wf-toolbar-chip">Published</span>
+          <span class="wf-toolbar-chip">Draft</span>
+          <span class="wf-toolbar-chip">Archived</span>
+        </div>
+        <div class="wf-editor-grid">
+          <article class="wf-editor-panel">
+            <span class="wf-section-kicker">Create Record</span>
+            <div class="wf-form-grid">
+              {% for field in section.fields %}
+              {{ render_field(field) }}
+              {% endfor %}
+            </div>
+            {% if section.upload_hint %}
+            <div class="wf-note-list">
+              <span>Upload support is available for image, media, and image-backed setting fields.</span>
+            </div>
+            {% endif %}
+          </article>
+          <article class="wf-editor-panel">
+            <span class="wf-section-kicker">Existing Records</span>
+            <div class="wf-card-stack">
+              {% if section.records %}
+                {% for card in section.records %}
+                {{ render_card(card) }}
+                {% endfor %}
+              {% else %}
+                {% for idx in range(3) %}
+                <article class="wf-card">
+                  <div class="wf-card-visual">Record {{ idx + 1 }}</div>
+                  <div class="wf-card-body">
+                    <span class="wf-card-meta">Editable row</span>
+                    <h3>{{ page.title }} item {{ idx + 1 }}</h3>
+                    <p>Inline edit, archive, restore, publish, and delete controls appear here.</p>
+                    <div class="wf-chip-row">
+                      <span class="wf-chip">Save</span>
+                      <span class="wf-chip">Publish</span>
+                      <span class="wf-chip">Archive</span>
+                      <span class="wf-chip">Delete</span>
+                    </div>
+                  </div>
+                </article>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </article>
+        </div>
+        {% if section.notes %}
+        <div class="wf-note-list">
+          {% for note in section.notes %}
+          <span>{{ note }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div class="wf-pagination-row">
+          <span>Pagination controls</span>
+          <div class="wf-pagination-chips">
+            <span>Previous</span>
+            <span>Page 1 of 1</span>
+            <span>Next</span>
+          </div>
+        </div>
+      </div>
+
+      {% elif section.kind == 'auth' %}
+      {% set intro = section.get('intro', {}) %}
+      <div class="wf-auth-layout">
+        <article class="wf-split-card">
+          {% if intro.eyebrow is defined and intro.eyebrow %}<span class="wf-section-kicker">{{ intro.eyebrow }}</span>{% endif %}
+          {% if intro.title is defined and intro.title %}<h3>{{ intro.title }}</h3>{% endif %}
+          {% if intro.copy is defined and intro.copy %}<p>{{ intro.copy }}</p>{% endif %}
+          {% if intro.get('cards') %}
+          <div class="wf-card-stack">
+            {% for card in intro.get('cards') %}
+            {{ render_card(card) }}
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+        <div class="wf-auth-panels">
+          {% for panel in section.panels %}
+          <article class="wf-auth-panel">
+            <span class="wf-section-kicker">{{ panel.title }}</span>
+            <p>{{ panel.copy }}</p>
+            <div class="wf-form-grid wf-form-grid--compact">
+              {% for field in panel.fields %}
+              {{ render_field(field) }}
+              {% endfor %}
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% elif section.kind == 'dashboard' %}
+      <div class="wf-dashboard-layout">
+        <div class="wf-metric-grid wf-metric-grid--wide">
+          {% for metric in section.metrics %}
+          {{ render_metric(metric) }}
+          {% endfor %}
+        </div>
+        <div class="wf-chart-grid">
+          {% for chart in section.charts %}
+          <article class="wf-chart-card">
+            <span class="wf-section-kicker">Chart</span>
+            <strong>{{ chart }}</strong>
+            <div class="wf-chart-placeholder"></div>
+          </article>
+          {% endfor %}
+        </div>
+        <div class="wf-dashboard-lists">
+          {% for item in section.lists %}
+          <article class="wf-dashboard-list-card">
+            <span class="wf-section-kicker">{{ item }}</span>
+            <div class="wf-list-placeholder"></div>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% elif section.kind == 'timeline' %}
+      <div class="wf-timeline-grid">
+        {% for step in section.steps %}
+        <article class="wf-timeline-card">
+          <span class="wf-step-index">{{ loop.index }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.copy }}</p>
+        </article>
+        {% endfor %}
+      </div>
+
+      {% elif section.kind == 'stack' %}
+      <div class="wf-stack-layout">
+        {% for card in section.cards %}
+        {{ render_card(card) }}
+        {% endfor %}
+      </div>
+
+      {% elif section.kind == 'shell' %}
+      <div class="wf-shellmap-layout">
+        <article class="wf-shellmap-sidebar">
+          <span class="wf-section-kicker">Sidebar</span>
+          <div class="wf-shellmap-list">
+            {% for item in section.nav_items %}
+            <span>{{ item }}</span>
+            {% endfor %}
+          </div>
+        </article>
+        <article class="wf-shellmap-topbar">
+          <span class="wf-section-kicker">Topbar</span>
+          <div class="wf-shellmap-list">
+            {% for item in section.topbar %}
+            <span>{{ item }}</span>
+            {% endfor %}
+          </div>
+        </article>
+      </div>
+
+      {% elif section.kind == 'cta' %}
+      <div class="wf-cta-layout">
+        <article class="wf-cta-card">
+          <span class="wf-section-kicker">Call to action</span>
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.copy }}</p>
+          {% if section.actions %}
+          <div class="wf-action-row">
+            {% for action in section.actions %}
+            <span class="wf-btn wf-btn--ghost">{{ action }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+      </div>
+
+      {% else %}
+      <div class="wf-note-list">
+        <span>Section type {{ section.kind }} is not mapped yet.</span>
+      </div>
+      {% endif %}
+    </div>
+  </details>
+  {% endfor %}
+</div>
+{% endblock %}

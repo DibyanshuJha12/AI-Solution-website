@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}{{ post.meta_title or post.title }} | AI SOLUTION{% endblock %}
+{% block meta_description %}{{ post.meta_description or post.description }}{% endblock %}
+{% block content %}
+<section class="page-hero compact-hero blog-hero">
+  <span class="eyebrow">{{ post.category }}</span>
+  <h1>{{ post.title }}</h1>
+  <p>{{ post.description }}</p>
+  <div class="blog-meta">
+    <span>By {{ post.author }}</span>
+    <span>{{ post.publish_date|date_label }}</span>
+    <span>{{ read_time }} min read</span>
+  </div>
+</section>
+
+<section class="section blog-detail reveal">
+  <article class="blog-article">
+    <img class="blog-featured-image" src="{{ post.image_url }}" alt="{{ post.title }}">
+    <div class="blog-share-bar">
+      <div>
+        <strong>Share this insight</strong>
+        <span>Useful for delivery teams, sponsors, and enterprise buyers.</span>
+      </div>
+      <div class="blog-share-actions">
+        <a href="{{ share_links.linkedin }}" target="_blank" rel="noopener noreferrer"><i data-lucide="share-2"></i> LinkedIn</a>
+        <a href="{{ share_links.x }}" target="_blank" rel="noopener noreferrer"><i data-lucide="share-2"></i> X</a>
+      </div>
+    </div>
+    <div class="rich-copy">{{ post.content|markdownish }}</div>
+    <section class="blog-comments-ui">
+      <div class="section-heading compact">
+        <span class="eyebrow">Comments</span>
+        <h2>Reader discussion preview</h2>
+      </div>
+      <div class="comment-list">
+        {% for comment in sample_comments %}
+        <article class="comment-card">
+          <div class="comment-avatar">{{ comment.name[0] }}</div>
+          <div>
+            <strong>{{ comment.name }}</strong>
+            <span>{{ comment.role }}</span>
+            <p>{{ comment.body }}</p>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+      <div class="comment-cta-card">
+        <strong>Want to discuss this topic with the AI SOLUTION team?</strong>
+        <p>Use the contact page to start a conversation about your workflow, architecture, or implementation priorities.</p>
+        <a class="btn ghost" href="{{ url_for('public.contact') }}">Continue the conversation <i data-lucide="arrow-right"></i></a>
+      </div>
+    </section>
+  </article>
+  <aside class="blog-sidebar">
+    <div class="blog-side-card">
+      <span class="eyebrow">Need a delivery partner?</span>
+      <h2>Turn strategy into a production roadmap.</h2>
+      <p>Share your workflow, security requirements, and target outcome to get a focused recommendation.</p>
+      <a class="btn primary" href="{{ url_for('public.contact') }}">Contact Us</a>
+    </div>
+    <div class="blog-side-card">
+      <span class="eyebrow">Related Articles</span>
+      {% for item in related_posts %}
+      <a class="preview-row compact" href="{{ url_for('public.blog_detail', slug=item.slug) }}">
+        <img src="{{ item.image_url }}" alt="">
+        <span>{{ item.category }}</span>
+        <strong>{{ item.title }}</strong>
+      </a>
+      {% endfor %}
+    </div>
+  </aside>
+</section>
+{% endblock %}

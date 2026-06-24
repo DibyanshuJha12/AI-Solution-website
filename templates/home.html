@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+{% from "macros.html" import brand_icon %}
+{% block title %}AI SOLUTION | Smart Solutions, Intelligent Future{% endblock %}
+{% block meta_description %}AI SOLUTION designs secure automation, analytics, copilots, and enterprise AI programmes that turn strategy into measurable operating advantage.{% endblock %}
+{% block content %}
+{% set homepage_video_url = site_settings.get('homepage_video_url') %}
+{% if not homepage_video_url or homepage_video_url == 'https://www.youtube.com/embed/aircAruvnKk?rel=0' %}
+  {% set homepage_video_url = 'https://www.youtube.com/embed/qYNweeDHiyU?rel=0' %}
+{% endif %}
+<section class="hero ai-grid">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-content reveal">
+    <span class="eyebrow">{{ site_settings.get('homepage_hero_badge', 'Enterprise AI SaaS Studio') }}</span>
+    <h1>{{ site_settings.get('homepage_hero_title', 'Enterprise AI that turns strategy into measurable advantage.') }}</h1>
+    <p>{{ site_settings.get('homepage_hero_text', 'Secure automation, analytics, copilots, and decision systems for teams that want clear governance and visible outcomes.') }}</p>
+    <div class="hero-trust-strip" aria-label="Hero highlights">
+      <span><i data-lucide="shield-check"></i> Secure-by-design delivery</span>
+      <span><i data-lucide="sparkles"></i> AI-guided business experiences</span>
+      <span><i data-lucide="building-2"></i> Enterprise advisory and build delivery</span>
+    </div>
+    <div class="hero-actions">
+      <a class="btn primary" href="{{ url_for('public.contact') }}"><i data-lucide="rocket"></i> Book Strategy Session</a>
+      <a class="btn ghost" href="{{ url_for('public.solutions') }}"><i data-lucide="layers"></i> Explore Industry Solutions</a>
+    </div>
+  </div>
+  <div class="hero-console reveal">
+    <div class="console-top"><span></span><span></span><span></span></div>
+    <div class="neural-orbit">
+      <img src="{{ url_for('static', filename='images/logo-mark.png') }}" alt="AI SOLUTION logo">
+    </div>
+    <div class="signal-list signal-list--stacked">
+      <span><i data-lucide="shield-check"></i> Secure deployment architecture</span>
+      <span><i data-lucide="chart-no-axes-combined"></i> Board-ready performance reporting</span>
+      <span><i data-lucide="bot"></i> AI-guided enterprise workflows</span>
+    </div>
+    <div class="hero-console-grid">
+      <article>
+        <strong>Discovery to production</strong>
+        <span>Use-case design, governed rollout, and measurable adoption planning.</span>
+      </article>
+      <article>
+        <strong>Delivery model</strong>
+        <span>Automation, analytics, copilots, and secure AI operating layers.</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="stats-band reveal">
+  {% for value, label in stats %}
+  <article>
+    <strong data-counter="{{ value|replace('%','') }}">{{ value }}</strong>
+    <span>{{ label }}</span>
+  </article>
+  {% endfor %}
+</section>
+
+<section class="section two-column reveal">
+  <div>
+    <span class="eyebrow">Company Introduction</span>
+    <h2>AI operating systems for teams that need dependable execution.</h2>
+    <p>AI SOLUTION helps organisations modernise operations with secure assistants, decision intelligence, workflow orchestration, and practical AI delivery shaped around governance and measurable outcomes.</p>
+  </div>
+  <div class="mission-grid">
+    <article>
+      <i data-lucide="target"></i>
+      <h3>Mission</h3>
+      <p>Make enterprise AI practical, secure, and commercially useful.</p>
+    </article>
+    <article>
+      <i data-lucide="telescope"></i>
+      <h3>Vision</h3>
+      <p>A future where every team has trusted AI support for faster, clearer decisions.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-heading">
+    <span class="eyebrow">Featured Services</span>
+    <h2>Core AI capabilities</h2>
+    <a href="{{ url_for('public.solutions') }}">View all <i data-lucide="arrow-right"></i></a>
+  </div>
+  <div class="card-grid four">
+    {% for service in services %}
+    <article class="service-card">
+      <i data-lucide="{{ service.icon }}"></i>
+      <h3>{{ service.title }}</h3>
+      <p>{{ service.description }}</p>
+      <a href="{{ url_for('public.contact', service=service.title) }}">Inquire <i data-lucide="arrow-right"></i></a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="video-section reveal">
+  <div>
+    <span class="eyebrow">AI Transformation Brief</span>
+    <h2>See how modern AI reshapes the operating model.</h2>
+    <p>A short executive briefing for leaders exploring automation, copilots, analytics, cyber resilience, and enterprise intelligence.</p>
+    <div class="video-insight-list">
+      <article>
+        <strong>Enterprise Focus</strong>
+        <span>Clear strategy for teams aligning AI with delivery and governance.</span>
+      </article>
+      <article>
+        <strong>Operational Value</strong>
+        <span>Practical examples of how AI improves workflows, decisions, and service quality.</span>
+      </article>
+    </div>
+  </div>
+  <div class="video-frame">
+    <iframe src="{{ homepage_video_url }}" title="AI strategy video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-heading testimonial-home-heading">
+    <div class="section-heading--anchored">
+      <span class="eyebrow">Trusted Feedback</span>
+      <h2>Built for teams that need dependable AI.</h2>
+    </div>
+    <div class="section-actions">
+      <button class="btn small ghost" type="button" data-feedback-open>Share Your Feedback</button>
+      <a href="{{ url_for('public.testimonials') }}">Testimonials <i data-lucide="arrow-right"></i></a>
+    </div>
+  </div>
+  <div class="metric-strip review-summary-strip">
+    <article>
+      <span>Average Rating</span>
+      <strong>{{ review_stats.average_label }}</strong>
+    </article>
+    <article>
+      <span>Total Feedback</span>
+      <strong>{{ review_stats.total_count }}</strong>
+    </article>
+    <article>
+      <span>Approved Feedback</span>
+      <strong>{{ approved_feedback_count }}</strong>
+    </article>
+    <article>
+      <span>Testimonials</span>
+      <strong>{{ testimonial_count }}</strong>
+    </article>
+  </div>
+  <div class="testimonial-carousel-shell" data-carousel-root data-carousel-auto="true">
+    <div class="carousel-controls">
+      <button type="button" aria-label="Previous testimonial" data-carousel-prev><i data-lucide="arrow-left"></i></button>
+      <button type="button" aria-label="Next testimonial" data-carousel-next><i data-lucide="arrow-right"></i></button>
+    </div>
+    <div class="testimonial-carousel" data-carousel>
+      {% for item in testimonials %}
+      <article class="testimonial-card testimonial-card--home {% if item.kind == 'feedback' %}testimonial-card--feedback{% endif %}">
+        <div class="testimonial-card-head">
+          {% if item.profile_image %}
+          <img src="{{ item.profile_image }}" alt="{{ item.customer_name }}">
+          {% else %}
+          <div class="testimonial-avatar">{{ item.avatar_label }}</div>
+          {% endif %}
+          <div>
+            <span class="testimonial-source-pill">{{ item.source_label }}</span>
+            <span class="testimonial-rating-pill">{{ "★" * item.rating }}</span>
+            <strong>{{ item.customer_name }}</strong>
+            <span>{{ item.role }}, {{ item.company_name }}</span>
+          </div>
+        </div>
+        <p>{{ item.feedback|truncate(140, True, '...') }}</p>
+        <div class="testimonial-card-foot">
+          <span>{{ item.source_label }}</span>
+          <a href="{{ url_for('public.contact', service='AI Consultation') }}">Plan a similar engagement <i data-lucide="arrow-right"></i></a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  {% set team_focus_map = {
+    'Sumantra Yadav': 'Client Growth & Executive Strategy',
+    'Dibyanshu Jha': 'Architecture, Security & Platform Delivery',
+    'Sandeep Pokharel': 'Programme Governance & Rollout Operations'
+  } %}
+  <div class="section-heading section-heading--anchored">
+    <span class="eyebrow">Meet Our Team</span>
+    <h2>Leadership shaping secure, practical AI delivery.</h2>
+  </div>
+  <div class="team-grid">
+    {% for member in team_members %}
+    <article class="team-card premium-team-card">
+      <div class="team-card-media">
+        <img src="{{ member.image_url }}" alt="{{ member.name }}">
+      </div>
+      <div class="team-card-body">
+        <div class="team-meta">
+          <small>{{ team_focus_map.get(member.name, 'Enterprise AI Delivery') }}</small>
+          <span class="team-chip">{{ member.role }}</span>
+        </div>
+        <div class="team-heading-row">
+          <h3>{{ member.name }}</h3>
+        </div>
+        <p>{{ member.bio }}</p>
+        <div class="team-highlights">
+          <span><i data-lucide="badge-check"></i> Strategic leadership</span>
+          <span><i data-lucide="shield-check"></i> Secure-by-design execution</span>
+        </div>
+        <div class="team-card-footer">
+          <div class="team-socials">
+            <a class="team-social-link team-social-link--linkedin" href="{{ member.linkedin_url or site_settings.get('linkedin_url', 'https://www.linkedin.com') }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile for {{ member.name }}">
+              {{ brand_icon('linkedin') }}
+            </a>
+            <a class="team-social-link team-social-link--facebook" href="{{ site_settings.get('facebook_url', 'https://www.facebook.com') }}" target="_blank" rel="noopener noreferrer" aria-label="AI SOLUTION Facebook">
+              {{ brand_icon('facebook') }}
+            </a>
+          </div>
+          <a href="{{ member.linkedin_url or site_settings.get('linkedin_url', 'https://www.linkedin.com') }}" target="_blank" rel="noopener noreferrer">View LinkedIn Profile <i data-lucide="arrow-up-right"></i></a>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section split-preview reveal">
+  <article class="preview-panel">
+    <div class="section-heading compact">
+      <span class="eyebrow">Latest Articles</span>
+      <a href="{{ url_for('public.blog') }}">Blog <i data-lucide="arrow-right"></i></a>
+    </div>
+    {% for post in blogs %}
+    <a class="preview-row" href="{{ url_for('public.blog_detail', slug=post.slug) }}">
+      <img src="{{ post.image_url }}" alt="">
+      <span>{{ post.category }}</span>
+      <strong>{{ post.title }}</strong>
+    </a>
+    {% endfor %}
+  </article>
+  <article class="preview-panel">
+    <div class="section-heading compact">
+      <span class="eyebrow">Upcoming Events</span>
+      <a href="{{ url_for('public.events') }}">RSVP <i data-lucide="arrow-right"></i></a>
+    </div>
+    {% for event in events %}
+    <a class="preview-row" href="{{ url_for('public.events', event=event.id) }}">
+      <img src="{{ event.banner_image }}" alt="">
+      <span>{{ event.event_date|date_label }}</span>
+      <strong>{{ event.title }}</strong>
+    </a>
+    {% endfor %}
+  </article>
+</section>
+
+<section class="section reveal">
+  <div class="section-heading section-heading--anchored">
+    <span class="eyebrow">FAQ</span>
+    <h2>Answers for buyers and delivery teams.</h2>
+  </div>
+  <div class="faq-list">
+    {% for faq in faqs %}
+    <details class="faq-item">
+      <summary>
+        <span>{{ faq.question }}</span>
+        <i data-lucide="plus"></i>
+      </summary>
+      <p>{{ faq.answer }}</p>
+    </details>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="cta-panel reveal">
+  <div>
+    <span class="eyebrow">Start Engagement</span>
+    <h2>Plan the right AI delivery path before your team commits budget and time.</h2>
+    <p>Use a secure inquiry to brief AI SOLUTION on your workflow, industry, governance needs, and transformation goals.</p>
+  </div>
+  <div class="hero-actions">
+    <a class="btn primary" href="{{ url_for('public.contact') }}"><i data-lucide="send"></i> Start Inquiry</a>
+    <a class="btn ghost" href="{{ url_for('public.events') }}"><i data-lucide="calendar-check-2"></i> Reserve an AI Event</a>
+  </div>
+</section>
+{% endblock %}

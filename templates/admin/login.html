@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="robots" content="noindex,nofollow">
+  <script>
+    (function() {
+      try {
+        var theme = window.localStorage.getItem("ai-solution-theme");
+        if (!theme) return;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme === "light" ? "light" : "dark";
+      } catch (error) {
+        /* no-op */
+      }
+    })();
+  </script>
+  <title>Secure Admin Login | AI SOLUTION</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo-mark.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/core.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+</head>
+<body class="admin-auth-shell">
+  <div class="flash-stack" aria-live="polite">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+  </div>
+
+  <section class="login-page admin-auth-page">
+    <div class="admin-auth-surface">
+      <div class="admin-auth-intro reveal visible">
+        <span class="eyebrow">Protected Staff Access</span>
+        <h1>AI SOLUTION Control Center</h1>
+        <p>Secure enterprise administration with CAPTCHA verification, protected sessions, and activity logging across content, enquiries, client records, media, and performance reporting.</p>
+        <div class="admin-auth-points">
+          <span><i data-lucide="shield-check"></i> Private route with secure session controls</span>
+          <span><i data-lucide="activity"></i> Monitored sign-ins and audit-ready activity logs</span>
+          <span><i data-lucide="shield-check"></i> Clean control over content, enquiries, and analytics</span>
+        </div>
+        <div class="admin-auth-route">
+          <strong>Access Path</strong>
+          <code>{{ admin_prefix }}/login</code>
+        </div>
+      </div>
+
+      {% from "macros.html" import captcha_box, input_field %}
+      <form class="login-card admin-auth-card reveal visible" method="post" action="{{ url_for('admin.login') }}" data-admin-login-form>
+        <img src="{{ url_for('static', filename='images/logo-mark.png') }}" alt="AI SOLUTION logo">
+        <span class="eyebrow">Secure Admin</span>
+        <h2>Sign in to the control center</h2>
+        <p>Use your staff credentials and the CAPTCHA challenge to continue into the protected admin workspace.</p>
+        {{ form.hidden_tag() }}
+        {{ input_field(form.email, type='email') }}
+        {{ input_field(form.password, type='password') }}
+        <label class="checkline">
+          {{ form.remember() }}
+          <span>Remember this device</span>
+        </label>
+        {{ captcha_box(form, captcha_prompt) }}
+        <button class="btn primary" type="submit" data-loading-text="Signing in..."><i data-lucide="lock-keyhole"></i> Login</button>
+      </form>
+    </div>
+  </section>
+
+  <script type="module" src="{{ url_for('static', filename='js/site.js') }}"></script>
+</body>
+</html>

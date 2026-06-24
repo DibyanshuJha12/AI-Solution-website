@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% block title %}Solutions | AI SOLUTION{% endblock %}
+{% block meta_description %}Explore AI SOLUTION capabilities for automation, analytics, cybersecurity, cloud integration, and industry-specific delivery programmes.{% endblock %}
+{% block content %}
+{% set industry_icon_map = {
+  'Healthcare AI': 'heart-pulse',
+  'Finance AI': 'badge-pound-sterling',
+  'Education AI': 'graduation-cap',
+  'Retail AI': 'shopping-bag',
+  'Cybersecurity AI': 'shield-check',
+  'Data Analytics': 'chart-no-axes-combined',
+  'Automation': 'bot',
+  'Cloud & DevOps': 'cloud-cog'
+} %}
+{% set solutions_feature_image = site_settings.get('solutions_feature_image', 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1400&q=80') %}
+{% set solution_focus_cards = [
+  {'title': 'AI Automation', 'icon': 'bot', 'description': 'Automate approvals, intake, and repetitive operations with human-in-the-loop controls.', 'cta': 'Get Consultation'},
+  {'title': 'Data Analytics', 'icon': 'chart-no-axes-combined', 'description': 'Turn fragmented data into trusted dashboards and leadership-ready signals.', 'cta': 'Explore Solution'},
+  {'title': 'Machine Learning', 'icon': 'brain-circuit', 'description': 'Build practical ML models for prediction, classification, and optimisation.', 'cta': 'Book Demo'},
+  {'title': 'AI Chatbots', 'icon': 'messages-square', 'description': 'Launch branded assistants for support, knowledge access, and guided flows.', 'cta': 'Explore Solution'},
+  {'title': 'Cloud AI Solutions', 'icon': 'cloud-cog', 'description': 'Deploy AI securely across cloud, hybrid, and private environments.', 'cta': 'Get Consultation'},
+  {'title': 'Predictive Intelligence', 'icon': 'line-chart', 'description': 'Forecast demand, risk, churn, and performance before issues surface.', 'cta': 'Book Demo'},
+  {'title': 'Business Intelligence', 'icon': 'chart-no-axes-combined', 'description': 'Create governed BI hubs with natural-language insight and executive KPIs.', 'cta': 'Explore Solution'},
+  {'title': 'AI Security Systems', 'icon': 'shield-check', 'description': 'Strengthen cyber operations with threat enrichment, phishing defence, and risk scoring.', 'cta': 'Get Consultation'}
+] %}
+
+<section class="page-hero compact-hero solution-hero">
+  <div class="solution-hero-copy">
+    <span class="eyebrow">Solutions + Industries</span>
+    <h1>AI systems for workflows, industries, decisions, and security.</h1>
+    <p>A compact view of the capabilities and sector programmes we use to turn AI strategy into delivery.</p>
+    <div class="hero-trust-strip solution-trust-strip">
+      <span><i data-lucide="network"></i> Use-case to production mapping</span>
+      <span><i data-lucide="shield-check"></i> Governed enterprise rollout</span>
+      <span><i data-lucide="chart-no-axes-combined"></i> Measurable transformation value</span>
+    </div>
+    <div class="hero-actions">
+      <a class="btn primary" href="#capabilities"><i data-lucide="layers-3"></i> Explore Capabilities</a>
+      <a class="btn ghost" href="#industries"><i data-lucide="factory"></i> Review Industries</a>
+    </div>
+  </div>
+  <div class="solution-hero-visual">
+    <img src="{{ solutions_feature_image }}" alt="AI solution delivery visual">
+    <div class="solution-hero-card">
+      <strong>Enterprise AI operating layers</strong>
+      <p>Automation, decision intelligence, governed copilots, and secure workflow orchestration shaped around business risk, service quality, and growth priorities.</p>
+      <div class="solution-mini-metrics">
+        <span><i data-lucide="network"></i> Cross-functional rollout</span>
+        <span><i data-lucide="sparkles"></i> Guided advisory flows</span>
+      </div>
+    </div>
+    <div class="solution-hero-stack">
+      <span><i data-lucide="waypoints"></i> Strategy to execution</span>
+      <span><i data-lucide="shield-check"></i> Trust-aware delivery</span>
+      <span><i data-lucide="badge-check"></i> Production-ready experiences</span>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal solution-studio-section" id="capabilities">
+  <div class="section-heading section-heading--anchored">
+    <span class="eyebrow">Solution Studio</span>
+    <h2>Premium AI capabilities shaped for real business delivery.</h2>
+  </div>
+  <div class="solution-focus-grid">
+    {% for solution in solution_focus_cards %}
+    <article class="solution-focus-card">
+      <span class="solution-focus-icon"><i data-lucide="{{ solution.icon }}"></i></span>
+      <div>
+        <h3>{{ solution.title }}</h3>
+        <p>{{ solution.description }}</p>
+      </div>
+      <a class="btn small" href="{{ url_for('public.contact', service=solution.title) }}">{{ solution.cta }} <i data-lucide="arrow-right"></i></a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="solution-catalog-shell">
+    <div class="solution-catalog-intro">
+      <div class="solution-catalog-copy">
+        <span class="eyebrow">Solutions</span>
+        <h2>Capability-led services for real operating environments.</h2>
+        <p>Each capability is shaped for practical architecture, process fit, governance, and measurable outcomes.</p>
+      </div>
+    </div>
+    <div class="solution-catalog-content">
+      <div class="solution-catalog-toolbar">
+        <div class="pill-list">
+          <span>Automation and copilots</span>
+          <span>Analytics and intelligence</span>
+          <span>Secure implementation</span>
+          <span>Adoption planning</span>
+        </div>
+      </div>
+      <div class="filter-bar" data-filter-group>
+        <button class="active" type="button" data-filter="all">All</button>
+        {% for category in categories %}
+        <button type="button" data-filter="{{ category }}">{{ category }}</button>
+        {% endfor %}
+      </div>
+      <div class="card-grid four solution-service-grid">
+        {% for service in services %}
+        <article class="service-card image-card" data-filter-card="{{ service.category }}">
+          <img src="{{ service.image_url }}" alt="{{ service.title }}">
+          <div>
+            <div class="service-card-topline">
+              <span class="service-card-icon-pill"><i data-lucide="{{ service.icon }}"></i></span>
+              <span class="service-card-category">{{ service.category }}</span>
+            </div>
+            <h2>{{ service.title }}</h2>
+            <p>{{ service.description }}</p>
+            <div class="service-card-foot">
+              <a class="btn small" href="{{ url_for('public.contact', service=service.title) }}">Explore Solution <i data-lucide="arrow-right"></i></a>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="industries">
+  <div class="section-heading industry-program-heading">
+    <div class="section-heading--anchored">
+      <span class="eyebrow">Industries</span>
+      <h2>Compact AI programmes designed for sector-specific realities.</h2>
+    </div>
+    <a href="{{ url_for('public.contact') }}">Plan an industry roadmap <i data-lucide="arrow-right"></i></a>
+  </div>
+  <div class="industry-index industry-index--premium industry-index--compact">
+    {% for industry in industries %}
+    <a href="#industry-{{ industry.slug }}" class="industry-index-card industry-index-card--premium">
+      <img src="{{ industry.image_url }}" alt="{{ industry.name }}">
+      <div>
+        <span class="industry-icon-pill"><i data-lucide="{{ industry_icon_map.get(industry.name, 'sparkles') }}"></i></span>
+        <strong>{{ industry.name }}</strong>
+        <span>{{ industry.use_cases[0] if industry.use_cases else 'AI program' }}</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  <div class="industry-showcase-heading industry-showcase-heading--compact">
+    <div class="industry-program-overview-copy">
+      <span class="eyebrow">Programme Gallery</span>
+      <h3>Balanced industry programme cards with clearer delivery signals.</h3>
+      <p>Each card keeps the sector context, delivery focus, and strongest use cases visible without oversized copy blocks.</p>
+    </div>
+    <div class="industry-program-overview-stats">
+      <article>
+        <strong>{{ industries|length }}</strong>
+        <span>industry programs</span>
+      </article>
+      <article>
+        <strong>2 priority use cases</strong>
+        <span>highlighted per card</span>
+      </article>
+      <article>
+        <strong>Equal-height cards</strong>
+        <span>balanced on every screen</span>
+      </article>
+    </div>
+  </div>
+  <div class="industry-program-grid">
+    {% for industry in industries %}
+    <article class="industry-program-card reveal" id="industry-{{ industry.slug }}">
+      <div class="industry-program-media">
+        <img src="{{ industry.image_url }}" alt="{{ industry.name }} AI services" loading="lazy">
+        <div class="industry-program-overlay">
+          <span class="industry-icon-pill"><i data-lucide="{{ industry_icon_map.get(industry.name, 'sparkles') }}"></i></span>
+          <strong>{{ industry.name }}</strong>
+        </div>
+      </div>
+      <div class="industry-program-body">
+        <div class="industry-program-topline">
+          <span class="eyebrow">Industry Program</span>
+          <span class="service-card-category">{{ industry.use_cases|length }} use cases</span>
+        </div>
+        <div class="industry-program-copy">
+          <h3>{{ industry.name }}</h3>
+          <p class="industry-program-summary">{{ industry.overview|truncate(108, True, '...') }}</p>
+        </div>
+        <div class="industry-program-solution-block">
+          <span class="industry-program-label">Primary delivery focus</span>
+          <p class="industry-program-solution">{{ industry.solution|truncate(116, True, '...') }}</p>
+        </div>
+        <div class="industry-program-chipset">
+          {% for use_case in industry.use_cases[:2] %}
+          <span><i data-lucide="check-check"></i>{{ use_case }}</span>
+          {% endfor %}
+        </div>
+        <div class="industry-program-chipset industry-program-chipset--benefits">
+          {% for benefit in industry.benefits[:2] %}
+          <span>{{ benefit }}</span>
+          {% endfor %}
+        </div>
+        <div class="industry-program-note">
+          <strong>Common challenge</strong>
+          <span>{{ industry.problems|truncate(94, True, '...') }}</span>
+        </div>
+        <div class="industry-program-footer">
+          <a class="btn small" href="{{ url_for('public.contact', service=industry.name) }}">Discuss {{ industry.name }} <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="cta-panel reveal">
+  <div>
+    <span class="eyebrow">Need a tailored roadmap?</span>
+      <h2>Map your industry, workflow, and risk posture to the right AI delivery path.</h2>
+      <p>We help leadership teams prioritise the first use case, shape governance, and move from concept to production with confidence.</p>
+  </div>
+  <div class="hero-actions">
+    <a class="btn primary" href="{{ url_for('public.contact') }}"><i data-lucide="message-square-share"></i> Speak With AI SOLUTION</a>
+    <a class="btn ghost" href="{{ url_for('public.portfolio') }}"><i data-lucide="folder-kanban"></i> Review Case Studies</a>
+  </div>
+</section>
+{% endblock %}

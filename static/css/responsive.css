@@ -1,0 +1,453 @@
+@media (max-width: 1180px) {
+  .navbar {
+    grid-template-columns: auto auto auto;
+  }
+
+  .nav-toggle {
+    display: inline-grid;
+    justify-self: end;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 84px;
+    left: 18px;
+    right: 18px;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface-solid);
+    box-shadow: var(--shadow);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .admin-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 280px;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    z-index: 200;
+  }
+
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+
+  [data-admin-menu] {
+    display: inline-grid;
+  }
+}
+
+@media (max-width: 1100px) {
+  .solution-hero,
+  .careers-hero,
+  .solution-catalog-layout,
+  .solution-catalog-intro,
+  .solution-bridge-grid,
+  .solution-compass-grid,
+  .event-countdown-panel,
+  .solution-map-grid,
+  .careers-culture-grid,
+  .industry-program-shell,
+  .testimonial-showcase-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .careers-cta-strip {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .careers-cta-strip img {
+    width: 100%;
+  }
+
+  .solution-side-intro {
+    position: static;
+    top: auto;
+  }
+}
+
+@media (max-width: 980px) {
+  .hero,
+  .hero-split,
+  .two-column,
+  .video-section,
+  .cta-panel,
+  .contact-layout,
+  .map-section,
+  .form-section,
+  .industry-section,
+  .blog-feature-panel,
+  .event-rsvp-shell,
+  .admin-auth-surface,
+  .blog-detail,
+  .auth-shell,
+  .testimonial-feature,
+  .solution-hero,
+  .careers-hero,
+  .testimonial-grid-showcase,
+  .legal-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .solution-hero-metrics,
+  .solution-focus-grid,
+  .event-hero-metrics,
+  .event-countdown-grid,
+  .event-highlight-grid,
+  .event-journey-grid,
+  .event-speaker-grid,
+  .event-proof-grid,
+  .industry-showcase-heading {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero {
+    min-height: auto;
+  }
+
+  .event-rsvp-form {
+    order: -1;
+  }
+
+  .event-rsvp-visual {
+    order: 1;
+  }
+
+  .previous-events-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .feedback-modal__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feedback-rating-group {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card-grid.four,
+  .stats-band,
+  .footer-grid,
+  .mission-grid,
+  .benefit-grid,
+  .process-grid,
+  .metric-strip,
+  .industry-index,
+  .testimonial-wall,
+  .login-trust-grid,
+  .socials-compact,
+  .metric-grid,
+  .editor-grid,
+  .case-grid,
+  .blog-grid,
+  .event-grid,
+  .job-grid,
+  .team-grid,
+  .split-preview {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chart-grid,
+  .admin-split,
+  .admin-triple {
+    grid-template-columns: 1fr;
+  }
+
+  .section-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 760px) {
+  .brand-copy small,
+  .admin-brand-copy small {
+    display: none;
+  }
+
+  .solution-bridge-grid,
+  .solution-focus-grid,
+  .social-card-grid,
+  .industry-index,
+  .case-grid,
+  .blog-grid,
+  .event-grid,
+  .job-grid,
+  .team-grid,
+  .split-preview,
+  .legal-meta-grid,
+  .event-form-fields,
+  .testimonial-grid,
+  .previous-events-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feedback-rating-group {
+    grid-template-columns: 1fr;
+  }
+
+  .cookie-brand,
+  .cookie-brand-lockup,
+  .team-heading-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .premium-team-card .team-card-footer {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+
+  .social-card {
+    grid-template-columns: 56px minmax(0, 1fr);
+  }
+
+  .social-card-arrow {
+    display: none;
+  }
+
+  .footer-social-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .event-form-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .industry-showcase-heading {
+    gap: 14px;
+  }
+
+  .legal-toc-card {
+    position: static;
+  }
+
+  .team-card-media img,
+  .solution-hero-visual img,
+  .careers-hero-visual img,
+  .careers-visual-panel img,
+  .careers-cta-strip img {
+    min-height: 280px;
+  }
+
+  .industry-index--premium,
+  .solution-hero-metrics,
+  .solution-focus-grid,
+  .event-hero-metrics,
+  .event-countdown-grid,
+  .event-highlight-grid,
+  .event-journey-grid,
+  .event-speaker-grid,
+  .event-proof-grid,
+  .directions-meta,
+  .testimonial-metrics,
+  .event-form-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .event-form-fields--context {
+    grid-template-columns: 1fr;
+  }
+
+  .event-countdown-panel,
+  .event-timeline article {
+    grid-template-columns: 1fr;
+  }
+
+  .industry-program-summary,
+  .solution-catalog-copy,
+  .solution-catalog-toolbar,
+  .industry-roadmap-card,
+  .testimonial-spotlight-card--wide,
+  .testimonial-summary-card--panel,
+  .directions-card,
+  .feedback-modal__dialog {
+    padding: 22px;
+  }
+
+  .admin-page,
+  .admin-heading,
+  .admin-topbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .admin-page {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    min-height: 74px;
+    padding-inline: 14px;
+    gap: 10px;
+  }
+
+  .brand img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .nav-links {
+    top: 74px;
+  }
+
+  .nav-links button {
+    width: 100%;
+    text-align: left;
+  }
+
+  .hero,
+  .page-hero,
+  .section,
+  .form-section,
+  .contact-layout,
+  .map-section,
+  .legal-page,
+  .industry-stack,
+  .video-section,
+  .cta-panel,
+  .stats-band {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .hero {
+    padding-top: 46px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 17vw, 4.6rem);
+  }
+
+  .card-grid.four,
+  .stats-band,
+  .mission-grid,
+  .benefit-grid,
+  .process-grid,
+  .footer-grid,
+  .form-grid,
+  .metric-strip,
+  .login-trust-grid,
+  .socials-compact {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom,
+  .cookie-banner,
+  .hero-trust-strip,
+  .industry-highlights,
+  .login-aux,
+  .blog-share-bar,
+  .cookie-actions,
+  .event-form-actions,
+  .section-actions,
+  .feedback-modal__actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section-heading {
+    display: grid;
+    align-items: start;
+  }
+
+  .page-hero > div:first-child,
+  .section-heading--anchored,
+  .solution-side-intro {
+    padding-inline-start: 16px;
+  }
+
+  .page-hero > div:first-child::before,
+  .section-heading--anchored::before,
+  .solution-side-intro::before {
+    height: 46px;
+  }
+
+  .industry-section img {
+    min-height: 240px;
+  }
+
+  .chatbot {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .chatbot-launch {
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+  }
+
+  .captcha-inline {
+    grid-template-columns: 1fr;
+  }
+
+  .team-card img {
+    height: 280px;
+  }
+
+  .testimonial-feature,
+  .testimonial-person,
+  .industry-section,
+  .comment-card,
+  .industry-index-card {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-brand img,
+  .testimonial-feature img {
+    justify-self: start;
+  }
+
+  .contact-visual-card img {
+    height: 240px;
+  }
+
+  .preview-row.compact {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-row.compact img {
+    grid-row: auto;
+    width: 100%;
+    height: 180px;
+  }
+
+  .chatbot-panel {
+    width: min(100vw - 18px, 390px);
+    bottom: 78px;
+    height: min(82vh, 620px);
+  }
+
+  .chatbot-panel header,
+  .chatbot-form {
+    padding: 12px;
+  }
+
+  .event-form-actions .btn {
+    width: 100%;
+  }
+
+  .social-icon-row {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .footer-social-grid {
+    grid-template-columns: repeat(4, minmax(0, 70px));
+  }
+}

@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+{% from "macros.html" import captcha_box, checkbox_field, input_field, select_field, textarea_field %}
+{% block title %}AI Events & Innovation Programs | AI SOLUTION{% endblock %}
+{% block meta_description %}Explore AI SOLUTION conferences, workshops, bootcamps, webinars, and innovation programs with premium event design and secure registration.{% endblock %}
+{% block content %}
+{% set featured_event = featured_event or (showcase_events[0] if showcase_events else None) %}
+{% set hero_badges = [
+  'Enterprise event design',
+  'Secure verified registration',
+  'Responsive on every device'
+] %}
+
+<section class="page-hero compact-hero events-lab-hero">
+  <div class="events-lab-backdrop" aria-hidden="true">
+    <span class="events-lab-orb events-lab-orb--one"></span>
+    <span class="events-lab-orb events-lab-orb--two"></span>
+    <span class="events-lab-beam"></span>
+    <span class="events-lab-gridline"></span>
+  </div>
+  <div class="events-lab-copy">
+    <span class="eyebrow">AI Events</span>
+    <h1>AI events and innovation programs.</h1>
+    <p>Compact conferences, workshops, bootcamps, webinars, and innovation sessions for enterprise teams.</p>
+    <div class="hero-trust-strip events-lab-trust">
+      {% for badge in hero_badges %}
+      <span><i data-lucide="sparkles"></i>{{ badge }}</span>
+      {% endfor %}
+    </div>
+    <div class="hero-actions">
+      <a class="btn primary" href="#rsvp"><i data-lucide="ticket-check"></i> Register Now</a>
+      <a class="btn ghost" href="#explore-events"><i data-lucide="calendar-search"></i> Explore Events</a>
+    </div>
+    <div class="events-lab-metrics">
+      <article>
+        <strong>{{ "%02d"|format(showcase_events|length) }}</strong>
+        <span>Scheduled programs</span>
+      </article>
+      <article>
+        <strong>{{ featured_event.event_date|date_label if featured_event else 'Rolling' }}</strong>
+        <span>Next live session</span>
+      </article>
+      <article>
+        <strong>Secure RSVP</strong>
+        <span>Validated registration flow</span>
+      </article>
+    </div>
+  </div>
+  <div class="events-lab-stage">
+    <article class="events-lab-featured-card">
+      <span class="eyebrow">Featured Event</span>
+      {% if featured_event %}
+      <div class="events-lab-featured-meta">
+        <span class="events-lab-category"><i data-lucide="{{ featured_event.icon }}"></i>{{ featured_event.category }}</span>
+        <span class="events-lab-format">{{ featured_event.format_label }}</span>
+      </div>
+      <h2>{{ featured_event.title }}</h2>
+      <p>{{ featured_event.details|truncate(140, True, '...') }}</p>
+      <div class="events-lab-featured-points">
+        <span><i data-lucide="calendar-days"></i>{{ featured_event.event_date|date_label }}</span>
+        <span><i data-lucide="clock-3"></i>{{ featured_event.event_time }}</span>
+        <span><i data-lucide="map-pin"></i>{{ featured_event.location }}</span>
+      </div>
+      <button class="btn small" type="button" data-rsvp-event="{{ featured_event.id }}"><i data-lucide="arrow-right"></i> Reserve Seat</button>
+      {% else %}
+      <h2>New AI programs are being scheduled.</h2>
+      <p>Register your interest below and AI SOLUTION will share the next available session.</p>
+      <a class="btn small" href="#rsvp"><i data-lucide="arrow-right"></i> Join the waitlist</a>
+      {% endif %}
+    </article>
+    <div class="events-lab-stage-grid">
+      {% if featured_event %}
+      <figure class="events-lab-visual-card">
+        <img src="{{ featured_event.banner_image }}" alt="{{ featured_event.title }}" loading="eager">
+        <figcaption>
+          <span class="eyebrow">Immersive Event Design</span>
+          <strong>{{ featured_event.title }}</strong>
+          <p>High-touch sessions, expert panels, workshops, and networking moments for modern AI teams.</p>
+          <div class="events-lab-visual-pills">
+            <span><i data-lucide="users-round"></i> Curated audience</span>
+            <span><i data-lucide="radar"></i> Live innovation insights</span>
+          </div>
+        </figcaption>
+      </figure>
+      {% endif %}
+      <div class="events-lab-rail">
+        {% for event in showcase_events[:3] %}
+        <article class="events-lab-rail-card">
+          <strong>{{ event.title }}</strong>
+          <span>{{ event.event_date|date_label }} · {{ event.location }}</span>
+          <button type="button" data-rsvp-event="{{ event.id }}">Register</button>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="explore-events">
+  <div class="section-heading events-lab-heading">
+    <div class="section-heading--anchored">
+      <span class="eyebrow">Explore Events</span>
+      <h2>Eight polished AI events designed to stay compact and easy to book.</h2>
+    </div>
+    <p>Each card keeps the hierarchy tight with equal-height layouts, clear metadata, and responsive states.</p>
+  </div>
+  <div class="events-lab-grid">
+    {% for event in showcase_events %}
+    <article class="events-lab-card reveal">
+      <div class="events-lab-card-media">
+        <img src="{{ event.banner_image }}" alt="{{ event.title }}" loading="lazy">
+        <span class="events-lab-card-badge"><i data-lucide="{{ event.icon }}"></i>{{ event.category }}</span>
+      </div>
+      <div class="events-lab-card-body">
+        <div class="events-lab-card-meta">
+          <span><i data-lucide="calendar-days"></i>{{ event.event_date|date_label }}</span>
+          <span><i data-lucide="clock-3"></i>{{ event.event_time }}</span>
+          <span><i data-lucide="map-pin"></i>{{ event.location }}</span>
+        </div>
+        <div class="events-lab-card-copy">
+          <h2>{{ event.title }}</h2>
+          <p>{{ event.details|truncate(110, True, '...') }}</p>
+        </div>
+        <div class="events-lab-card-footer">
+          <span class="events-lab-format"><i data-lucide="ticket"></i>{{ event.format_label }}</span>
+          <button class="btn small" type="button" data-rsvp-event="{{ event.id }}"><i data-lucide="arrow-right"></i> Register</button>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section reveal previous-events-section">
+  <div class="section-heading section-heading--anchored">
+    <span class="eyebrow">Previous Events</span>
+    <h2>Recent sessions that shaped our delivery playbook.</h2>
+  </div>
+  <div class="previous-events-grid">
+    {% for event in previous_events %}
+    <article class="previous-event-card">
+      <div class="previous-event-media">
+        <img src="{{ event.banner_image }}" alt="{{ event.title }}" loading="lazy">
+        <span class="previous-event-badge"><i data-lucide="{{ event.icon }}"></i>{{ event.status_badge }}</span>
+      </div>
+      <div class="previous-event-body">
+        <div class="previous-event-topline">
+          <span>{{ event.category }}</span>
+          <span>{{ event.format_label }}</span>
+        </div>
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.details|truncate(100, True, '...') }}</p>
+        <div class="previous-event-meta">
+          <span><i data-lucide="calendar-days"></i>{{ event.event_date|date_label }}</span>
+          <span><i data-lucide="clock-3"></i>{{ event.event_time }}</span>
+          <span><i data-lucide="map-pin"></i>{{ event.location }}</span>
+        </div>
+        <div class="previous-event-highlights">
+          {% for highlight in event.highlights %}
+          <span><i data-lucide="check-check"></i>{{ highlight }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="form-section reveal events-lab-register-shell" id="rsvp">
+  <article class="events-lab-register-copy">
+    <span class="eyebrow">Event Registration</span>
+    <h2>One clear registration flow built for fast confirmation.</h2>
+    <p>The form stays simple while the backend validates details, prevents duplicates, and stores registrations securely.</p>
+    <div class="events-lab-register-points">
+      <article>
+        <i data-lucide="shield-check"></i>
+        <div>
+          <strong>Secure submission handling</strong>
+          <p>Secure validation, duplicate request protection, and reliable record keeping stay active.</p>
+        </div>
+      </article>
+      <article>
+        <i data-lucide="smartphone"></i>
+        <div>
+          <strong>Responsive on every device</strong>
+          <p>Balanced spacing, clear labels, and theme support keep the flow polished on every device.</p>
+        </div>
+      </article>
+    </div>
+    {% if featured_event %}
+    <div class="events-lab-register-spotlight">
+      <strong>Recommended next session</strong>
+      <span>{{ featured_event.title }} · {{ featured_event.event_date|date_label }} · {{ featured_event.location }}</span>
+    </div>
+    <figure class="events-lab-register-visual">
+      <img src="{{ featured_event.banner_image }}" alt="{{ featured_event.title }} preview" loading="lazy">
+      <figcaption>
+        <strong>{{ featured_event.category }} · {{ featured_event.format_label }}</strong>
+        <span>Designed for leaders, operators, builders, and teams moving from strategy into execution.</span>
+      </figcaption>
+    </figure>
+    {% endif %}
+  </article>
+  <form class="form-grid event-rsvp-form events-lab-form" method="post" action="{{ url_for('public.events') }}" data-event-rsvp-form aria-describedby="rsvp-feedback">
+    {{ form.hidden_tag() }}
+    <input type="hidden" name="job_title" value="{{ form.job_title.data or 'Event attendee' }}">
+    <input type="hidden" name="attendees" value="{{ form.attendees.data or 1 }}">
+    <input type="hidden" name="preferred_session" value="{{ form.preferred_session.data or 'Executive Briefing' }}">
+    <input type="hidden" name="special_requirements" value="{{ form.special_requirements.data or '' }}">
+    {% if form.errors %}
+    <div class="form-error-summary events-lab-form-wide" role="alert">
+      <strong>Check the highlighted registration details before submitting again.</strong>
+      <span>Make sure the required fields are complete and the security challenge is solved correctly.</span>
+    </div>
+    {% endif %}
+    <div class="events-lab-form-heading events-lab-form-wide">
+      <div>
+        <span class="eyebrow">Event RSVP</span>
+        <h3>Reserve your place with one clean submission.</h3>
+      </div>
+      <p>Choose your event, share your details, and complete the verification once for confirmation.</p>
+    </div>
+    <div class="event-form-feedback event-form-feedback--inline events-lab-form-wide" id="rsvp-feedback" data-rsvp-feedback role="status" aria-live="polite" hidden></div>
+    {{ input_field(form.full_name, placeholder='Full name', autocomplete='name') }}
+    {{ input_field(form.email, type='email', placeholder='name@company.com', autocomplete='email', inputmode='email', spellcheck='false') }}
+    {{ input_field(form.phone, placeholder='+44 20 0000 0000', autocomplete='tel', inputmode='tel', pattern='(?:[0-9]|\\+|-|\\(|\\)|\\s){7,30}', title='Use 7 to 30 characters with digits, spaces, +, -, and parentheses.') }}
+    {{ input_field(form.company, placeholder='Organization name', autocomplete='organization') }}
+    {{ select_field(form.event_id) }}
+    {{ textarea_field(form.message, rows=5, placeholder='Tell us what you want to learn, who is attending, or any planning context we should know.', minlength='12') }}
+    <div class="events-lab-form-support events-lab-form-wide">
+      {{ captcha_box(form, captcha_prompt) }}
+      {{ checkbox_field(form.terms, 'I agree to event communications and the <a href="' ~ url_for('public.privacy') ~ '">AI SOLUTION privacy policy</a>.') }}
+    </div>
+    <div class="event-form-actions events-lab-form-wide">
+      <small>Secure verification and duplicate request protection are active during submission.</small>
+      <button class="btn primary" type="submit" data-loading-text="Submitting registration..."><i data-lucide="check-circle"></i> Submit Registration</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

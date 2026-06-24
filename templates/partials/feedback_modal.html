@@ -1,0 +1,57 @@
+<div class="feedback-modal" data-feedback-modal hidden aria-hidden="true">
+  <div class="feedback-modal__backdrop" data-feedback-close aria-hidden="true"></div>
+  <section class="feedback-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="feedback-modal-title" aria-describedby="feedback-modal-description">
+    <button class="feedback-modal__close icon-button" type="button" data-feedback-close aria-label="Close feedback form">
+      <i data-lucide="x"></i>
+    </button>
+
+    <div class="feedback-modal__intro">
+      <span class="eyebrow">Share Your Feedback</span>
+      <h2 id="feedback-modal-title">Tell us what worked and what should feel sharper.</h2>
+      <p id="feedback-modal-description">Your feedback is stored securely, reviewed by the team, and only published after moderation.</p>
+    </div>
+
+    <form class="feedback-modal__form" method="post" action="{{ url_for('public.submit_feedback') }}" data-feedback-form novalidate>
+      {{ feedback_form.hidden_tag() }}
+      <div class="feedback-modal__status" data-feedback-status role="status" aria-live="polite" hidden></div>
+
+      <div class="feedback-modal__grid">
+        <label class="field" data-feedback-field="full_name">
+          <span>{{ feedback_form.full_name.label.text }}</span>
+          {{ feedback_form.full_name(class_='control', placeholder='Your name', autocomplete='name') }}
+          <small class="field-error" data-feedback-error="full_name"></small>
+        </label>
+
+        <label class="field" data-feedback-field="email">
+          <span>{{ feedback_form.email.label.text }}</span>
+          {{ feedback_form.email(class_='control', type='email', placeholder='name@company.com', autocomplete='email', inputmode='email', spellcheck='false') }}
+          <small class="field-error" data-feedback-error="email"></small>
+        </label>
+
+        <fieldset class="feedback-rating-field" data-feedback-field="rating">
+          <legend>{{ feedback_form.rating.label.text }}</legend>
+          <div class="feedback-rating-group">
+            {% for option in feedback_form.rating %}
+            <label class="feedback-rating-option">
+              {{ option() }}
+              <span>{{ option.label.text }}</span>
+            </label>
+            {% endfor %}
+          </div>
+          <small class="field-error" data-feedback-error="rating"></small>
+        </fieldset>
+
+        <label class="field field-wide" data-feedback-field="message">
+          <span>{{ feedback_form.message.label.text }}</span>
+          {{ feedback_form.message(class_='control', rows=5, placeholder='What should we keep, improve, or rethink?') }}
+          <small class="field-error" data-feedback-error="message"></small>
+        </label>
+      </div>
+
+      <div class="feedback-modal__actions">
+        <p>We usually review feedback before it is published on the site.</p>
+        <button class="btn primary" type="submit"><i data-lucide="send"></i> Send Feedback</button>
+      </div>
+    </form>
+  </section>
+</div>

@@ -1,0 +1,27 @@
+<section class="chatbot" data-chatbot aria-label="AI Solution Assistant">
+  <button class="chatbot-launch" type="button" data-open-chatbot aria-label="Open AI Solution Assistant" aria-expanded="false" aria-controls="chatbot-panel">
+    <img src="{{ url_for('static', filename='images/chatbot-mark.svg') }}" alt="AI SOLUTION assistant icon">
+  </button>
+  <div class="chatbot-panel" id="chatbot-panel" data-chatbot-panel role="dialog" aria-modal="false" aria-labelledby="chatbot-title" aria-hidden="true">
+    <header class="chatbot-header">
+      <div class="chatbot-identity">
+        <span class="chatbot-badge"><img src="{{ url_for('static', filename='images/chatbot-mark.svg') }}" alt="AI SOLUTION assistant icon"></span>
+        <div>
+          <strong id="chatbot-title">AI Solution Assistant</strong>
+          <span>Ask about solutions, events, delivery planning, and next steps.</span>
+        </div>
+      </div>
+      <div class="chatbot-actions">
+        <button class="icon-button" type="button" data-clear-chatbot aria-label="Clear chat"><i data-lucide="refresh-cw"></i></button>
+        <button class="icon-button" type="button" data-collapse-chatbot aria-label="Minimize chatbot"><i data-lucide="minus"></i></button>
+        <button class="icon-button" type="button" data-close-chatbot aria-label="Close chatbot"><i data-lucide="x"></i></button>
+      </div>
+    </header>
+    <div class="chatbot-messages" data-chatbot-messages aria-live="polite" data-welcome="{{ site_settings.get('chatbot_welcome_message', 'Welcome to AI SOLUTION. Share your industry, workflow, or goal and I will guide you to the best next step.') }}"></div>
+    <form class="chatbot-form" data-chatbot-form data-busy="false">
+      <span class="chatbot-status-accessible" data-chatbot-status aria-live="polite"></span>
+      <textarea name="message" rows="1" placeholder="Ask about solutions, pricing, industry fit, events, or delivery planning" maxlength="1200" aria-label="Ask AI Solution a question" required></textarea>
+      <button type="submit" aria-label="Send message"><i data-lucide="send"></i></button>
+    </form>
+  </div>
+</section>

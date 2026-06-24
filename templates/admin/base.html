@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="robots" content="noindex,nofollow">
+  <script>
+    (function() {
+      try {
+        var theme = window.localStorage.getItem("ai-solution-theme");
+        if (!theme) return;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme === "light" ? "light" : "dark";
+      } catch (error) {
+        /* no-op */
+      }
+    })();
+  </script>
+  <title>{% block title %}AI SOLUTION Admin{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo-mark.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/core.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+</head>
+<body class="admin-shell">
+  <aside class="admin-sidebar">
+    <a class="admin-brand" href="{{ url_for('admin.dashboard') }}">
+      <img src="{{ url_for('static', filename='images/logo-mark.png') }}" alt="AI SOLUTION logo">
+      <span class="admin-brand-copy">
+        <strong>AI SOLUTION</strong>
+        <small>Control Center</small>
+      </span>
+    </a>
+    <nav>
+      <a href="{{ url_for('admin.dashboard') }}"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+      <a href="{{ url_for('admin.inquiries') }}"><i data-lucide="inbox"></i> Contact Submissions</a>
+      <a href="{{ url_for('admin.client_users') }}"><i data-lucide="users-round"></i> Users</a>
+      <a href="{{ url_for('admin.applications') }}"><i data-lucide="briefcase-business"></i> Applications</a>
+      <a href="{{ url_for('admin.rsvps') }}"><i data-lucide="ticket"></i> RSVPs</a>
+      <a href="{{ url_for('admin.chatbot_logs') }}"><i data-lucide="bot"></i> Chatbot Logs</a>
+      <a href="{{ url_for('admin.newsletter') }}"><i data-lucide="mail-plus"></i> Newsletter</a>
+      <a href="{{ url_for('admin.manage_content', resource='services') }}"><i data-lucide="layers"></i> Services</a>
+      <a href="{{ url_for('admin.manage_content', resource='industries') }}"><i data-lucide="building-2"></i> Solutions / Industries</a>
+      <a href="{{ url_for('admin.manage_content', resource='events') }}"><i data-lucide="calendar-range"></i> Events</a>
+      <a href="{{ url_for('admin.manage_content', resource='blogs') }}"><i data-lucide="newspaper"></i> Blogs</a>
+      <a href="{{ url_for('admin.manage_content', resource='testimonials') }}"><i data-lucide="star"></i> Testimonials</a>
+      <a href="{{ url_for('admin.feedback') }}"><i data-lucide="message-square"></i> Feedback</a>
+      <a href="{{ url_for('admin.manage_content', resource='faq') }}"><i data-lucide="circle-help"></i> FAQ</a>
+      <a href="{{ url_for('admin.manage_content', resource='team') }}"><i data-lucide="badge-check"></i> Team</a>
+      <a href="{{ url_for('admin.manage_content', resource='media') }}"><i data-lucide="image"></i> Media</a>
+      <a href="{{ url_for('admin.manage_content', resource='site-settings') }}"><i data-lucide="sliders-horizontal"></i> Homepage / Privacy / Cookies</a>
+      <a href="{{ url_for('admin.manage_content', resource='case-studies') }}"><i data-lucide="folder-kanban"></i> Case Studies</a>
+      <a href="{{ url_for('admin.manage_content', resource='jobs') }}"><i data-lucide="user-search"></i> Jobs</a>
+      <a href="{{ url_for('admin.auth_logs') }}"><i data-lucide="shield-alert"></i> Security / Auth Logs</a>
+      <a href="{{ url_for('admin.activity_logs') }}"><i data-lucide="history"></i> Activity Logs</a>
+      <a href="{{ url_for('admin.staff') }}"><i data-lucide="shield-user"></i> Staff</a>
+    </nav>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button class="icon-button" type="button" data-admin-menu aria-label="Toggle menu"><i data-lucide="panel-left"></i></button>
+      <div>
+        <strong>{{ g.staff_user.name if g.staff_user else 'Admin' }}</strong>
+        <span>{{ g.staff_user.role if g.staff_user else '' }}</span>
+      </div>
+      <button class="theme-toggle icon-button" type="button" data-theme-toggle aria-label="Toggle theme"><i data-lucide="moon"></i></button>
+      <a class="btn small ghost" href="{{ url_for('admin.logout') }}"><i data-lucide="log-out"></i> Logout</a>
+    </header>
+    <div class="flash-stack" aria-live="polite">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endwith %}
+    </div>
+    {% block admin_content %}{% endblock %}
+  </div>
+  <script type="module" src="{{ url_for('static', filename='js/site.js') }}"></script>
+  <script type="module" src="{{ url_for('static', filename='js/admin.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

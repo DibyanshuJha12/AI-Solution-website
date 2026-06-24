@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% from "macros.html" import captcha_box, checkbox_field, input_field, select_field, social_card, textarea_field %}
+{% block title %}Contact Us | AI SOLUTION{% endblock %}
+{% block meta_description %}Contact AI SOLUTION for secure AI strategy, automation planning, analytics support, and enterprise delivery guidance.{% endblock %}
+{% block content %}
+<section class="page-hero compact-hero hero-split">
+  <div>
+    <span class="eyebrow">Contact Us</span>
+    <h1>Start a secure AI conversation with our delivery team.</h1>
+    <p>Share your operating context and we will recommend the clearest next step for automation, analytics, support, cloud AI, or cybersecurity.</p>
+    <div class="hero-trust-strip">
+      <span><i data-lucide="message-circle-heart"></i> Business-first consultation</span>
+      <span><i data-lucide="shield-check"></i> Secure enquiry handling</span>
+      <span><i data-lucide="cloud"></i> Enterprise AI roadmap support</span>
+    </div>
+  </div>
+  <div class="hero-visual-card">
+    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80" alt="AI business contact and support visual">
+    <div class="hero-visual-overlay">
+      <strong>Premium AI-business support</strong>
+      <p>Strategy workshops, secure cloud intelligence, automation planning, analytics mapping, and practical delivery guidance for enterprise teams.</p>
+      <div class="hero-kpi-grid">
+        <span><i data-lucide="sparkles"></i> Smart Support</span>
+        <span><i data-lucide="messages-square"></i> Fast response path</span>
+        <span><i data-lucide="network"></i> Delivery planning</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-layout reveal">
+  <div class="contact-aside">
+    <article class="contact-visual-card">
+      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="AI strategy meeting with enterprise team">
+      <div>
+        <span class="eyebrow">Executive Contact</span>
+        <h2>Talk to a team that translates AI ambition into a delivery plan.</h2>
+        <p>From discovery calls to solution workshops, we help organisations clarify use cases, risk posture, rollout priorities, and the right first implementation path.</p>
+      </div>
+    </article>
+
+    <div class="support-stack">
+      <article>
+        <i data-lucide="phone"></i>
+        <h2>Phone</h2>
+        <p><a href="tel:+9779807803733">{{ settings.get('contact_phone', '9807803733') }}</a></p>
+      </article>
+      <article>
+        <i data-lucide="mail"></i>
+        <h2>Email</h2>
+        <p>{{ settings.get('contact_email', 'contact@aisolutionsglobal.co.uk') }}</p>
+      </article>
+      <article>
+        <i data-lucide="network"></i>
+        <h2>LinkedIn</h2>
+        <p>Connect with our team for enterprise conversations, partnerships, and strategic introductions.</p>
+        <a class="btn small ghost" href="{{ settings.get('contact_linkedin_url', settings.get('linkedin_url', 'https://www.linkedin.com')) }}" target="_blank" rel="noopener noreferrer">Open LinkedIn</a>
+      </article>
+      <article>
+        <i data-lucide="map-pin"></i>
+        <h2>Office</h2>
+        <p>{{ settings.get('contact_address', 'Canary Wharf, London, United Kingdom') }}</p>
+      </article>
+    </div>
+    <div class="socials socials-compact social-card-grid" aria-label="Contact social links">
+      {{ social_card(settings.get('linkedin_url', 'https://www.linkedin.com'), 'linkedin', 'LinkedIn', 'Leadership updates', 'linkedin') }}
+      {{ social_card(settings.get('whatsapp_url', 'https://wa.me/9779807803733'), 'whatsapp', 'WhatsApp', 'Direct business contact', 'whatsapp') }}
+      {{ social_card(settings.get('instagram_url', 'https://www.instagram.com'), 'instagram', 'Instagram', 'Product stories', 'instagram') }}
+      {{ social_card(settings.get('facebook_url', 'https://www.facebook.com'), 'facebook', 'Facebook', 'Company updates', 'facebook') }}
+    </div>
+  </div>
+
+  <form class="form-grid inquiry-form" method="post" action="{{ url_for('public.contact') }}">
+    {{ form.hidden_tag() }}
+    {{ input_field(form.full_name) }}
+    {{ input_field(form.email, type='email') }}
+    {{ input_field(form.subject, placeholder='Project topic or subject') }}
+    {{ input_field(form.phone) }}
+    {{ input_field(form.company) }}
+    {{ input_field(form.country) }}
+    {{ input_field(form.job_title) }}
+    {{ select_field(form.service) }}
+    {{ select_field(form.contact_method) }}
+    {{ select_field(form.budget) }}
+    {{ textarea_field(form.message, rows=6) }}
+    {{ captcha_box(form, captcha_prompt) }}
+    {{ checkbox_field(form.terms, 'I agree to be contacted by AI SOLUTION and accept the Privacy Policy.') }}
+    <button class="btn primary" type="submit" data-loading-text="Sending inquiry..."><i data-lucide="send"></i> Send Inquiry</button>
+  </form>
+</section>
+
+<section class="map-section reveal">
+  <article class="directions-card">
+    <span class="eyebrow">Get Directions</span>
+    <h2>Visit our Canary Wharf AI strategy studio.</h2>
+    <p>We support global clients remotely and host executive workshops from our London base for discovery, delivery planning, solution mapping, and board-level AI strategy sessions.</p>
+    <div class="directions-meta">
+      <article>
+        <i data-lucide="map-pin"></i>
+        <div>
+          <strong>Office location</strong>
+          <span>{{ settings.get('contact_address', 'Canary Wharf, London, United Kingdom') }}</span>
+        </div>
+      </article>
+      <article>
+        <i data-lucide="clock-3"></i>
+        <div>
+          <strong>Workshop format</strong>
+          <span>On-site strategy meetings and secure hybrid sessions</span>
+        </div>
+      </article>
+    </div>
+    <div class="hero-trust-strip directions-chip-row">
+      <span><i data-lucide="building-2"></i> Executive workshop space</span>
+      <span><i data-lucide="shield-check"></i> Secure client conversations</span>
+      <span><i data-lucide="navigation"></i> Easy route planning</span>
+    </div>
+    <a class="btn primary directions-button" href="https://www.google.com/maps/dir/?api=1&destination=Canary%20Wharf%2C%20London%2C%20United%20Kingdom" target="_blank" rel="noopener noreferrer"><i data-lucide="navigation"></i> Get Directions</a>
+  </article>
+  <div class="map-frame map-frame--premium">
+    <iframe title="Canary Wharf map" src="https://www.google.com/maps?q=Canary%20Wharf%2C%20London%2C%20United%20Kingdom&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+{% endblock %}

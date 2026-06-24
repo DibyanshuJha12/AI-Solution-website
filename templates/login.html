@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% from "macros.html" import captcha_box, checkbox_field, input_field %}
+{% block title %}Client Login | AI SOLUTION{% endblock %}
+{% block robots %}noindex,nofollow{% endblock %}
+{% block content %}
+<section class="login-page public-login">
+  <div class="login-suite">
+    <div class="login-intro">
+      <img src="{{ url_for('static', filename='images/logo-mark.png') }}" alt="AI SOLUTION logo">
+      <span class="eyebrow">Secure Access</span>
+      <h1>Client Workspace Access</h1>
+      <p>Sign in, create an account, or request a password reset through a protected enterprise-ready flow designed for approved clients, project stakeholders, and business contacts.</p>
+    </div>
+
+    <div class="login-trust-grid">
+      <article>
+        <strong>Protected Sessions</strong>
+        <span>Secure session handling, route protection, and suspicious login monitoring.</span>
+      </article>
+      <article>
+        <strong>Custom Numeric CAPTCHA</strong>
+        <span>Dynamic challenge validation with refresh-after-failure protection.</span>
+      </article>
+      <article>
+        <strong>Privacy-First Access</strong>
+        <span>Account flows are designed around consent, validation, and business-only use.</span>
+      </article>
+    </div>
+
+    <div class="auth-shell">
+      <aside class="auth-sidecard">
+        <span class="eyebrow">Security Standard</span>
+        <h2>Enterprise-grade access for client collaboration.</h2>
+        <p>This access area is intended for approved client workspaces, secure communication, project visibility, and account recovery.</p>
+        <ul class="login-feature-list">
+          <li><i data-lucide="shield-check"></i> Session protection and route controls</li>
+          <li><i data-lucide="scan-eye"></i> Suspicious-login and failed-attempt monitoring</li>
+          <li><i data-lucide="key-round"></i> Secure reset requests with server-side validation</li>
+          <li><i data-lucide="badge-check"></i> Privacy acceptance for account creation</li>
+        </ul>
+      </aside>
+
+      <div>
+        <div class="auth-tabbar" data-auth-tabs>
+          <button type="button" class="{% if active_panel == 'login' %}active{% endif %}" data-auth-target="login">Login</button>
+          <button type="button" class="{% if active_panel == 'register' %}active{% endif %}" data-auth-target="register">Create Account</button>
+          <button type="button" class="{% if active_panel == 'forgot' %}active{% endif %}" data-auth-target="forgot">Forgot Password</button>
+        </div>
+
+        <div class="login-panels auth-panels" data-auth-panels data-active-panel="{{ active_panel }}">
+          <form class="login-card auth-panel {% if active_panel == 'login' %}active{% endif %}" method="post" action="{{ url_for('public.login') }}" data-auth-panel="login">
+            <input type="hidden" name="form_name" value="login">
+            {{ login_form.hidden_tag() }}
+            <span class="login-type"><i data-lucide="shield"></i> Sign In</span>
+            <h2>Access Your Workspace</h2>
+            <p>Use your approved email and password to continue through the secure client access flow.</p>
+            {{ input_field(login_form.email, type='email', autocomplete='email', autocapitalize='none', spellcheck='false') }}
+            {{ input_field(login_form.password, type='password', autocomplete='current-password') }}
+            <div class="login-aux">
+              <label class="checkline">
+                {{ login_form.remember() }}
+                <span>Remember this device</span>
+              </label>
+              <button type="button" class="link-button" data-auth-trigger="forgot">Forgot password?</button>
+            </div>
+            {{ captcha_box(login_form, captcha_login) }}
+            <button class="btn primary" type="submit" data-loading-text="Signing in..."><i data-lucide="log-in"></i> Continue</button>
+            <small class="login-support">Passwords are stored using modern hashing and protected session handling.</small>
+          </form>
+
+          <form class="login-card auth-panel {% if active_panel == 'register' %}active{% endif %}" method="post" action="{{ url_for('public.login') }}" data-auth-panel="register">
+            <input type="hidden" name="form_name" value="register">
+            {{ register_form.hidden_tag() }}
+            <span class="login-type"><i data-lucide="user-plus"></i> Create Account</span>
+            <h2>Open A Secure Account</h2>
+            <p>Create client access for project collaboration, reporting, updates, and secure communication.</p>
+            {{ input_field(register_form.full_name, autocomplete='name') }}
+            {{ input_field(register_form.company, autocomplete='organization') }}
+            {{ input_field(register_form.email, type='email', autocomplete='email', autocapitalize='none', spellcheck='false') }}
+            {{ input_field(register_form.password, type='password', autocomplete='new-password') }}
+            {{ input_field(register_form.confirm_password, type='password', autocomplete='new-password') }}
+            <div class="security-note">
+              <strong>Password guidance</strong>
+              <span>Use at least 8 characters with a mix of uppercase, lowercase, numbers, and symbols.</span>
+            </div>
+            <div class="login-aux">
+              <label class="checkline">
+                {{ register_form.remember() }}
+                <span>Remember this device</span>
+              </label>
+            </div>
+            {{ checkbox_field(register_form.accept_privacy, 'I accept the Privacy Policy and secure handling of my account data.') }}
+            {{ captcha_box(register_form, captcha_register) }}
+            <button class="btn primary" type="submit" data-loading-text="Creating account..."><i data-lucide="sparkles"></i> Create Account</button>
+            <small class="login-support">Client access is monitored for failed attempts and suspicious login patterns.</small>
+          </form>
+
+          <form class="login-card auth-panel {% if active_panel == 'forgot' %}active{% endif %}" method="post" action="{{ url_for('public.login') }}" data-auth-panel="forgot">
+            <input type="hidden" name="form_name" value="forgot">
+            {{ forgot_form.hidden_tag() }}
+            <span class="login-type"><i data-lucide="key-round"></i> Password Reset</span>
+            <h2>Reset Access Securely</h2>
+            <p>Submit your account email to generate a protected reset path with server-side validation.</p>
+            {{ input_field(forgot_form.email, type='email', autocomplete='email', autocapitalize='none', spellcheck='false') }}
+            {{ captcha_box(forgot_form, captcha_forgot) }}
+            <button class="btn primary" type="submit" data-loading-text="Generating reset path..."><i data-lucide="refresh-cw"></i> Generate Reset Link</button>
+            {% if reset_preview_url %}
+            <div class="reset-preview">
+              <span>Development preview link</span>
+              <a href="{{ reset_preview_url }}">{{ reset_preview_url }}</a>
+            </div>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

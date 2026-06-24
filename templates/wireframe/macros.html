@@ -1,0 +1,78 @@
+{% macro render_card(card) %}
+<article class="wf-card">
+  <div class="wf-card-visual">{{ card.visual or card.meta or "Block" }}</div>
+  <div class="wf-card-body">
+    {% if card.meta %}
+    <span class="wf-card-meta">{{ card.meta }}</span>
+    {% endif %}
+    <h3>{{ card.title }}</h3>
+    {% if card.copy %}
+    <p>{{ card.copy }}</p>
+    {% endif %}
+    {% if card.chips %}
+    <div class="wf-chip-row">
+      {% for chip in card.chips %}
+      <span class="wf-chip">{{ chip }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if card.note %}
+    <small>{{ card.note }}</small>
+    {% endif %}
+    {% if card.support %}
+    <div class="wf-support-line">{{ card.support }}</div>
+    {% endif %}
+    {% if card.rating %}
+    <div class="wf-rating">
+      <span>{{ "★" * card.rating }}</span>
+      <small>{{ card.rating }}/5</small>
+    </div>
+    {% endif %}
+    {% if card.before or card.after %}
+    <div class="wf-result-grid">
+      {% if card.before %}
+      <div>
+        <span>Before</span>
+        <strong>{{ card.before }}</strong>
+      </div>
+      {% endif %}
+      {% if card.after %}
+      <div>
+        <span>After</span>
+        <strong>{{ card.after }}</strong>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% if card.date or card.location %}
+    <div class="wf-card-meta-row">
+      {% if card.date %}<span>{{ card.date }}</span>{% endif %}
+      {% if card.location %}<span>{{ card.location }}</span>{% endif %}
+    </div>
+    {% endif %}
+  </div>
+</article>
+{% endmacro %}
+
+{% macro render_metric(metric) %}
+<article class="wf-metric">
+  <strong>{{ metric.value }}</strong>
+  <span>{{ metric.label }}</span>
+</article>
+{% endmacro %}
+
+{% macro render_field(field) %}
+{% if field is string %}
+<div class="wf-field">
+  <span>{{ field }}</span>
+  <div class="wf-input"></div>
+</div>
+{% else %}
+<div class="wf-field wf-field--{{ field.type or 'text' }}">
+  <span>{{ field.label }}</span>
+  <div class="wf-input">
+    <small>{{ field.type or 'text' }}</small>
+  </div>
+</div>
+{% endif %}
+{% endmacro %}

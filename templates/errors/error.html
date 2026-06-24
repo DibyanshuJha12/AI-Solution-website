@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ status_code }} | AI SOLUTION{% endblock %}
+{% block robots %}noindex,nofollow{% endblock %}
+{% block content %}
+<section class="page-hero compact-hero">
+  <span class="eyebrow">System Message</span>
+  <h1>{{ title }}</h1>
+  <p>{{ message }}</p>
+</section>
+
+<section class="section reveal">
+  <div class="two-column">
+    <div>
+      <span class="eyebrow">Need help quickly?</span>
+      <h2>We can still get you to the right place.</h2>
+      <p>Use the main navigation to continue browsing, or contact AI SOLUTION directly if you were trying to reach a team member or request support.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="{{ url_for('public.home') }}">Return Home</a>
+        <a class="btn ghost" href="{{ url_for('public.contact') }}">Contact Us</a>
+      </div>
+    </div>
+    <article class="workspace-card">
+      <span class="eyebrow">Status</span>
+      <h3>Error {{ status_code }}</h3>
+      <p>The header, footer, and navigation remain available so you can continue using the site without losing context.</p>
+    </article>
+  </div>
+</section>
+{% endblock %}

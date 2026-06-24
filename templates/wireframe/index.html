@@ -1,0 +1,65 @@
+{% extends "wireframe/base.html" %}
+{% block title %}Website Wireframe | AI SOLUTION{% endblock %}
+{% block content %}
+<section class="wf-index-hero">
+  <div class="wf-index-copy">
+    <span class="eyebrow">Wireframe Index</span>
+    <h2>{{ wireframe_summary }}</h2>
+    <p>This index covers the public pages, client access flow, admin panel, and the system error state using the same section order and route structure as the live application.</p>
+    <div class="wf-stat-row">
+      <article><strong>{{ page_count }}</strong><span>Total pages</span></article>
+      <article><strong>{{ public_count }}</strong><span>Public pages</span></article>
+      <article><strong>{{ client_count }}</strong><span>Client pages</span></article>
+      <article><strong>{{ admin_count }}</strong><span>Admin pages</span></article>
+    </div>
+  </div>
+  <div class="wf-index-panel">
+    <span class="wf-index-panel-label">Coverage</span>
+    <div class="wf-index-panel-grid">
+      {% for group in nav_groups %}
+      <article>
+        <strong>{{ group.label }}</strong>
+        <span>{{ group.pages|length }} pages</span>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% for group in nav_groups %}
+<section class="wf-index-group">
+  <div class="wf-group-heading">
+    <div>
+      <span class="eyebrow">{{ group.label }}</span>
+      <h3>{{ group.pages|length }} page{% if group.pages|length != 1 %}s{% endif %}</h3>
+    </div>
+  </div>
+  <div class="wf-page-grid">
+    {% for page in group.pages %}
+    <article class="wf-page-card">
+      <div class="wf-page-card-accent"></div>
+      <div class="wf-page-card-copy">
+        <span class="wf-page-card-kicker">{{ group.label }}</span>
+        <h4>{{ page.title }}</h4>
+        <p>{{ page.summary }}</p>
+        <div class="wf-page-card-meta">
+          <span>{{ page.section_count }} sections</span>
+          {% if page.live_url %}
+          <span>Live route available</span>
+          {% else %}
+          <span>Token or utility route</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="wf-page-card-actions">
+        <a class="wf-btn wf-btn--primary" href="{{ page.wireframe_url }}">Open wireframe</a>
+        {% if page.live_url %}
+        <a class="wf-btn" href="{{ page.live_url }}" target="_blank" rel="noopener noreferrer">Open live page</a>
+        {% endif %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

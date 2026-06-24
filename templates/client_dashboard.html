@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Workspace | AI SOLUTION{% endblock %}
+{% block robots %}noindex,nofollow{% endblock %}
+{% block content %}
+<section class="page-hero compact-hero">
+  <span class="eyebrow">Client Workspace</span>
+  <h1>Welcome back, {{ user.full_name }}.</h1>
+  <p>Your secure workspace keeps project communication, intake, and next-step planning organized and accessible.</p>
+</section>
+
+<section class="section reveal">
+  <div class="metric-strip">
+    <article>
+      <span>Account Email</span>
+      <strong>{{ user.email }}</strong>
+    </article>
+    <article>
+      <span>Company</span>
+      <strong>{{ user.company or 'Independent / Confidential' }}</strong>
+    </article>
+    <article>
+      <span>Inquiries Submitted</span>
+      <strong>{{ inquiry_count }}</strong>
+    </article>
+    <article>
+      <span>Assistant Sessions</span>
+      <strong>{{ chatbot_count }}</strong>
+    </article>
+  </div>
+</section>
+
+<section class="section two-column reveal">
+  <div>
+    <span class="eyebrow">Next Steps</span>
+    <h2>Keep delivery moving with secure communication.</h2>
+    <p>Use the contact pathway for scoped requests, explore current solution areas, or continue using the assistant for high-level guidance before a formal engagement review.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="{{ url_for('public.contact') }}">Start A New Inquiry</a>
+      <a class="btn ghost" href="{{ url_for('public.solutions') }}">Review Solutions</a>
+    </div>
+  </div>
+  <div class="workspace-card">
+    <span class="eyebrow">Account Security</span>
+    <h3>Protected session controls are active.</h3>
+    <p>Account access is tracked with session logging, numerical verification, and protected route handling.</p>
+    <a class="btn small ghost" href="{{ url_for('public.logout') }}">Sign Out</a>
+  </div>
+</section>
+{% endblock %}

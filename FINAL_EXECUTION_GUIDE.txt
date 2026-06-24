@@ -1,0 +1,59 @@
+AI SOLUTION FINAL EXECUTION GUIDE
+
+Recommended one-click launcher:
+RUN_AI_SOLUTION.bat
+
+PowerShell launcher:
+powershell -ExecutionPolicy Bypass -File .\RUN_AI_SOLUTION.ps1
+
+Recommended quick start:
+1. Double-click RUN_AI_SOLUTION.bat
+2. Wait for the runner to print the public URL and admin login URL
+3. Open the website in your browser
+
+What the runner does:
+1. Creates .env from .env.example if .env is missing
+2. Reuses an existing working Python runtime if one is already available
+3. Can create .venv and install requirements when you run with -InstallDeps
+4. Initializes the database and seed content
+5. Uses PostgreSQL when configured and reachable
+6. Falls back to local SQLite automatically when PostgreSQL is unavailable and fallback is enabled
+7. Starts the site on http://127.0.0.1:5055 or the next free port
+
+Useful launcher commands:
+RUN_AI_SOLUTION.bat
+RUN_AI_SOLUTION.bat -SkipBrowser
+RUN_AI_SOLUTION.bat -OpenAdmin
+RUN_AI_SOLUTION.bat -Port 5060
+RUN_AI_SOLUTION.bat -InstallDeps
+
+PowerShell examples:
+powershell -ExecutionPolicy Bypass -File .\RUN_AI_SOLUTION.ps1 -SkipBrowser
+powershell -ExecutionPolicy Bypass -File .\RUN_AI_SOLUTION.ps1 -OpenAdmin
+powershell -ExecutionPolicy Bypass -File .\RUN_AI_SOLUTION.ps1 -Port 5060
+powershell -ExecutionPolicy Bypass -File .\RUN_AI_SOLUTION.ps1 -InstallDeps
+
+Runtime notes:
+1. The runner prints the exact public URL it started
+2. The runner prints the exact admin login URL based on ADMIN_ROUTE_PREFIX
+3. The runner prints the active database mode, including SQLite fallback when used
+
+Admin credentials come from .env:
+ADMIN_EMAIL
+ADMIN_PASSWORD
+
+Private keys:
+Keep Gemini and reCAPTCHA keys inside .env only.
+Never place them in static JavaScript or public templates.
+
+Local CAPTCHA:
+ALLOW_INSECURE_DEV_CAPTCHA=true is acceptable only for local testing.
+Set it to false before real deployment.
+
+Production checklist:
+1. Set a strong SECRET_KEY in .env
+2. Replace ADMIN_EMAIL and ADMIN_PASSWORD with secure values
+3. Add real GEMINI_API_KEY, RECAPTCHA_SITE_KEY, and RECAPTCHA_SECRET_KEY values
+4. Set SESSION_COOKIE_SECURE=true when serving through HTTPS
+5. Keep the admin route private and access it only through /secure-admin/login or your custom ADMIN_ROUTE_PREFIX
+6. Use PostgreSQL for production data storage

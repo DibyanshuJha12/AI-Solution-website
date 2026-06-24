@@ -1,0 +1,228 @@
+%% 1. System Architecture Diagram
+flowchart LR
+  User[Visitor / User]
+  Admin[Administrator]
+
+  subgraph CLIENT["HTML / CSS / JavaScript Frontend"]
+    direction TB
+    PublicUI[Public Website UI]
+    AdminUI[Admin Dashboard UI]
+    ChatbotUI[AI Chatbot Widget]
+  end
+
+  subgraph BACKEND["Flask Backend"]
+    direction TB
+    Router[Route Layer]
+    InquiryMgmt[Inquiry Management Module]
+    ContentMgmt[Content Management Module]
+    Analytics[Analytics Module]
+    ChatbotSvc[Gemini Chatbot Service]
+
+    Router --> InquiryMgmt
+    Router --> ContentMgmt
+    Router --> Analytics
+    Router --> ChatbotSvc
+  end
+
+  Database[(PostgreSQL Database)]
+  Gemini[(Gemini API)]
+
+  User --> PublicUI
+  Admin --> AdminUI
+  PublicUI --> Router
+  AdminUI --> Router
+  ChatbotUI --> Router
+
+  InquiryMgmt <--> Database
+  ContentMgmt <--> Database
+  Analytics <--> Database
+  ChatbotSvc <--> Database
+  ChatbotSvc --> Gemini
+
+%% 2. Use Case Diagram
+%% Actors: Visitor/User and Administrator
+usecaseDiagram
+  actor Visitor
+  actor Administrator
+
+  Visitor --> (View Services)
+  Visitor --> (Browse Portfolio)
+  Visitor --> (Read Blogs)
+  Visitor --> (View Events)
+  Visitor --> (Submit Inquiry)
+  Visitor --> (Apply for Jobs)
+  Visitor --> (Subscribe Newsletter)
+  Visitor --> (Chat with AI Assistant)
+
+  Administrator --> (Login)
+  Administrator --> (Manage Inquiries)
+  Administrator --> (Manage Blogs)
+  Administrator --> (Manage Events)
+  Administrator --> (Manage Careers)
+  Administrator --> (Manage Testimonials)
+  Administrator --> (Manage Portfolio)
+  Administrator --> (Manage Newsletter)
+  Administrator --> (View Analytics)
+  Administrator --> (Manage Content)
+  Administrator --> (Manage Users)
+
+%% 3. User Flowchart
+graph TD
+  Start([Start]) --> Visit[Visit Website]
+  Visit --> Browse[Browse Pages]
+  Browse --> Explore[View Services / Portfolio / Blogs]
+  Explore --> Contact[Contact or Inquiry]
+  Contact --> Chatbot[AI Chatbot Assistance]
+  Chatbot --> Submit[Submit Inquiry / Application]
+  Submit --> Confirmation[Confirmation]
+  Confirmation --> End([End])
+
+%% 4. Admin Flowchart
+graph TD
+  StartAdmin([Start]) --> Login[Admin Login]
+  Login --> Dashboard[Dashboard]
+  Dashboard --> Content[Manage Content]
+  Content --> Inquiries[Manage Inquiries]
+  Inquiries --> Careers[Manage Careers]
+  Careers --> Events[Manage Events]
+  Events --> Testimonials[Manage Testimonials]
+  Testimonials --> AnalyticsView[View Analytics]
+  AnalyticsView --> Logout[Logout]
+  Logout --> EndAdmin([End])
+
+%% 5. Data Flow Diagram (DFD Level 0)
+flowchart LR
+  UserDFD[User]
+  AdminDFD[Admin]
+  GeminiDFD[Gemini API]
+
+  subgraph SYSTEM["AI Solution Web-Based System"]
+    direction LR
+    WI((Website Interface))
+    INQ((Inquiry Processing))
+    CAREER((Career Processing))
+    CONTENT((Content Management))
+    CHAT((AI Chatbot))
+    ANALYTICS((Analytics System))
+    DB[(PostgreSQL Database)]
+  end
+
+  UserDFD -->|browse pages, submit forms, chat| WI
+  AdminDFD -->|login, manage records, view reports| WI
+
+  WI -->|inquiry data| INQ
+  WI -->|application data| CAREER
+  WI -->|content updates| CONTENT
+  WI -->|chat messages| CHAT
+  WI -->|dashboard requests| ANALYTICS
+
+  INQ <--> |store / retrieve inquiries| DB
+  CAREER <--> |store / retrieve applications| DB
+  CONTENT <--> |store / retrieve site content| DB
+  CHAT <--> |store chat history and logs| DB
+  CHAT -->|prompt / response traffic| GeminiDFD
+  ANALYTICS <--> |read visits, auth logs, submissions, metrics| DB
+
+%% 6. User Interface Design Diagram
+graph TB
+  subgraph PUBLIC["Public Website Navigation"]
+    direction TB
+    HOME[Home]
+    ABOUT[About]
+    SERVICES[Services]
+    INDUSTRIES[Industries]
+    PORTFOLIO[Portfolio]
+    GALLERY[Gallery / Media]
+    EVENTS[Events]
+    BLOG[Blog]
+    CAREERS[Careers]
+    TESTIMONIALS[Testimonials]
+    CONTACT[Contact]
+    CHATBOT[AI Chatbot]
+
+    HOME --> ABOUT
+    HOME --> SERVICES
+    HOME --> INDUSTRIES
+    HOME --> PORTFOLIO
+    HOME --> EVENTS
+    HOME --> BLOG
+    HOME --> CAREERS
+    HOME --> TESTIMONIALS
+    HOME --> CONTACT
+    HOME --> CHATBOT
+    PORTFOLIO --> GALLERY
+  end
+
+  subgraph ADMINNAV["Admin Dashboard Navigation"]
+    direction TB
+    DASH[Admin Dashboard]
+    ANALYTICSNAV[Analytics]
+    INQUIRIESNAV[Inquiries]
+    CAREERSNAV[Careers]
+    BLOGSNAV[Blogs]
+    EVENTSNAV[Events]
+    TESTIMONIALSNAV[Testimonials]
+    PORTFOLIONAV[Portfolio]
+    NEWSLETTERNAV[Newsletter]
+    SETTINGSNAV[Settings]
+
+    DASH --> ANALYTICSNAV
+    DASH --> INQUIRIESNAV
+    DASH --> CAREERSNAV
+    DASH --> BLOGSNAV
+    DASH --> EVENTSNAV
+    DASH --> TESTIMONIALSNAV
+    DASH --> PORTFOLIONAV
+    DASH --> NEWSLETTERNAV
+    DASH --> SETTINGSNAV
+  end
+
+%% 7. Security Design Diagram
+flowchart TB
+  UserSec[User]
+  AdminSec[Admin]
+  PublicForms[Public Forms]
+  AdminForms[Admin Forms]
+
+  subgraph REQUEST["Request Protection"]
+    direction TB
+    Validation[Input Validation]
+    CSRF[CSRF Protection]
+    Captcha[Google reCAPTCHA]
+  end
+
+  subgraph AUTH["Authentication & Session Management"]
+    direction TB
+    Hashing[Password Hashing]
+    UserAuth[User Authentication]
+    AdminAuth[Admin Authentication]
+    Session[Session Management]
+
+    Hashing --> UserAuth
+    Hashing --> AdminAuth
+    UserAuth --> Session
+    AdminAuth --> Session
+  end
+
+  subgraph SERVER["Backend & Data Security"]
+    direction TB
+    Backend[Flask Backend]
+    DBAccess[Secure Database Access]
+    SQLi[SQL Injection Prevention]
+    DatabaseSec[(PostgreSQL Database)]
+    GeminiLayer[Gemini API Security Layer]
+    GeminiSec[(Gemini API)]
+
+    Backend --> DBAccess --> SQLi --> DatabaseSec
+    Backend --> GeminiLayer --> GeminiSec
+  end
+
+  UserSec --> PublicForms
+  AdminSec --> AdminForms
+  PublicForms --> Validation
+  AdminForms --> Validation
+  Validation --> CSRF
+  CSRF --> Captcha
+  Captcha --> UserAuth
+  Captcha --> AdminAuth
+  Session --> Backend

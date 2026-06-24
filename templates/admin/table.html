@@ -1,0 +1,122 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ title }} | AI SOLUTION Admin{% endblock %}
+{% block admin_content %}
+<section class="admin-page">
+  <div class="admin-heading">
+    <div>
+      <span class="eyebrow">Manage</span>
+      <h1>{{ title }}</h1>
+    </div>
+    <form class="admin-toolbar" method="get">
+      <input class="control" name="q" value="{{ search }}" placeholder="Search {{ title|lower }}">
+      {% if statuses %}
+      <select class="control" name="status">
+        <option value="">All statuses</option>
+        {% for item in statuses %}
+        <option value="{{ item }}" {% if status_filter == item %}selected{% endif %}>{{ item }}</option>
+        {% endfor %}
+      </select>
+      {% endif %}
+      <select class="control" name="direction">
+        <option value="desc" {% if direction == 'desc' %}selected{% endif %}>Newest first</option>
+        <option value="asc" {% if direction == 'asc' %}selected{% endif %}>Oldest first</option>
+      </select>
+      <button class="btn small ghost" type="submit">Apply</button>
+      {% if export_endpoint %}
+      <a class="btn small" href="{{ url_for(export_endpoint, q=search, status=status_filter) }}"><i data-lucide="file-down"></i> Export CSV</a>
+      {% endif %}
+    </form>
+  </div>
+
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          {% for column in columns %}
+          <th>
+            <a href="?q={{ search }}&status={{ status_filter }}&direction={{ 'asc' if direction == 'desc' else 'desc' }}&sort={{ column }}&page={{ page }}">{{ column.replace('_', ' ').title() }}</a>
+          </th>
+          {% endfor %}
+          {% if statuses or download or table_actions == 'clients' or allow_delete %}<th>Actions</th>{% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+        <tr>
+          {% for column in columns %}
+          {% set value = record|attr(column) %}
+          <td>
+            {% if column in ['created_at', 'logged_in_at', 'logged_out_at', 'last_login_at'] %}
+              {{ value.strftime('%b %d, %Y %I:%M %p') if value else '—' }}
+            {% elif column == 'rating' and value %}
+              {{ '★' * value }} {{ value }}/5
+            {% elif column in ['subject', 'message', 'feedback', 'description', 'content', 'bio', 'details'] %}
+              {{ (value or '—')|truncate(140, True, '…') }}
+            {% elif value is sameas true %}
+              Yes
+            {% elif value is sameas false %}
+              No
+            {% elif value is iterable and value is not string %}
+              {{ value|join(', ') }}
+            {% else %}
+              {{ value or '—' }}
+            {% endif %}
+          </td>
+          {% endfor %}
+          {% if statuses or download or table_actions == 'clients' or allow_delete %}
+          <td class="table-actions">
+            {% if statuses %}
+            <form method="post" action="{{ url_for('admin.update_status', resource=request.endpoint.split('.')[-1], record_id=record.id) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <select name="status">
+                {% for status in statuses %}
+                <option value="{{ status }}" {% if record.status == status %}selected{% endif %}>{{ status }}</option>
+                {% endfor %}
+              </select>
+              <button type="submit">Update</button>
+            </form>
+            {% endif %}
+            {% if download %}
+            <a href="{{ url_for('admin.download_resume', application_id=record.id) }}"><i data-lucide="download"></i> Resume</a>
+            {% endif %}
+            {% if table_actions == 'clients' %}
+            <form method="post" action="{{ url_for('admin.update_client_user', user_id=record.id) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              {% if record.is_active %}
+              <button type="submit" name="action" value="archive">Archive</button>
+              {% else %}
+              <button type="submit" name="action" value="restore">Restore</button>
+              {% endif %}
+              <button type="submit" name="action" value="delete">Delete</button>
+            </form>
+            {% endif %}
+            {% if allow_delete %}
+            <form method="post" action="{{ url_for('admin.delete_record', resource=table_actions, record_id=record.id) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit">Delete</button>
+            </form>
+            {% endif %}
+          </td>
+          {% endif %}
+        </tr>
+        {% else %}
+        <tr><td colspan="{{ columns|length + 1 }}">No records yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <span>{{ total }} total records</span>
+    <div>
+      {% if page > 1 %}
+      <a class="btn small ghost" href="?q={{ search }}&status={{ status_filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page-1 }}">Previous</a>
+      {% endif %}
+      <span>Page {{ page }} of {{ pages }}</span>
+      {% if page < pages %}
+      <a class="btn small ghost" href="?q={{ search }}&status={{ status_filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page+1 }}">Next</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="description" content="{% block meta_description %}AI SOLUTION builds secure AI automation, analytics, cybersecurity, cloud AI, and virtual assistant platforms for modern companies.{% endblock %}">
+  <meta name="robots" content="{% block robots %}index,follow,max-image-preview:large{% endblock %}">
+  <meta name="theme-color" content="#040b15">
+  <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ self.meta_description() }}{% endblock %}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ request.base_url }}">
+  <meta property="og:image" content="{{ url_for('static', filename='images/logo.png', _external=True) }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <script>
+    (function() {
+      try {
+        var theme = window.localStorage.getItem("ai-solution-theme");
+        if (!theme) return;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme === "light" ? "light" : "dark";
+      } catch (error) {
+        /* no-op */
+      }
+    })();
+    (function() {
+      try {
+        var storedChoice = window.localStorage.getItem("ai-solution-cookie-choice");
+        if (!storedChoice) return;
+        document.documentElement.dataset.cookiePreference = storedChoice;
+      } catch (error) {
+        /* no-op */
+      }
+    })();
+  </script>
+  <title>{% block title %}{{ brand_name }}{% endblock %}</title>
+  <link rel="canonical" href="{{ request.base_url }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo-mark.png') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/logo-mark.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/core.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  {% block head_extra %}{% endblock %}
+</head>
+  {% from "macros.html" import brand_icon %}
+<body class="{% block body_class %}{% endblock %}{% if cookie_gate_visible %} cookie-lock cookie-gated{% endif %}" data-cookie-preference="{{ cookie_preference }}" data-cookie-mode="{{ cookie_gate_mode }}" data-recaptcha-site-key="{{ recaptcha_site_key }}">
+  <script>
+    (function() {
+      try {
+        var storedChoice = window.localStorage.getItem("ai-solution-cookie-choice");
+        if (!storedChoice) return;
+        document.body.dataset.cookiePreference = storedChoice;
+        document.body.classList.remove("cookie-lock", "cookie-gated");
+      } catch (error) {
+        /* no-op */
+      }
+    })();
+  </script>
+  {% if not cookie_gate_visible %}
+  <div class="site-loader" aria-hidden="true"><span></span></div>
+  {% endif %}
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="navbar" data-nav>
+    <a class="brand" href="{{ url_for('public.home') }}" aria-label="AI SOLUTION home">
+      <img src="{{ url_for('static', filename='images/logo-mark.png') }}" alt="AI SOLUTION logo">
+      <span class="brand-copy">
+        <strong>{{ brand_name }}</strong>
+        <small>{{ brand_slogan }}</small>
+      </span>
+    </a>
+    <button class="nav-toggle icon-button" type="button" aria-label="Open menu" data-nav-toggle>
+      <i data-lucide="menu"></i>
+    </button>
+    <nav class="nav-links" data-nav-links aria-label="Primary navigation">
+      <a href="{{ url_for('public.home') }}">Home</a>
+      <a href="{{ url_for('public.solutions') }}">Solutions</a>
+      <a href="{{ url_for('public.portfolio') }}">Portfolio</a>
+      <a href="{{ url_for('public.testimonials') }}">Testimonials</a>
+      <a href="{{ url_for('public.events') }}">Events</a>
+      <a href="{{ url_for('public.blog') }}">Blog</a>
+      <a href="{{ url_for('public.careers') }}">Careers</a>
+      <a href="{{ url_for('public.contact') }}">Contact Us</a>
+      <button class="nav-feedback-btn" type="button" data-feedback-open>Share Feedback</button>
+    </nav>
+    <button class="theme-toggle icon-button" type="button" aria-label="Toggle theme" data-theme-toggle>
+      <i data-lucide="moon"></i>
+    </button>
+  </header>
+
+  <div class="flash-stack" aria-live="polite">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+  </div>
+
+  <main id="main-content" tabindex="-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand footer-brand-anchor" href="{{ url_for('public.home') }}" aria-label="AI SOLUTION home">
+          <img src="{{ url_for('static', filename='images/logo-mark.png') }}" alt="AI SOLUTION logo">
+          <span class="brand-copy">
+            <strong>{{ brand_name }}</strong>
+            <small>{{ brand_slogan }}</small>
+          </span>
+        </a>
+        <p class="footer-brand-summary">Secure automation, intelligent analytics, governed copilots, and delivery programmes for teams that need dependable AI outcomes.</p>
+        <section class="footer-social-showcase" aria-labelledby="footer-social-title">
+          <div class="footer-social-titleblock">
+            <h3 id="footer-social-title">Follow <span>AI SOLUTION</span></h3>
+            <p>Connect with our latest updates, delivery insights, and AI programme announcements.</p>
+          </div>
+          <span class="footer-social-line" aria-hidden="true"></span>
+          <div class="footer-social-grid" aria-label="Social links">
+            <a class="footer-social-tile footer-social-tile--linkedin" href="{{ site_settings.get('linkedin_url', 'https://www.linkedin.com') }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <span class="footer-social-tile-icon">{{ brand_icon('linkedin') }}</span>
+              <small>LinkedIn</small>
+            </a>
+            <a class="footer-social-tile footer-social-tile--instagram" href="{{ site_settings.get('instagram_url', 'https://www.instagram.com') }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <span class="footer-social-tile-icon">{{ brand_icon('instagram') }}</span>
+              <small>Instagram</small>
+            </a>
+            <a class="footer-social-tile footer-social-tile--facebook" href="{{ site_settings.get('facebook_url', 'https://www.facebook.com') }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <span class="footer-social-tile-icon">{{ brand_icon('facebook') }}</span>
+              <small>Facebook</small>
+            </a>
+            <a class="footer-social-tile footer-social-tile--whatsapp" href="{{ site_settings.get('whatsapp_url', 'https://wa.me/9779807803733') }}" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <span class="footer-social-tile-icon">{{ brand_icon('whatsapp') }}</span>
+              <small>WhatsApp</small>
+            </a>
+          </div>
+        </section>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <a href="{{ url_for('public.solutions') }}">Solutions</a>
+        <a href="{{ url_for('public.portfolio') }}">Case Studies</a>
+        <a href="{{ url_for('public.blog') }}">Insights</a>
+        <a href="{{ url_for('public.contact') }}">Contact Us</a>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <a href="{{ url_for('public.contact', service='AI Automation') }}">AI Automation</a>
+        <a href="{{ url_for('public.contact', service='AI Analytics') }}">AI Analytics</a>
+        <a href="{{ url_for('public.contact', service='AI Cybersecurity') }}">AI Cybersecurity</a>
+        <a href="{{ url_for('public.contact', service='Virtual Assistant Systems') }}">Virtual Assistants</a>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <p><a href="tel:+9779807803733">{{ site_settings.get('contact_phone', '9807803733') }}</a></p>
+        <p>{{ site_settings.get('contact_email', 'contact@aisolutionsglobal.co.uk') }}</p>
+        <p>{{ site_settings.get('contact_address', 'Canary Wharf, London, United Kingdom') }}</p>
+        <form class="newsletter-form" action="{{ url_for('public.newsletter') }}" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="email" name="email" placeholder="Newsletter email" required>
+          <button type="submit" aria-label="Subscribe"><i data-lucide="send"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{ current_year }} AI SOLUTION. All rights reserved.</span>
+      <span><a href="{{ url_for('public.privacy') }}">Privacy Policy</a> · <a href="{{ url_for('public.terms') }}">Terms & Conditions</a></span>
+    </div>
+  </footer>
+
+  {% include "partials/feedback_modal.html" %}
+  {% include "partials/chatbot.html" %}
+
+  <div class="cookie-banner {% if cookie_gate_visible %}show{% endif %}" data-cookie-banner role="dialog" aria-modal="true" aria-labelledby="cookie-title" aria-describedby="cookie-description">
+    <div class="cookie-card">
+      <div class="cookie-brand">
+        <div class="cookie-brand-lockup">
+          <img src="{{ url_for('static', filename='images/logo-mark.png') }}" alt="AI SOLUTION logo">
+          <div>
+            <span class="eyebrow">Cookie Consent</span>
+            <strong>AI SOLUTION privacy preferences</strong>
+          </div>
+        </div>
+        <button class="cookie-dismiss" type="button" data-cookie-manage aria-label="Manage cookie preferences">
+          <i data-lucide="settings-2"></i>
+        </button>
+      </div>
+      <h2 id="cookie-title">{{ site_settings.get('cookie_banner_title', 'Cookie preferences') }}</h2>
+      <p id="cookie-description">{{ site_settings.get('cookie_banner_text', 'Essential cookies keep sessions and forms secure. Optional cookies help remember your preferences and keep the site smoother.') }}</p>
+      <small>Essential cookies stay on. Optional preferences can be adjusted at any time.</small>
+      <div class="cookie-preferences" data-cookie-preferences hidden>
+        <div>
+          <strong>Essential security cookies</strong>
+          <span>Always enabled for sessions, form protection, and secure access handling.</span>
+        </div>
+        <label class="cookie-preference-toggle">
+          <span>
+            <strong>Optional preference cookies</strong>
+            <span>Used to remember consent and keep interface preferences, including dark/light mode, consistent across pages.</span>
+          </span>
+          <input type="checkbox" data-cookie-optional checked>
+        </label>
+        <div class="cookie-preference-actions">
+          <button class="btn small primary" type="button" data-cookie-save-preferences>Save Preferences</button>
+        </div>
+      </div>
+      <div class="cookie-actions">
+        <a class="cookie-learnmore" href="{{ url_for('public.privacy') }}">Learn More</a>
+        <button type="button" data-cookie-manage>{{ site_settings.get('cookie_manage_label', 'Customize Preferences') }}</button>
+        <button type="button" data-cookie-decline>{{ site_settings.get('cookie_decline_label', 'Reject Non-Essential') }}</button>
+        <button type="button" data-cookie-accept>{{ site_settings.get('cookie_accept_label', 'Accept All') }}</button>
+      </div>
+    </div>
+  </div>
+
+  {% if recaptcha_site_key %}
+  <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}" defer></script>
+  {% endif %}
+  <script type="module" src="{{ url_for('static', filename='js/site.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

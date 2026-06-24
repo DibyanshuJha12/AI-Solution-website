@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block title %}Privacy Policy | AI SOLUTION{% endblock %}
+{% block meta_description %}Read the AI SOLUTION privacy policy covering forms, chatbot conversations, cookies, analytics, retention, and data subject rights.{% endblock %}
+{% block content %}
+<section class="page-hero compact-hero legal-hero">
+  <span class="eyebrow">Privacy Policy</span>
+  <h1>Clear privacy information for AI SOLUTION visitors, clients, applicants, and event guests.</h1>
+  <p>This notice explains how AI SOLUTION handles personal data under the UK GDPR, the Data Protection Act 2018, and the Privacy and Electronic Communications Regulations (PECR) where cookies and similar technologies are used.</p>
+  <div class="hero-trust-strip">
+    <span><i data-lucide="shield-check"></i> UK GDPR-focused privacy notice</span>
+    <span><i data-lucide="cookie"></i> Covers chatbot, forms, and consent</span>
+    <span><i data-lucide="scroll-text"></i> Structured for clear review</span>
+  </div>
+</section>
+
+<section class="legal-layout reveal">
+  <aside class="legal-toc-card">
+    <span class="eyebrow">Contents</span>
+    <nav class="legal-toc" aria-label="Privacy policy contents">
+      <a href="#controller">Who we are</a>
+      <a href="#data-we-collect">Data we collect</a>
+      <a href="#how-we-use-data">How we use data</a>
+      <a href="#lawful-bases">Lawful bases</a>
+      <a href="#chatbot-processing">AI chatbot data usage</a>
+      <a href="#cookies">Cookies and consent</a>
+      <a href="#sharing">Sharing and transfers</a>
+      <a href="#retention">Retention</a>
+      <a href="#rights">Your rights</a>
+      <a href="#security">Security</a>
+      <a href="#contact">Contact and complaints</a>
+    </nav>
+    <div class="legal-highlight">
+      <strong>Quick note</strong>
+      <p>This page is written to align with official UK ICO guidance on privacy information and cookie consent. It is general website information and not a substitute for legal advice specific to your business.</p>
+    </div>
+  </aside>
+
+  <article class="legal-page legal-article">
+  {% if custom_policy %}
+  <div class="rich-copy">{{ custom_policy|markdownish }}</div>
+  {% else %}
+  <div class="legal-meta-grid">
+    <article>
+      <span>Controller</span>
+      <strong>AI SOLUTION</strong>
+    </article>
+    <article>
+      <span>Jurisdiction</span>
+      <strong>United Kingdom</strong>
+    </article>
+    <article>
+      <span>Primary laws</span>
+      <strong>UK GDPR, DPA 2018, PECR</strong>
+    </article>
+    <article>
+      <span>Privacy contact</span>
+      <strong>{{ site_settings.get('contact_email', 'contact@aisolutionsglobal.co.uk') }}</strong>
+    </article>
+  </div>
+
+  <section class="legal-section" id="controller">
+    <h2>1. Who We Are</h2>
+    <p>AI SOLUTION acts as the controller for the personal data collected through this website and related business interactions, including contact requests, client account access, event registration, career applications, newsletter subscriptions, and chatbot conversations handled through our public website.</p>
+    <p>You can contact us about privacy matters at {{ site_settings.get('contact_email', 'contact@aisolutionsglobal.co.uk') }}. Our public business contact location is {{ site_settings.get('contact_address', 'Canary Wharf, London, United Kingdom') }}.</p>
+  </section>
+
+  <section class="legal-section" id="data-we-collect">
+    <h2>2. What Personal Data We Collect</h2>
+    <p>We may collect identity and contact data such as your name, business email, company name, role, phone number, address, and country. We also collect service and enquiry data such as project requirements, preferred contact method, budget range, event attendance details, and the content of messages you send to us.</p>
+    <p>If you apply for a role, we may process recruitment information such as your CV or resume, employment history, skills, portfolio URL, cover letter, and application progress. If you create a client account, we process login records, password reset activity, accepted privacy confirmation, and session security information.</p>
+    <p>We also collect technical and operational records such as IP address, browser and device information, session identifiers, CAPTCHA validation outcomes, authentication history, cookie preferences, server logs, page access information, and activity logs needed to keep the platform secure and operational.</p>
+  </section>
+
+  <section class="legal-section" id="how-we-use-data">
+    <h2>3. How We Use Personal Data</h2>
+    <ul class="legal-list">
+      <li>Respond to enquiries, strategy requests, and business conversations.</li>
+      <li>Review event registrations, job applications, and client access requests.</li>
+      <li>Operate and secure public forms, logins, password resets, and website sessions.</li>
+      <li>Provide newsletter communications where requested.</li>
+      <li>Support service quality, platform maintenance, fraud prevention, and abuse monitoring.</li>
+      <li>Improve the relevance of content, service messaging, and customer support pathways.</li>
+    </ul>
+  </section>
+
+  <section class="legal-section" id="lawful-bases">
+    <h2>4. UK GDPR Lawful Bases</h2>
+    <p>Depending on the context, we rely on one or more lawful bases recognised by the UK GDPR. These may include legitimate interests to operate, secure, and improve the website; contract or steps taken at your request before entering into a contract; legal obligation where retention or disclosure is required; and consent where optional cookies or preference-based communications require it.</p>
+    <div class="legal-highlight">
+      <strong>Examples of lawful basis use</strong>
+      <ul class="legal-list">
+        <li><strong>Legitimate interests:</strong> website security, service enquiries, business relationship management, and abuse prevention.</li>
+        <li><strong>Contract:</strong> preparing proposals, handling client access, or responding to service requests.</li>
+        <li><strong>Consent:</strong> optional preference cookies and other non-essential technologies where PECR requires consent.</li>
+        <li><strong>Legal obligation:</strong> employment, tax, accounting, regulatory, or dispute-related record keeping where applicable.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="legal-section" id="chatbot-processing">
+    <h2>5. AI Chatbot Data Usage</h2>
+    <p>The public website assistant operates through secure server-side processing. Messages that you send through the chatbot may be logged together with the assistant response, session context, inferred intent, and technical metadata needed for service quality, reliability, and abuse monitoring.</p>
+    <p>Where enabled, responses may be generated using trusted third-party AI model services. The service credential is not exposed in public website code. Please do not submit passwords, payment card details, confidential access credentials, medical data, or other highly sensitive personal information through the chatbot.</p>
+    <p>The chatbot is designed to provide general business guidance and routing support. It does not make legally significant decisions about individuals without human involvement.</p>
+  </section>
+
+  <section class="legal-section" id="cookies">
+    <h2>6. Cookies, PECR, and Consent</h2>
+    <p>We use essential cookies and similar technologies where necessary to provide secure sessions, CSRF protection, login continuity, CAPTCHA handling, and privacy preference storage. These are required for the safe operation of the website.</p>
+    <p>Where non-essential cookies or similar technologies are introduced, we seek consent where required by PECR before setting them. Our cookie banner allows you to accept all, reject non-essential cookies, or customize preferences, and your choice is stored so it can be respected on return visits.</p>
+    <p>If analytics or optional preference technologies are used, they should only activate in line with the consent choice you give. You can also manage cookies through your browser settings, although doing so may affect parts of the website experience.</p>
+  </section>
+
+  <section class="legal-section" id="sharing">
+    <h2>7. Sharing, Processors, and International Transfers</h2>
+    <p>We may share limited personal data with processors and service providers that help us host the website, manage communication systems, support recruiting workflows, operate secure infrastructure, deliver embedded media, and process AI assistant responses. We do not sell personal data.</p>
+    <p>Some suppliers may process data outside the United Kingdom. Where that happens, we aim to use appropriate safeguards such as adequacy regulations, contractual protections, or equivalent organisational and technical measures intended to protect personal data to an appropriate standard.</p>
+  </section>
+
+  <section class="legal-section" id="retention">
+    <h2>8. Data Retention</h2>
+    <p>We keep personal data only for as long as reasonably necessary for the purpose for which it was collected and to meet legal, regulatory, accounting, security, and dispute-management requirements.</p>
+    <ul class="legal-list">
+      <li>Enquiry and sales records may be retained for up to 24 months after the last meaningful interaction.</li>
+      <li>Event registration records may be retained for up to 18 months after the relevant event.</li>
+      <li>Career applications are generally retained for up to 12 months unless a longer period is justified.</li>
+      <li>Chatbot and security logs may be retained for shorter operational periods or longer if required for incident investigation or abuse prevention.</li>
+      <li>Newsletter records are retained until unsubscribe handling, list review, or lawful suppression management requires otherwise.</li>
+    </ul>
+  </section>
+
+  <section class="legal-section" id="rights">
+    <h2>9. Your Rights</h2>
+    <p>Under UK data protection law, you may have rights including the right to be informed, access personal data, request rectification, request erasure, request restriction, object to certain processing, request portability in some circumstances, and withdraw consent where consent is the relevant lawful basis.</p>
+    <p>These rights are not absolute, and we may need to retain or continue processing data where exemptions or overriding legal grounds apply. We may ask for identity verification before fulfilling a request.</p>
+  </section>
+
+  <section class="legal-section" id="security">
+    <h2>10. Security Measures</h2>
+    <p>We use technical and organisational safeguards designed to reduce risk, including password hashing, secure session handling, route protection, CAPTCHA checks, request validation, file upload controls, activity logging, input sanitisation, and access restrictions for administrative systems.</p>
+    <p>No internet-based system can be guaranteed completely secure, but we aim to apply controls appropriate to the data involved and the risks presented by the service.</p>
+  </section>
+
+  <section class="legal-section" id="contact">
+    <h2>11. Contact and Complaints</h2>
+    <p>For privacy questions, rights requests, or concerns about this notice, contact {{ site_settings.get('contact_email', 'contact@aisolutionsglobal.co.uk') }} or write to {{ site_settings.get('contact_address', 'Canary Wharf, London, United Kingdom') }}.</p>
+    <p>If you believe your personal data has been handled unlawfully or unfairly, you also have the right to complain to the UK Information Commissioner's Office. You can find guidance through the <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer">ICO website</a>.</p>
+  </section>
+
+  <section class="legal-section">
+    <h2>12. Updates to This Notice</h2>
+    <p>We may update this privacy notice from time to time to reflect changes to the website, our processing activities, or applicable regulatory expectations. The most recent version published on this page applies from the date it is made available.</p>
+  </section>
+  {% endif %}
+  </article>
+</section>
+{% endblock %}

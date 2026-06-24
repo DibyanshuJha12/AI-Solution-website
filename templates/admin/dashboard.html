@@ -1,0 +1,117 @@
+{% extends "admin/base.html" %}
+{% block title %}Dashboard | AI SOLUTION Admin{% endblock %}
+{% block admin_content %}
+<section class="admin-page">
+  <div class="admin-heading">
+    <div>
+      <span class="eyebrow">Analytics Dashboard</span>
+      <h1>AI SOLUTION operations overview</h1>
+    </div>
+    <a class="btn small" href="{{ url_for('public.home') }}" target="_blank"><i data-lucide="external-link"></i> View Site</a>
+  </div>
+
+  <div class="metric-grid wide">
+    {% for label, value in counts.items() %}
+    <article class="metric-card">
+      <span>{{ label }}</span>
+      <strong>{{ value }}</strong>
+    </article>
+    {% endfor %}
+  </div>
+
+  <div class="chart-grid">
+    <article><h2>Monthly Growth</h2><div class="chart-canvas"><canvas id="growthChart"></canvas></div></article>
+    <article><h2>Service Interest</h2><div class="chart-canvas"><canvas id="serviceChart"></canvas></div></article>
+    <article><h2>Country Analytics</h2><div class="chart-canvas"><canvas id="countryChart"></canvas></div></article>
+  </div>
+
+  <div class="admin-triple">
+    <section>
+      <div class="section-heading compact">
+        <span class="eyebrow">Notifications</span>
+      </div>
+      {% for item in notifications %}
+      <div class="admin-list-row cardlike">
+        <strong>{{ item.title }}</strong>
+        <span>{{ item.body }}</span>
+      </div>
+      {% endfor %}
+    </section>
+    <section>
+      <div class="section-heading compact">
+        <span class="eyebrow">Quick Actions</span>
+      </div>
+      <div class="quick-action-grid">
+        {% for item in quick_actions %}
+        <a class="quick-action" href="{{ item.url }}">{{ item.label }} <i data-lucide="arrow-right"></i></a>
+        {% endfor %}
+      </div>
+    </section>
+    <section>
+      <div class="section-heading compact">
+        <span class="eyebrow">Recent Auth</span>
+      </div>
+      {% for item in recent_auth %}
+      <div class="admin-list-row auth-log-card">
+        <strong>{{ item.email }}</strong>
+        <span>{{ item.browser }} · {{ item.operating_system }} · {{ item.ip_address or 'No IP' }}</span>
+        <small>{{ 'Success' if item.success else 'Failed' }}{% if item.failure_reason %} · {{ item.failure_reason }}{% elif item.location_label %} · {{ item.location_label }}{% endif %}</small>
+      </div>
+      {% endfor %}
+    </section>
+  </div>
+
+  <div class="admin-split">
+    <section>
+      <h2>Latest Inquiries</h2>
+      {% for item in latest_inquiries %}
+      <a class="admin-list-row" href="{{ url_for('admin.inquiries') }}">
+        <strong>{{ item.full_name }}</strong>
+        <span>{{ item.subject or item.service }} · {{ item.status }}</span>
+      </a>
+      {% else %}
+      <p class="muted">No inquiries yet.</p>
+      {% endfor %}
+    </section>
+    <section>
+      <h2>Latest Applications</h2>
+      {% for item in latest_apps %}
+      <a class="admin-list-row" href="{{ url_for('admin.applications') }}">
+        <strong>{{ item.full_name }}</strong>
+        <span>{{ item.position }} · {{ item.status }}</span>
+      </a>
+      {% else %}
+      <p class="muted">No applications yet.</p>
+      {% endfor %}
+    </section>
+    <section>
+      <h2>Latest Feedback</h2>
+      {% for item in latest_feedback %}
+      <a class="admin-list-row" href="{{ url_for('admin.feedback') }}">
+        <strong>{{ item.full_name }}</strong>
+        <span>{{ item.rating }}/5 · {{ item.status }}</span>
+      </a>
+      {% else %}
+      <p class="muted">No feedback yet.</p>
+      {% endfor %}
+    </section>
+  </div>
+
+  <section class="admin-activity">
+    <h2>Recent Activity</h2>
+    <div class="activity-feed">
+      {% for item in recent_activity %}
+      <div class="admin-list-row">
+        <strong>{{ item.actor_name }} · {{ item.action|replace('-', ' ')|title }}</strong>
+        <span>{{ item.description }}</span>
+      </div>
+      {% else %}
+      <p class="muted">No activity recorded yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+</section>
+{% endblock %}
+{% block scripts %}
+<script id="admin-chart-data" type="application/json">{{ chart_data|tojson }}</script>
+{% endblock %}

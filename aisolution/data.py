@@ -1,0 +1,861 @@
+from __future__ import annotations
+
+from datetime import date
+
+
+IMAGE = {
+    "hero": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=85",
+    "cloud": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+    "analytics": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+    "cyber": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
+    "team": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+    "automation": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
+    "office": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80",
+    "retail": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=1200&q=80",
+    "healthcare": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+    "education": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+    "manufacturing": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80",
+    "logistics": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80",
+    "event_summit": "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1400&q=80",
+    "event_bootcamp": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
+    "event_cyber": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1400&q=80",
+    "event_masterclass": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80",
+    "event_datascience": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&q=80",
+    "event_networking": "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=1400&q=80",
+    "event_healthcare": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1400&q=80",
+    "event_automation": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
+}
+
+
+SERVICES = [
+    {
+        "title": "AI Automation",
+        "category": "Automation",
+        "icon": "bot",
+        "description": "Autonomous process orchestration for sales, operations, finance, and internal service desks.",
+        "image_url": IMAGE["automation"],
+    },
+    {
+        "title": "AI Customer Support",
+        "category": "Customer Experience",
+        "icon": "messages-square",
+        "description": "Multilingual assistants, ticket triage, sentiment routing, and knowledge-base acceleration.",
+        "image_url": IMAGE["team"],
+    },
+    {
+        "title": "AI Analytics",
+        "category": "Analytics",
+        "icon": "chart-no-axes-combined",
+        "description": "Predictive dashboards, anomaly detection, forecasting, and executive decision intelligence.",
+        "image_url": IMAGE["analytics"],
+    },
+    {
+        "title": "Workflow Optimization",
+        "category": "Operations",
+        "icon": "workflow",
+        "description": "Human-in-the-loop AI workflows that reduce handoffs, delays, and duplicated work.",
+        "image_url": IMAGE["office"],
+    },
+    {
+        "title": "AI Cloud Integration",
+        "category": "Cloud",
+        "icon": "cloud-cog",
+        "description": "Secure AI deployments across cloud, hybrid, and private data environments.",
+        "image_url": IMAGE["cloud"],
+    },
+    {
+        "title": "Business Intelligence",
+        "category": "Analytics",
+        "icon": "chart-no-axes-combined",
+        "description": "Decision hubs that combine BI, natural-language querying, and governed enterprise data.",
+        "image_url": IMAGE["analytics"],
+    },
+    {
+        "title": "AI Cybersecurity",
+        "category": "Security",
+        "icon": "shield-check",
+        "description": "Threat intelligence, phishing defense, risk scoring, and automated incident enrichment.",
+        "image_url": IMAGE["cyber"],
+    },
+    {
+        "title": "Virtual Assistant Systems",
+        "category": "Assistant",
+        "icon": "sparkles",
+        "description": "Custom assistants trained around company policies, products, support flows, and sales playbooks.",
+        "image_url": IMAGE["hero"],
+    },
+]
+
+
+INDUSTRIES = [
+    {
+        "name": "Healthcare AI",
+        "slug": "healthcare",
+        "image_url": IMAGE["healthcare"],
+        "overview": "Clinical, operational, and patient-service AI designed for safer decisions and faster care delivery.",
+        "problems": "Manual intake, fragmented records, delayed triage, and overstretched administrative teams slow both patient care and executive visibility.",
+        "solution": "AI triage assistants, claims document intelligence, clinical summaries, appointment automation, and governed patient-operations dashboards.",
+        "benefits": ["Faster patient routing", "Reduced admin load", "Stronger care coordination"],
+        "use_cases": ["Patient intake automation", "Clinical note summarization", "Claims review"],
+    },
+    {
+        "name": "Finance AI",
+        "slug": "finance",
+        "image_url": IMAGE["analytics"],
+        "overview": "Governed AI for risk, compliance, service operations, and portfolio intelligence in financial environments.",
+        "problems": "Fraud exposure, slow reporting cycles, compliance pressure, fragmented service operations, and limited executive insight create operational drag.",
+        "solution": "Fraud monitoring, explainable analytics, AI service desks, KYC support, compliance workflows, and portfolio intelligence reporting.",
+        "benefits": ["Lower fraud leakage", "Faster reporting", "Stronger service governance"],
+        "use_cases": ["Risk scoring", "KYC review", "Portfolio analytics"],
+    },
+    {
+        "name": "Education AI",
+        "slug": "education",
+        "image_url": IMAGE["education"],
+        "overview": "Learning, support, and enrollment AI that helps institutions personalize service at scale.",
+        "problems": "Generic learning paths, staff workload, fragmented student support, and weak visibility into progression make service delivery inconsistent.",
+        "solution": "Tutor assistants, enrollment automation, support copilots, learning analytics, and content operations workflows.",
+        "benefits": ["Better retention", "Personalized learning", "Lower support workload"],
+        "use_cases": ["AI tutors", "Admissions automation", "Student success dashboards"],
+    },
+    {
+        "name": "Retail AI",
+        "slug": "retail",
+        "image_url": IMAGE["retail"],
+        "overview": "Forecasting, personalization, and commerce-support AI for modern retail and multi-channel operations.",
+        "problems": "Inventory mismatch, disconnected channels, reactive service teams, and weak forecasting make growth and margins harder to protect.",
+        "solution": "Demand forecasting, recommendation engines, conversational support, campaign intelligence, and inventory-planning analytics.",
+        "benefits": ["Higher conversion", "Smarter inventory", "Faster support resolution"],
+        "use_cases": ["Product recommendations", "Inventory planning", "Customer sentiment"],
+    },
+    {
+        "name": "Cybersecurity AI",
+        "slug": "cybersecurity",
+        "image_url": IMAGE["cyber"],
+        "overview": "AI-assisted cyber operations for defence, triage, governance, and resilience planning.",
+        "problems": "Alert fatigue, slow investigation cycles, fragmented telemetry, and rising board-level cyber exposure overwhelm security teams.",
+        "solution": "Security copilots, threat enrichment workflows, phishing defence, governed incident-response support, and exposure analytics.",
+        "benefits": ["Faster triage", "Lower analyst workload", "Improved resilience"],
+        "use_cases": ["Threat enrichment", "Phishing analysis", "Incident response support"],
+    },
+    {
+        "name": "Data Analytics",
+        "slug": "data-analytics",
+        "image_url": IMAGE["analytics"],
+        "overview": "Decision intelligence and governed analytics for leadership teams that need trusted operational visibility.",
+        "problems": "Slow reporting cycles, disconnected data sources, weak forecasting, and unclear decision ownership reduce confidence across teams.",
+        "solution": "Executive dashboards, anomaly detection, predictive forecasting, natural-language analytics, and connected insight workflows.",
+        "benefits": ["Faster decisions", "Clearer visibility", "Higher forecast confidence"],
+        "use_cases": ["Executive dashboards", "Predictive reporting", "Anomaly detection"],
+    },
+    {
+        "name": "Automation",
+        "slug": "automation",
+        "image_url": IMAGE["automation"],
+        "overview": "Workflow automation for cross-functional teams that need reliable execution without manual bottlenecks.",
+        "problems": "Too many handoffs, duplicated work, approval delays, and inconsistent operating steps create avoidable cost and friction.",
+        "solution": "Workflow orchestration, approval routing, service assistants, document automation, and human-in-the-loop execution design.",
+        "benefits": ["Fewer manual handoffs", "Higher process speed", "Better operational consistency"],
+        "use_cases": ["Approval automation", "Document processing", "Service orchestration"],
+    },
+    {
+        "name": "Cloud & DevOps",
+        "slug": "cloud-devops",
+        "image_url": IMAGE["cloud"],
+        "overview": "AI-enabled cloud operations, platform engineering, and deployment control for modern delivery teams.",
+        "problems": "Complex environments, slow release cycles, high infrastructure overhead, and limited observability make scaling risky and expensive.",
+        "solution": "Cloud AI deployment patterns, environment automation, observability workflows, platform copilots, and governed DevOps acceleration.",
+        "benefits": ["Faster releases", "Better platform visibility", "More resilient delivery"],
+        "use_cases": ["Release automation", "Cloud observability", "Platform support copilots"],
+    },
+]
+
+
+PREVIOUS_EVENTS = [
+    {
+        "title": "AI Strategy Leaders Forum",
+        "category": "Leadership Forum",
+        "icon": "sparkles",
+        "format_label": "In-Person Forum",
+        "event_date": date(2026, 5, 22),
+        "event_time": "10:00 AM GMT",
+        "location": "Canary Wharf Innovation Exchange",
+        "banner_image": IMAGE["event_summit"],
+        "status_badge": "Completed",
+        "highlights": [
+            "Executive roadmap sessions",
+            "Governance and risk playbooks",
+            "Board-level AI adoption stories",
+        ],
+        "details": "A focused leadership forum for teams shaping their AI strategy, governance standards, and delivery priorities before moving into implementation.",
+    },
+    {
+        "title": "Enterprise Automation Masterclass",
+        "category": "Applied Workshop",
+        "icon": "workflow",
+        "format_label": "Hands-on Workshop",
+        "event_date": date(2026, 4, 18),
+        "event_time": "2:30 PM GMT",
+        "location": "Virtual Live Studio",
+        "banner_image": IMAGE["event_automation"],
+        "status_badge": "Completed",
+        "highlights": [
+            "Workflow orchestration walkthroughs",
+            "Approval routing patterns",
+            "Human-in-the-loop automation design",
+        ],
+        "details": "A practical workshop covering the mechanics of secure automation programmes, adoption readiness, and measurable operations improvement.",
+    },
+    {
+        "title": "Secure AI Operations Roundtable",
+        "category": "Security Roundtable",
+        "icon": "shield-check",
+        "format_label": "Private Roundtable",
+        "event_date": date(2026, 3, 14),
+        "event_time": "11:15 AM GMT",
+        "location": "London Security Operations Centre",
+        "banner_image": IMAGE["event_cyber"],
+        "status_badge": "Completed",
+        "highlights": [
+            "Threat detection use cases",
+            "Policy and access controls",
+            "Secure assistant deployment guidance",
+        ],
+        "details": "A closed-door session on secure AI operations, helping teams align threat posture, access boundaries, and governance expectations.",
+    },
+    {
+        "title": "Data Intelligence Demo Day",
+        "category": "Analytics Showcase",
+        "icon": "chart-no-axes-combined",
+        "format_label": "Demo Showcase",
+        "event_date": date(2026, 2, 7),
+        "event_time": "4:00 PM GMT",
+        "location": "Virtual Analytics Hub",
+        "banner_image": IMAGE["event_datascience"],
+        "status_badge": "Completed",
+        "highlights": [
+            "Executive dashboards",
+            "Forecasting demonstrations",
+            "Decision-intelligence workflows",
+        ],
+        "details": "A showcase of analytics and decision-intelligence patterns for leaders who wanted a cleaner view of operational performance and forecasting.",
+    },
+]
+
+
+CASE_STUDIES = [
+    {
+        "title": "Predictive Patient Intake Platform",
+        "client_industry": "Healthcare",
+        "technologies": "Intake orchestration, clinical workflows, visibility",
+        "impact": "Cut triage queue time by 42% across multi-site clinics.",
+        "key_features": [
+            "Digital intake with secure triage prioritisation",
+            "Role-aware clinical visibility and handoff tracking",
+            "Operational dashboards for leadership review",
+        ],
+        "before_result": "Average intake cycle: 28 minutes",
+        "after_result": "Average intake cycle: 16 minutes",
+        "image_url": IMAGE["healthcare"],
+    },
+    {
+        "title": "AI Fraud Signal Engine",
+        "client_industry": "Finance",
+        "technologies": "Fraud monitoring, anomaly scoring, risk operations",
+        "impact": "Improved high-risk transaction review speed by 61%.",
+        "key_features": [
+            "Event-driven risk scoring and alert routing",
+            "Governed analyst review queue",
+            "Explainable signals for audit-ready decisions",
+        ],
+        "before_result": "Manual review batches every 6 hours",
+        "after_result": "Near real-time prioritization",
+        "image_url": IMAGE["cyber"],
+    },
+    {
+        "title": "Retail Demand Intelligence Hub",
+        "client_industry": "Retail",
+        "technologies": "Forecasting workflows, reporting, commerce planning",
+        "impact": "Reduced out-of-stock events across priority SKUs by 34%.",
+        "key_features": [
+            "Demand forecasting and replenishment signals",
+            "Executive reporting across sales and inventory",
+            "Connected planning for multi-channel operations",
+        ],
+        "before_result": "Reactive replenishment",
+        "after_result": "Predictive stock planning",
+        "image_url": IMAGE["retail"],
+    },
+    {
+        "title": "Manufacturing Defect Vision System",
+        "client_industry": "Manufacturing",
+        "technologies": "Visual quality automation, plant intelligence, uptime",
+        "impact": "Increased first-pass quality by 19%.",
+        "key_features": [
+            "AI-assisted visual quality inspection",
+            "Production line anomaly alerts",
+            "Operator-friendly plant performance insights",
+        ],
+        "before_result": "Sampling-based inspection",
+        "after_result": "Continuous AI-assisted QA",
+        "image_url": IMAGE["manufacturing"],
+    },
+    {
+        "title": "University Student Success Assistant",
+        "client_industry": "Education",
+        "technologies": "Knowledge retrieval, enrolment automation, student guidance",
+        "impact": "Raised support resolution rate by 47% during enrollment.",
+        "key_features": [
+            "Admissions and enrollment assistance",
+            "Guided knowledge retrieval for staff and students",
+            "Student operations workflows with faster routing",
+        ],
+        "before_result": "Email-heavy manual routing",
+        "after_result": "Guided assistant and staff queue",
+        "image_url": IMAGE["education"],
+    },
+    {
+        "title": "AI Logistics Control Tower",
+        "client_industry": "Logistics",
+        "technologies": "Route intelligence, ETA forecasting, exception handling",
+        "impact": "Lowered late-delivery exceptions by 26%.",
+        "key_features": [
+            "Dynamic route planning and live ETA prediction",
+            "Exception alerts with escalation logic",
+            "Control-tower style operational visibility",
+        ],
+        "before_result": "Static route planning",
+        "after_result": "Dynamic route intelligence",
+        "image_url": IMAGE["logistics"],
+    },
+    {
+        "title": "Marketing Growth Intelligence Suite",
+        "client_industry": "Marketing",
+        "technologies": "Growth decisioning, lead qualification, campaign intelligence",
+        "impact": "Improved qualified pipeline conversion by 31%.",
+        "key_features": [
+            "Weekly campaign decisioning and lead scoring",
+            "Cross-channel growth signal tracking",
+            "Executive-ready pipeline visibility",
+        ],
+        "before_result": "Segment rules updated monthly",
+        "after_result": "AI-assisted weekly campaign decisions",
+        "image_url": IMAGE["team"],
+    },
+    {
+        "title": "Enterprise Support Copilot",
+        "client_industry": "Customer Support",
+        "technologies": "Knowledge access automation, support operations, service analytics",
+        "impact": "Reduced average handling time by 38%.",
+        "key_features": [
+            "Unified knowledge access across support tools",
+            "Governed response suggestions for agents",
+            "Service-operation analytics and insight tracking",
+        ],
+        "before_result": "Agents searched five tools manually",
+        "after_result": "One governed assistant workspace",
+        "image_url": IMAGE["office"],
+    },
+]
+
+
+TESTIMONIALS = [
+    {
+        "customer_name": "Sumantra Yadav",
+        "company_name": "Northstar Health Systems",
+        "role": "Chief Executive Officer",
+        "rating": 5,
+        "profile_image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+        "feedback": "AI SOLUTION translated our AI vision into a disciplined operating model with measurable delivery milestones and far better executive visibility.",
+    },
+    {
+        "customer_name": "Biplove Yadav",
+        "company_name": "Sterling Finance Group",
+        "role": "Director of Risk Operations",
+        "rating": 5,
+        "profile_image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80",
+        "feedback": "The team balanced analytics, governance, and security in a way that made our transformation programme feel dependable rather than experimental.",
+    },
+    {
+        "customer_name": "Dibyanshu Jha",
+        "company_name": "Apex Learning Network",
+        "role": "Chief Technology Officer",
+        "rating": 5,
+        "profile_image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+        "feedback": "Their assistant experience felt enterprise-ready, and the implementation team made adoption easier for both users and technical stakeholders.",
+    },
+    {
+        "customer_name": "Bipin Yadav",
+        "company_name": "OmniCart Retail",
+        "role": "Head of Commerce Systems",
+        "rating": 5,
+        "profile_image": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80",
+        "feedback": "Forecasting, support automation, and reporting now operate in one connected layer, which gave us better decisions and a much cleaner customer journey.",
+    },
+    {
+        "customer_name": "Anil Pandey",
+        "company_name": "VectorWorks Manufacturing",
+        "role": "Plant Systems Director",
+        "rating": 5,
+        "profile_image": "https://images.unsplash.com/photo-1504257432389-52343af06ae3?auto=format&fit=crop&w=400&q=80",
+        "feedback": "AI SOLUTION understood the realities of operations and delivered automation that our teams trusted from the first rollout window.",
+    },
+    {
+        "customer_name": "Praphul Yadav",
+        "company_name": "PulseRoute Logistics",
+        "role": "Chief Product Officer",
+        "rating": 5,
+        "profile_image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80",
+        "feedback": "The control tower approach gave us operational foresight. We now catch delivery and routing risk before it affects service quality.",
+    },
+    {
+        "customer_name": "Sandeep Pokharel",
+        "company_name": "GrowthForge Studio",
+        "role": "Managing Director",
+        "rating": 5,
+        "profile_image": "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=400&q=80",
+        "feedback": "The workflow design helped us turn scattered campaign and delivery signals into a sharper, more executive-friendly decision framework.",
+    },
+    {
+        "customer_name": "Sachin Yadav",
+        "company_name": "AsterCloud Systems",
+        "role": "Cloud Strategy Director",
+        "rating": 5,
+        "profile_image": "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=400&q=80",
+        "feedback": "Architecture clarity, strong governance, and fast delivery rarely come together this well. The programme moved with confidence at every stage.",
+    },
+    {
+        "customer_name": "Rahul Yadav",
+        "company_name": "ServicePilot",
+        "role": "Head of Customer Success",
+        "rating": 5,
+        "profile_image": "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?auto=format&fit=crop&w=400&q=80",
+        "feedback": "The support copilot became part of daily operations quickly, and the governance guardrails meant our teams adopted it with trust.",
+    },
+]
+
+
+EVENTS = [
+    {
+        "title": "AI Future Summit 2026",
+        "category": "Startup Innovation",
+        "icon": "sparkles",
+        "format_label": "Executive Summit",
+        "event_date": date(2026, 6, 18),
+        "event_time": "9:30 AM GMT",
+        "location": "Canary Wharf Innovation Exchange",
+        "banner_image": IMAGE["event_summit"],
+        "details": "A flagship AI leadership summit covering strategy, responsible rollout, innovation funding, and high-impact operating models for modern enterprises.",
+    },
+    {
+        "title": "Machine Learning Bootcamp",
+        "category": "Bootcamp",
+        "icon": "brain-circuit",
+        "format_label": "Hands-on Bootcamp",
+        "event_date": date(2026, 7, 9),
+        "event_time": "2:00 PM GMT",
+        "location": "Virtual Live Studio",
+        "banner_image": IMAGE["event_bootcamp"],
+        "details": "An immersive learning bootcamp focused on practical ML pipelines, evaluation patterns, model operations, and production-readiness for teams scaling AI.",
+    },
+    {
+        "title": "Cybersecurity & AI Defense",
+        "category": "Cybersecurity",
+        "icon": "shield-check",
+        "format_label": "Security Roundtable",
+        "event_date": date(2026, 7, 28),
+        "event_time": "11:00 AM GMT",
+        "location": "London Security Operations Centre",
+        "banner_image": IMAGE["event_cyber"],
+        "details": "A focused security session on AI threat defense, analyst acceleration, governance controls, phishing resilience, and secure assistant deployment.",
+    },
+    {
+        "title": "Generative AI Masterclass",
+        "category": "Webinar",
+        "icon": "monitor-play",
+        "format_label": "Interactive Webinar",
+        "event_date": date(2026, 8, 14),
+        "event_time": "4:00 PM GMT",
+        "location": "Online Broadcast",
+        "banner_image": IMAGE["event_masterclass"],
+        "details": "A premium webinar exploring generative AI use cases, prompt operations, policy guardrails, and enterprise design choices for customer and internal experiences.",
+    },
+    {
+        "title": "Data Science Innovation Forum",
+        "category": "Data Science",
+        "icon": "chart-no-axes-combined",
+        "format_label": "Insight Forum",
+        "event_date": date(2026, 9, 3),
+        "event_time": "10:30 AM GMT",
+        "location": "Virtual Analytics Hub",
+        "banner_image": IMAGE["event_datascience"],
+        "details": "A decision-science forum for analytics leaders who need stronger forecasting, anomaly detection, experimentation discipline, and executive reporting clarity.",
+    },
+    {
+        "title": "Startup AI Networking Night",
+        "category": "Networking",
+        "icon": "users",
+        "format_label": "Founder Networking",
+        "event_date": date(2026, 10, 7),
+        "event_time": "6:30 PM GMT",
+        "location": "Shoreditch Founder Lounge",
+        "banner_image": IMAGE["event_networking"],
+        "details": "A curated networking evening for founders, operators, and investors building AI-first products, partnerships, and innovation programmes across fast-growth teams.",
+    },
+    {
+        "title": "AI in Healthcare Conference",
+        "category": "AI Workshop",
+        "icon": "heart-pulse",
+        "format_label": "Sector Conference",
+        "event_date": date(2026, 11, 12),
+        "event_time": "9:45 AM GMT",
+        "location": "London HealthTech Centre",
+        "banner_image": IMAGE["event_healthcare"],
+        "details": "A healthcare-focused event on clinical operations, patient-service automation, data trust, compliance design, and the future of AI-enabled care delivery.",
+    },
+    {
+        "title": "Intelligent Automation Workshop",
+        "category": "Machine Learning",
+        "icon": "workflow",
+        "format_label": "Applied Workshop",
+        "event_date": date(2026, 12, 4),
+        "event_time": "1:30 PM GMT",
+        "location": "Birmingham Digital Operations Campus",
+        "banner_image": IMAGE["event_automation"],
+        "details": "A practical workshop on process orchestration, assistant-led workflows, operational KPIs, and the delivery patterns behind enterprise automation success.",
+    },
+]
+
+
+BLOGS = [
+    ("AI Trends Reshaping Enterprise Teams", "AI Trends", date(2026, 4, 22)),
+    ("How Automation Moves From Task Bots to Operating Systems", "Automation", date(2026, 4, 15)),
+    ("Cybersecurity Lessons for AI-Enabled Businesses", "Cybersecurity", date(2026, 4, 4)),
+    ("Cloud AI Architecture Without Data Chaos", "Cloud AI", date(2026, 3, 28)),
+    ("Business Intelligence After Natural-Language Analytics", "Business Intelligence", date(2026, 3, 18)),
+    ("Machine Learning Governance for Growing Companies", "Machine Learning", date(2026, 3, 7)),
+    ("Digital Transformation That Actually Changes Work", "Digital Transformation", date(2026, 2, 25)),
+    ("The Future of AI Assistants in Customer Operations", "Future of AI", date(2026, 2, 9)),
+    ("Choosing the Right AI Use Case for Your First 90 Days", "Strategy", date(2026, 1, 30)),
+    ("Why Human-in-the-Loop AI Wins in Regulated Teams", "AI Governance", date(2026, 1, 16)),
+]
+
+
+JOBS = [
+    ("AI Software Engineer", "Engineering", "London / Remote", "Full-time"),
+    ("Frontend Developer", "Product Engineering", "Remote", "Full-time"),
+    ("Backend Platform Developer", "Platform", "London / Hybrid", "Full-time"),
+    ("Machine Learning Engineer", "AI Research", "London / Remote", "Full-time"),
+    ("UI/UX Designer", "Design", "Remote", "Full-time"),
+    ("Cloud Solutions Engineer", "Cloud", "London / Hybrid", "Full-time"),
+    ("Cybersecurity Analyst", "Security", "London / Remote", "Full-time"),
+    ("Technical Support Specialist", "Customer Success", "Remote", "Full-time"),
+]
+
+
+TEAM_MEMBERS = [
+    {
+        "name": "Sumantra Yadav",
+        "role": "Chief Executive Officer",
+        "bio": "Leads AI SOLUTION's strategic direction, client growth, and executive oversight across enterprise automation, analytics, and intelligent delivery programmes.",
+        "image_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+        "linkedin_url": "https://www.linkedin.com",
+        "sort_order": 1,
+    },
+    {
+        "name": "Dibyanshu Jha",
+        "role": "Chief Technology Officer",
+        "bio": "Drives platform architecture, secure assistant delivery, security controls, and the engineering systems that make AI SOLUTION deployments production-ready.",
+        "image_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80",
+        "linkedin_url": "https://www.linkedin.com",
+        "sort_order": 2,
+    },
+    {
+        "name": "Sandeep Pokharel",
+        "role": "Director of AI Delivery",
+        "bio": "Leads delivery governance, solution rollout, and client enablement, ensuring each AI programme lands cleanly across people, process, and technology.",
+        "image_url": "https://images.unsplash.com/photo-1504257432389-52343af06ae3?auto=format&fit=crop&w=600&q=80",
+        "linkedin_url": "https://www.linkedin.com",
+        "sort_order": 3,
+    },
+]
+
+
+FAQS = [
+    {
+        "question": "How do you decide whether a company is ready for an AI project?",
+        "answer": "We assess workflow maturity, data readiness, security requirements, integration complexity, and business goals before recommending a delivery path.",
+        "category": "Strategy",
+        "sort_order": 1,
+    },
+    {
+        "question": "Can AI SOLUTION integrate with our existing CRM, ERP, or support systems?",
+        "answer": "Yes. Most engagements are designed around existing systems so teams can improve operations without replacing core platforms.",
+        "category": "Delivery",
+        "sort_order": 2,
+    },
+    {
+        "question": "How do you handle security, privacy, and governance?",
+        "answer": "Security controls, access boundaries, logging, approval workflows, and policy alignment are designed into the solution from the start rather than added after launch.",
+        "category": "Security",
+        "sort_order": 3,
+    },
+    {
+        "question": "What does a typical enterprise engagement look like?",
+        "answer": "Most projects move through discovery, solution design, prototype validation, production rollout, and continuous optimization with business KPIs tracked throughout.",
+        "category": "Delivery",
+        "sort_order": 4,
+    },
+    {
+        "question": "Do you support both internal copilots and customer-facing AI experiences?",
+        "answer": "Yes. We build internal workflow assistants, analytics copilots, and external service experiences depending on the use case and risk profile.",
+        "category": "Solutions",
+        "sort_order": 5,
+    },
+    {
+        "question": "How quickly can we launch a first production use case?",
+        "answer": "Timelines depend on integrations and governance needs, but focused projects can often reach a production-ready first release in a matter of weeks.",
+        "category": "Delivery",
+        "sort_order": 6,
+    },
+]
+
+
+SITE_SETTINGS = [
+    {
+        "key": "homepage_hero_badge",
+        "label": "Homepage Hero Badge",
+        "category": "homepage",
+        "value_text": "London-Based Enterprise AI Studio",
+        "value_type": "text",
+        "description": "Small eyebrow label shown in the homepage hero.",
+    },
+    {
+        "key": "homepage_hero_title",
+        "label": "Homepage Hero Title",
+        "category": "homepage",
+        "value_text": "Enterprise AI that turns strategy into measurable advantage.",
+        "value_type": "text",
+        "description": "Primary homepage headline.",
+    },
+    {
+        "key": "homepage_hero_text",
+        "label": "Homepage Hero Summary",
+        "category": "homepage",
+        "value_text": "Secure automation, analytics, copilots, and decision systems for teams that want clear governance and visible outcomes.",
+        "value_type": "textarea",
+        "description": "Hero supporting copy.",
+    },
+    {
+        "key": "homepage_video_url",
+        "label": "Homepage Video URL",
+        "category": "homepage",
+        "value_text": "https://www.youtube.com/embed/qYNweeDHiyU?rel=0",
+        "value_type": "url",
+        "description": "Embedded video URL for the homepage showcase section.",
+    },
+    {
+        "key": "solutions_feature_image",
+        "label": "Solutions Feature Image",
+        "category": "solutions",
+        "value_text": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1400&q=80",
+        "value_type": "url",
+        "description": "Featured image used on the solutions page.",
+    },
+    {
+        "key": "careers_hero_image",
+        "label": "Careers Hero Image",
+        "category": "careers",
+        "value_text": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80",
+        "value_type": "url",
+        "description": "Hero image used on the careers page.",
+    },
+    {
+        "key": "careers_culture_image",
+        "label": "Careers Culture Image",
+        "category": "careers",
+        "value_text": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
+        "value_type": "url",
+        "description": "Culture image used on the careers page.",
+    },
+    {
+        "key": "careers_cta_image",
+        "label": "Careers CTA Image",
+        "category": "careers",
+        "value_text": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=80",
+        "value_type": "url",
+        "description": "Image used in the careers call-to-action section.",
+    },
+    {
+        "key": "contact_phone",
+        "label": "Contact Phone",
+        "category": "contact",
+        "value_text": "9807803733",
+        "value_type": "text",
+        "description": "Primary public phone number.",
+    },
+    {
+        "key": "contact_email",
+        "label": "Contact Email",
+        "category": "contact",
+        "value_text": "contact@aisolutionsglobal.co.uk",
+        "value_type": "email",
+        "description": "Primary public email address.",
+    },
+    {
+        "key": "contact_address",
+        "label": "Contact Address",
+        "category": "contact",
+        "value_text": "Canary Wharf, London, United Kingdom",
+        "value_type": "text",
+        "description": "Primary office location label.",
+    },
+    {
+        "key": "contact_linkedin_url",
+        "label": "LinkedIn URL",
+        "category": "contact",
+        "value_text": "https://www.linkedin.com",
+        "value_type": "url",
+        "description": "Public company LinkedIn page.",
+    },
+    {
+        "key": "instagram_url",
+        "label": "Instagram URL",
+        "category": "social",
+        "value_text": "https://www.instagram.com",
+        "value_type": "url",
+        "description": "Instagram profile URL.",
+    },
+    {
+        "key": "facebook_url",
+        "label": "Facebook URL",
+        "category": "social",
+        "value_text": "https://www.facebook.com",
+        "value_type": "url",
+        "description": "Facebook profile URL.",
+    },
+    {
+        "key": "whatsapp_url",
+        "label": "WhatsApp URL",
+        "category": "social",
+        "value_text": "https://wa.me/9779807803733",
+        "value_type": "url",
+        "description": "WhatsApp CTA URL.",
+    },
+    {
+        "key": "linkedin_url",
+        "label": "Footer LinkedIn URL",
+        "category": "social",
+        "value_text": "https://www.linkedin.com",
+        "value_type": "url",
+        "description": "LinkedIn profile URL.",
+    },
+    {
+        "key": "chatbot_welcome_message",
+        "label": "Chatbot Welcome Message",
+        "category": "chatbot",
+        "value_text": "Welcome to AI SOLUTION. Share your industry, workflow, or delivery challenge and I will guide you to the strongest next step.",
+        "value_type": "textarea",
+        "description": "Initial assistant greeting.",
+    },
+    {
+        "key": "chatbot_prompt_one",
+        "label": "Chatbot Prompt 1",
+        "category": "chatbot",
+        "value_text": "Which AI roadmap fits a healthcare provider?",
+        "value_type": "text",
+        "description": "Quick prompt button one.",
+    },
+    {
+        "key": "chatbot_prompt_two",
+        "label": "Chatbot Prompt 2",
+        "category": "chatbot",
+        "value_text": "How do I start an enterprise automation programme?",
+        "value_type": "text",
+        "description": "Quick prompt button two.",
+    },
+    {
+        "key": "chatbot_prompt_three",
+        "label": "Chatbot Prompt 3",
+        "category": "chatbot",
+        "value_text": "Show me AI cybersecurity services",
+        "value_type": "text",
+        "description": "Quick prompt button three.",
+    },
+    {
+        "key": "cookie_banner_title",
+        "label": "Cookie Banner Title",
+        "category": "cookie",
+        "value_text": "Cookie preferences",
+        "value_type": "text",
+        "description": "Cookie consent dialog heading.",
+    },
+    {
+        "key": "cookie_banner_text",
+        "label": "Cookie Banner Text",
+        "category": "cookie",
+        "value_text": "Essential cookies keep sessions and forms secure. Optional cookies help remember your preferences and keep the site smoother.",
+        "value_type": "textarea",
+        "description": "Cookie consent body copy.",
+    },
+    {
+        "key": "cookie_accept_label",
+        "label": "Cookie Accept Label",
+        "category": "cookie",
+        "value_text": "Accept All",
+        "value_type": "text",
+        "description": "Accept all button label.",
+    },
+    {
+        "key": "cookie_decline_label",
+        "label": "Cookie Decline Label",
+        "category": "cookie",
+        "value_text": "Reject Non-Essential",
+        "value_type": "text",
+        "description": "Reject non-essential button label.",
+    },
+    {
+        "key": "cookie_manage_label",
+        "label": "Cookie Manage Label",
+        "category": "cookie",
+        "value_text": "Customize Preferences",
+        "value_type": "text",
+        "description": "Customize preferences button label.",
+    },
+    {
+        "key": "privacy_policy_body",
+        "label": "Privacy Policy Body",
+        "category": "legal",
+        "value_text": "",
+        "value_type": "richtext",
+        "description": "Optional override for the public privacy policy body.",
+    },
+]
+
+
+def slugify(title: str) -> str:
+    return title.lower().replace(" ", "-").replace("/", "-").replace(":", "").replace(",", "")
+
+
+def default_blog_content(title: str, category: str) -> str:
+    return f"""## Executive Snapshot
+{title} matters because enterprise AI programs succeed when teams align delivery speed with governance, adoption, and measurable business value.
+
+## What Leaders Should Solve First
+- Clarify the business workflow that needs improvement.
+- Define operational metrics before implementation begins.
+- Identify security, compliance, and data access constraints early.
+- Focus the first release on a workflow that users will adopt quickly.
+
+## Delivery Approach
+Strong {category.lower()} programs move through discovery, architecture, pilot validation, and controlled production rollout. Each phase should reduce ambiguity while protecting the operating environment.
+
+## Governance Considerations
+Leadership teams should document approval paths, human review points, audit expectations, and escalation rules before expanding into higher-risk use cases.
+
+## Where AI SOLUTION Helps
+AI SOLUTION designs practical programs that connect automation, analytics, assistants, and secure integration work into a delivery path built for enterprise operations.
+
+## Recommended Next Step
+Use the contact form to describe your current workflow, target outcome, and integration environment so the team can recommend the most effective first implementation path.
+"""
