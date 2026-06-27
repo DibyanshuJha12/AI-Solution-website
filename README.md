@@ -274,7 +274,6 @@ flask --app app setup
 - Docker support
 - REST API
 - Two-factor authentication
-- Dark mode
 - Analytics dashboard
 - Multi-language support
 - Automated backups
