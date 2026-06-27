@@ -105,7 +105,6 @@ The system includes content management for blogs, portfolio items, testimonials,
 | Backend | Flask 3 |
 | Language | Python 3 |
 | Database | PostgreSQL |
-| ORM | SQLAlchemy |
 | Forms | Flask-WTF |
 | Authentication | Flask-Login |
 | Database Migration | Flask-Migrate |
