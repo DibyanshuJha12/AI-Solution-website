@@ -1,55 +1,31 @@
 
-
-
-
 # 🚀 AI-Solutions CMS
 
 <div align="center">
 
-### **AI-Powered Content Management System for Modern Business Websites**
+# AI-Solutions CMS
 
-A professional full-stack **Flask** Content Management System featuring a responsive corporate website, secure administration dashboard, AI-powered chatbot, PostgreSQL database integration, and comprehensive content management capabilities.
+### Intelligent AI-Powered Content Management System
 
-![Python](https://img.shields.io/badge/Python-3.14-blue?style=for-the-badge&logo=python)
+A modern full-stack **Flask** Content Management System that combines a professional corporate website with a secure administration dashboard and an AI-powered chatbot. The application uses **PostgreSQL** as its primary database and **Google Gemini AI** to deliver intelligent conversational assistance.
+
+![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)
 ![Flask](https://img.shields.io/badge/Flask-3.x-black?style=for-the-badge&logo=flask)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791?style=for-the-badge&logo=postgresql)
-![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-ORM-red?style=for-the-badge)
-![Jinja2](https://img.shields.io/badge/Jinja2-Templates-B41717?style=for-the-badge)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=for-the-badge&logo=javascript)
 ![License](https://img.shields.io/badge/License-Academic-success?style=for-the-badge)
 
 </div>
 
 ---
 
-# 📖 Table of Contents
+# 📖 Overview
 
-- Overview
-- Key Features
-- Technology Stack
-- System Architecture
-- Project Structure
-- Installation
-- Configuration
-- Database Setup
-- Running the Project
-- AI Chatbot
-- Admin Dashboard
-- Public Website
-- Security
-- CLI Commands
-- Deployment
-- Troubleshooting
-- Future Improvements
-- Author
-- License
+AI-Solutions CMS is a professional Content Management System developed as an academic and portfolio project. It provides a responsive public-facing company website together with a secure administration panel that allows administrators to manage website content from a single platform.
 
----
-
-# 🌟 Overview
-
-**AI-Solutions CMS** is a modern Content Management System developed using **Python Flask** and **PostgreSQL**. The application combines a responsive corporate website with a powerful administration dashboard, enabling administrators to manage dynamic website content from a single platform.
-
-The system includes content management for blogs, portfolio items, testimonials, gallery images, FAQs, team members, pages, inquiries, users, roles, and website settings. It also integrates an AI-powered chatbot using Google's Gemini API to provide intelligent responses for visitors.
+The system supports dynamic management of pages, portfolio items, blogs, testimonials, galleries, FAQs, events, team members, user enquiries, roles and site settings. It also integrates Google's Gemini AI to provide intelligent chatbot responses.
 
 ---
 
@@ -57,26 +33,23 @@ The system includes content management for blogs, portfolio items, testimonials,
 
 ## 🌐 Public Website
 
-- Responsive landing page
-- Company information
-- AI solutions showcase
-- Portfolio & case studies
-- Blog & articles
-- Team members
+- Responsive company website
+- About, Services and Portfolio pages
+- Blog and Articles
 - Gallery
 - Testimonials
-- FAQs
+- FAQ section
+- Team profiles
 - Events
 - Contact form
 - Cookie consent
 - Progressive Web App (PWA) assets
-- Gemini AI chatbot integration
+- Gemini AI chatbot
 
-## 🛠️ Administration Dashboard
+## 🛠️ Admin Dashboard
 
-- Secure administrator authentication
+- Secure administrator login
 - Dashboard overview
-- Content management
 - Blog management
 - Portfolio management
 - Gallery management
@@ -84,17 +57,17 @@ The system includes content management for blogs, portfolio items, testimonials,
 - FAQ management
 - Team management
 - Testimonial management
-- Contact inquiry management
-- User & role management
-- Audit & activity logs
-- Site configuration
+- Contact enquiry management
+- User and role management
+- Site settings
+- Activity and audit logs
 
-## 🤖 AI Assistant
+## 🤖 AI Integration
 
-- Google Gemini API integration
-- Context-aware responses
+- Google Gemini API
+- Intelligent chatbot responses
 - Local fallback behaviour
-- Easily configurable API key
+- Easy API key configuration
 
 ---
 
@@ -103,33 +76,34 @@ The system includes content management for blogs, portfolio items, testimonials,
 | Category | Technology |
 |----------|------------|
 | Backend | Flask 3 |
-| Language | Python 3 |
+| Programming Language | Python 3 |
 | Database | PostgreSQL |
-| Forms | Flask-WTF |
+| Database Driver | pg8000 |
 | Authentication | Flask-Login |
-| Database Migration | Flask-Migrate |
-| Templates | Jinja2 |
-| Frontend | HTML5, CSS3, JavaScript |
-| AI | Google Gemini API |
+| Forms & Validation | Flask-WTF |
+| Frontend | HTML5, CSS3, Vanilla JavaScript |
+| Template Engine | Jinja2 |
+| AI Integration | Google Gemini API |
+| Version Control | Git & GitHub |
 
 ---
 
 # 🏗️ System Architecture
 
 ```text
-Browser
-    │
-    ▼
+Client Browser
+      │
+      ▼
 Flask Application
-    │
+      │
  ├── Public Website
- ├── Authentication
  ├── Admin Dashboard
- ├── CMS Services
+ ├── Authentication
+ ├── CMS Modules
  ├── Gemini AI Service
- └── Utility Modules
-    │
-    ▼
+ └── Utility Components
+      │
+      ▼
 PostgreSQL Database
 ```
 
@@ -147,7 +121,6 @@ AI-Solutions/
 ├── .env.example
 │
 ├── aisolution/
-│   ├── models/
 │   ├── routes/
 │   ├── services/
 │   ├── utilities/
@@ -155,8 +128,8 @@ AI-Solutions/
 │   └── static/
 │
 ├── migrations/
-├── instance/
-└── uploads/
+├── uploads/
+└── instance/
 ```
 
 ---
@@ -166,18 +139,19 @@ AI-Solutions/
 ```bash
 git clone <repository-url>
 cd AI-Solutions
+
 python -m venv .venv
 ```
 
 Activate the virtual environment.
 
-**Windows**
+Windows:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-Install dependencies.
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -185,12 +159,12 @@ pip install -r requirements.txt
 
 ---
 
-# 🔧 Configuration
+# 🔧 Environment Configuration
 
-Create your `.env` file.
+Create a `.env` file.
 
 ```env
-SECRET_KEY=your-secret-key
+SECRET_KEY=your_secret_key
 
 DB_HOST=localhost
 DB_PORT=5432
@@ -201,20 +175,22 @@ DB_PASSWORD=your_password
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=strong_password
 
-GEMINI_API_KEY=your_api_key
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
-> **Note:** SMTP/email configuration is intentionally omitted because it is not part of the implemented project.
+> SMTP configuration is intentionally omitted because it is not part of the implemented project.
 
 ---
 
 # 🗄️ Database Setup
 
+Create the PostgreSQL database.
+
 ```sql
 CREATE DATABASE ai_solutions_db;
 ```
 
-Initialize the project.
+Run the setup commands.
 
 ```bash
 flask --app app check-db
@@ -223,7 +199,7 @@ flask --app app setup
 
 ---
 
-# ▶️ Running the Project
+# ▶️ Running the Application
 
 ```bash
 flask --app app run
@@ -231,58 +207,42 @@ flask --app app run
 
 Open:
 
-```
-http://127.0.0.1:5000
-```
+`http://127.0.0.1:5000`
 
 ---
 
-# 🤖 AI Chatbot
-
-The application supports Google Gemini AI for intelligent conversations.
-
-Features include:
-
-- AI-powered responses
-- Configurable API key
-- Local fallback behaviour
-- Flask service integration
-
----
-
-# 🔐 Security
+# 🔐 Security Features
 
 - Password hashing
 - CSRF protection
 - Session management
-- Role-based authorization
-- SQLAlchemy ORM protection
-- Secure environment variables
-- File upload validation
-- Login history
+- Role-based authentication
+- Parameterized PostgreSQL queries
+- Input validation and sanitisation
+- Secure environment variable configuration
+- Upload validation
 - Security headers
+- Login history and account protection
 
 ---
 
-# ⚡ CLI Commands
+# ⚡ Useful CLI Commands
 
 ```bash
 flask --app app check-db
 flask --app app setup
 flask --app app seed-db
 flask --app app routes
-flask --app app db migrate
-flask --app app db upgrade
 ```
 
 ---
 
 # 🚀 Deployment Checklist
 
-- Configure production PostgreSQL
-- Generate secure SECRET_KEY
-- Disable debug mode
+- Configure PostgreSQL
+- Set a secure SECRET_KEY
 - Configure Gemini API key
+- Disable debug mode
 - Enable HTTPS
 - Configure secure cookies
 
@@ -290,17 +250,18 @@ flask --app app db upgrade
 
 # 🛠️ Troubleshooting
 
-### Database connection failed
+**Database connection issues**
 
-Verify PostgreSQL is running and check `.env` values.
+- Verify PostgreSQL is running.
+- Check database credentials in `.env`.
 
-### AI chatbot unavailable
+**Gemini chatbot unavailable**
 
-Verify the Gemini API key.
+- Verify `GEMINI_API_KEY`.
 
-### Administrator account missing
+**Unable to login**
 
-Run:
+- Run:
 
 ```bash
 flask --app app setup
@@ -312,9 +273,9 @@ flask --app app setup
 
 - Docker support
 - REST API
+- Two-factor authentication
 - Dark mode
 - Analytics dashboard
-- Two-factor authentication
 - Multi-language support
 - Automated backups
 
@@ -328,10 +289,10 @@ flask --app app setup
 
 University of Sunderland
 
-Academic Portfolio Project (AI Solution)
+Academic Portfolio Project
 
 ---
 
 # 📄 License
 
-This project has been developed for academic and portfolio purposes. If you intend to publish or reuse this project publicly, consider adding an appropriate open-source license such as MIT or Apache 2.0.
+This project is intended for academic and portfolio purposes. If you plan to publish it publicly, consider adding an open-source license such as MIT or Apache 2.0.
